@@ -1,0 +1,3 @@
+[submodule "external/eszFW"]
+	path = external/eszFW
+	url = https://github.com/mupfelofen-de/eszFW.git
