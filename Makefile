@@ -1,4 +1,4 @@
-.PHONY: all clean debug
+.PHONY: all clean run
 
 include Config.mk
 
@@ -18,3 +18,8 @@ clean:
 	make -C external/eszFW/ clean
 	rm -f $(OBJS)
 	rm -f $(OUT)
+
+run:
+	make -C external/eszFW/
+	make
+	./TauCeti

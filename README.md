@@ -2,8 +2,7 @@
 
 ## About
 
-Tau Ceti will be a sci-fi 2D platformer game in the spirit of the 1990s
-written in C using SDL2 and
+Tau Ceti will be a sci-fi 2D platformer game written in C using SDL2 and
 [eszFW](https://github.com/mupfelofen-de/eszFW): a portable framework
 with the intention to simplify 2D game development in C.
 
@@ -12,7 +11,7 @@ with the intention to simplify 2D game development in C.
 
 ## Android version
 
-A Android version is available on Google Play:
+An Android version is available on Google Play:
 
 [![Tau Ceti](.media/badge_new.png)](https://play.google.com/store/apps/details?id=de.mupfelofen.TauCeti)
 
@@ -24,6 +23,7 @@ hold your finger on the bottom of the screen.  You can also zoom in and
 out using a pinch gesture.
 
 ```
+F:       toggle fullscreen
 Q:       quit
 SPACE:   jump
 LEFT:    walk left

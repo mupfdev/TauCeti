@@ -30,11 +30,15 @@ static int  Render();
 static void Quit();
 
 #ifndef __ANDROID__
-int main(int sArgC, char *pacArgV[])
+int main()
+{
 #else
 int SDL_main(int sArgC, char *pacArgV[])
-#endif
 {
+    (void)sArgC;
+    (void)pacArgV;
+#endif
+
     int        sReturnValue  = 0;
     bool       bIsRunning    = true;
     double     dTimeA        = 0.f;
@@ -44,9 +48,6 @@ int SDL_main(int sArgC, char *pacArgV[])
     bool       bIsCrouching  = false;
     bool       bIsMoving     = false;
     SDL_Event  stEvent;
-
-    (void)sArgC;
-    (void)pacArgV;
 
     sReturnValue = Init();
     sReturnValue = Render();
@@ -125,6 +126,9 @@ int SDL_main(int sArgC, char *pacArgV[])
                       break;
                   case SDLK_SPACE:
                       JumpEntity(3.5f, pstEntity[0]);
+                      break;
+                  case SDLK_f:
+                      ToggleFullscreen(pstVideo);
                       break;
                 }
             }
@@ -249,9 +253,12 @@ int SDL_main(int sArgC, char *pacArgV[])
             SetAnimation(22, 22, 0.f, pstEntity[0]);
         }
 
-        // Update game logic.
-        // Set up collision detection.
-        if (IsOnTileOfType("Platform", pstEntity[0]->dPosX, pstEntity[0]->dPosY, pstEntity[0]->u16Height, pstMap))
+        // ** Game logic start **
+
+        // Collision detection.
+        if (IsOnTileOfType(
+                "Platform", pstEntity[0]->dPosX, pstEntity[0]->dPosY,
+                pstEntity[0]->u16Height, pstMap))
         {
             bIsOnPlatform = true;
         }
@@ -322,6 +329,8 @@ int SDL_main(int sArgC, char *pacArgV[])
         {
             ConnectHorizontalMapEndsForEntity(pstMap->u16Width, pstEntity[u8Index]);
         }
+
+        // ** Game logic end **
     }
 
     Quit();
@@ -347,13 +356,7 @@ static int Init()
         "res/backgrounds/city-bg2.png"
     };
 
-    #ifndef __ANDROID__
-    bFullscreen = true;
-    #endif
-
-    sReturnValue = InitVideo(
-        "Tau Ceti", 640, 360, 384, 216,
-        bFullscreen, &pstVideo);
+    sReturnValue = InitVideo("Tau Ceti", 640, 360, 384, 216, bFullscreen, &pstVideo);
     RETURN_ON_ERROR(sReturnValue);
 
     sReturnValue = InitCamera(&pstCamera);
