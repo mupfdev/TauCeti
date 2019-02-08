@@ -191,7 +191,7 @@ int SDL_main(int sArgC, char *pacArgV[])
                 double dDY = fabs(stEvent.tfinger.dy);
                 if (0.03 < dDY)
                 {
-                    JumpEntity(4.5f, pstEntity[0]);
+                    JumpEntity(4.7f, pstEntity[0]);
                 }
             }
             else if (SDL_MULTIGESTURE == stEvent.type)

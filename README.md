@@ -2,9 +2,10 @@
 
 ## About
 
-Tau Ceti will be a sci-fi 2D platformer game written in C using SDL2 and
-[eszFW](https://github.com/mupfelofen-de/eszFW): a portable framework
-with the intention to simplify 2D game development in C.
+Tau Ceti will be a cross-platform 2D sci-fi platformer game written in C
+using SDL2 and [eszFW](https://github.com/mupfelofen-de/eszFW): a
+portable framework with the intention to simplify 2D game development in
+C.
 
 [![Tau Ceti](.media/01-tn.png)](.media/01.png?raw=true "01")
 [![Tau Ceti](.media/02-tn.png)](.media/01.png?raw=true "02")
@@ -29,6 +30,27 @@ SPACE:   jump
 LEFT:    walk left
 RIGHT:   walk right
 DOWN:    crouch
+```
+
+## Compiling
+
+To compile _TauCeti_ under Linux simply enter:
+```
+git clone --recurse-submodules -j2 https://github.com/mupfelofen-de/TauCeti.git
+cd TauCeti
+mkdir build
+cmake ..
+make
+```
+
+If it doesn't work, you can also use a plain make instead:
+```
+make
+```
+
+If you're on NixOS enter:
+```
+nix-shell --command make
 ```
 
 ## Licence and Credits
