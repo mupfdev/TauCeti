@@ -30,9 +30,9 @@ static void  Quit();
 int main()
 {
 #else
-int SDL_main(Sint8 s8ArgC, char *pacArgV[])
+int SDL_main(int sArgC, char *pacArgV[])
 {
-    (void)s8ArgC;
+    (void)sArgC;
     (void)pacArgV;
 #endif
     Sint8     s8ReturnValue = 0;
@@ -40,7 +40,7 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
     double    dTimeA        = 0.f;
     double    dTimeB        = 0.f;
     SDL_bool  bIsOnPlatform = 1;
-    SDL_bool  bOrientation  = LEFT;
+    Direction eDirection    = LEFT;
     SDL_bool  bIsCrouching  = 0;
     SDL_bool  bIsMoving     = 0;
     SDL_Event stEvent;
@@ -109,12 +109,12 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
                       bIsRunning = 0;
                       break;
                   case SDLK_LEFT:
-                      bOrientation = LEFT;
-                      bIsMoving    = 1;
+                      eDirection = LEFT;
+                      bIsMoving  = 1;
                       break;
                   case SDLK_RIGHT:
-                      bOrientation = RIGHT;
-                      bIsMoving    = 1;
+                      eDirection = RIGHT;
+                      bIsMoving  = 1;
                       break;
                   case SDLK_DOWN:
                       bIsCrouching = 1;
@@ -157,18 +157,18 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
             }
             else if (SDL_FINGERDOWN == stEvent.type)
             {
-                s32TouchPosX = (Sint32)SDL_round(stEvent.tfinger.x * s32WindowW);
-                s32TouchPosY = (Sint32)SDL_round(stEvent.tfinger.y * s32WindowH);
+                s32TouchPosX = (Sint32)SDL_floor(stEvent.tfinger.x * s32WindowW);
+                s32TouchPosY = (Sint32)SDL_floor(stEvent.tfinger.y * s32WindowH);
 
                 if (s32TouchPosX < (s32WindowW / 2))
                 {
-                    bOrientation = LEFT;
-                    bIsMoving    = 1;
+                    eDirection = LEFT;
+                    bIsMoving  = 1;
                 }
                 else
                 {
-                    bOrientation = RIGHT;
-                    bIsMoving    = 1;
+                    eDirection = RIGHT;
+                    bIsMoving  = 1;
                 }
 
                 if (s32TouchPosY > (s32WindowH - 32))
@@ -235,7 +235,7 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
         {
             AnimateEntity(1, pstEntity[0]);
             MoveEntityFull(
-                bOrientation, 6.0, 3.0, 0, 15,
+                eDirection, 6.0, 3.0, 0, 15,
                 24.f,
                 0,
                 pstEntity[0]);
@@ -245,7 +245,7 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
         {
             AnimateEntity(0, pstEntity[0]);
             SetFrameOffset(0, 0, pstEntity[0]);
-            SetDirection(bOrientation, pstEntity[0]);
+            SetDirection(eDirection, pstEntity[0]);
             SetAnimation(22, 22, 0.f, pstEntity[0]);
         }
 
