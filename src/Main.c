@@ -75,7 +75,7 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
     InitFPSLimiter(&dTimeA, &dTimeB, &dDeltaTime);
     while (bIsRunning)
     {
-        // Limit framerate.
+        // Calculate delta time.
         LimitFramerate(60, &dTimeA, &dTimeB, &dDeltaTime);
 
         // Render scene.
@@ -187,7 +187,7 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
                 double dDY = fabs(stEvent.tfinger.dy);
                 if (0.03 < dDY)
                 {
-                    JumpEntity(4.7f, pstEntity[0]);
+                    JumpEntity(3.5f, pstEntity[0]);
                 }
             }
             else if (SDL_MULTIGESTURE == stEvent.type)
@@ -245,12 +245,11 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
         {
             AnimateEntity(0, pstEntity[0]);
             SetFrameOffset(0, 0, pstEntity[0]);
-            SetOrientation(bOrientation, pstEntity[0]);
+            SetDirection(bOrientation, pstEntity[0]);
             SetAnimation(22, 22, 0.f, pstEntity[0]);
         }
 
         // ** Game logic start **
-
         // Collision detection.
         if (IsOnTileOfType(
                 "Platform", pstEntity[0]->dPosX, pstEntity[0]->dPosY,
@@ -283,10 +282,10 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
         }
 
         // Update game entities.
-        UpdateEntity(dDeltaTime, pstMap->dGravitation, pstMap->u8MeterInPixel, pstEntity[0]);
+        UpdateEntity(pstMap->dGravitation, pstMap->u8MeterInPixel, pstEntity[0]);
         for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
         {
-            UpdateEntity(dDeltaTime, 0, 24, pstEntity[u8Index]);
+            UpdateEntity(0, 24, pstEntity[u8Index]);
         }
 
         // Follow player entity and set camera boudnaries to map size.
@@ -326,7 +325,6 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
         {
             ConnectHorizontalMapEndsForEntity(pstMap->u16Width, pstEntity[u8Index]);
         }
-
         // ** Game logic end **
     }
 
@@ -344,7 +342,7 @@ int SDL_main(Sint8 s8ArgC, char *pacArgV[])
 
 static Sint8 Init()
 {
-    SDL_bool bFullscreen   = 0;
+    SDL_bool bFullscreen   = 1;
     Sint8    s8ReturnValue = 0;
 
     const char *pacBgFileNames[3] = {
@@ -366,7 +364,7 @@ static Sint8 Init()
     // Set up background vehicles.
     s8ReturnValue = InitEntity(-257, 192, 264, 104, &pstEntity[1]); // Truck.
     RETURN_ON_ERROR(s8ReturnValue);
-    SetOrientation(LEFT, pstEntity[1]);
+    SetDirection(LEFT, pstEntity[1]);
     SetSpeed(5.f, 2.f, pstEntity[1]);
     MoveEntity(pstEntity[1]);
 
@@ -380,7 +378,7 @@ static Sint8 Init()
     RETURN_ON_ERROR(s8ReturnValue);
     SetFrameOffset(1, 3, pstEntity[3]);
     SetSpeed(50.f, 8.f, pstEntity[2]);
-    SetOrientation(LEFT, pstEntity[3]);
+    SetDirection(LEFT, pstEntity[3]);
     MoveEntity(pstEntity[3]);
 
     s8ReturnValue = InitEntity(800, 416, 96, 64, &pstEntity[4]);    // Misc 2.
@@ -426,7 +424,7 @@ static Sint8 Render()
     int s8ReturnValue = 0;
 
     s8ReturnValue = DrawBackground(
-        pstEntity[0]->bOrientation,
+        pstEntity[0]->eDirection,
         pstVideo->s32LogicalWindowHeight,
         pstCamera->dPosY,
         dBgVelocityX,
@@ -446,7 +444,6 @@ static Sint8 Render()
         0, 1, 1, "BG",
         pstCamera->dPosX,
         pstCamera->dPosY,
-        dDeltaTime,
         pstMap,
         pstVideo->pstRenderer);
 
@@ -460,7 +457,6 @@ static Sint8 Render()
         1, 0, 0, "FG",
         pstCamera->dPosX,
         pstCamera->dPosY,
-        dDeltaTime,
         pstMap,
         pstVideo->pstRenderer);
 
