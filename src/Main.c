@@ -8,9 +8,6 @@
 
 #include <SDL.h>
 #include <eszfw.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stdint.h>
 
 static Audio      *pstAudio;
 static Background *pstBg;
@@ -25,45 +22,44 @@ static Video      *pstVideo;
 static double      dBgVelocityX;
 static double      dDeltaTime = 0.f;
 
-static int  Init();
-static int  Render();
-static void Quit();
+static Sint8 Init();
+static Sint8 Render();
+static void  Quit();
 
 #ifndef __ANDROID__
 int main()
 {
 #else
-int SDL_main(int sArgC, char *pacArgV[])
+int SDL_main(Sint8 s8ArgC, char *pacArgV[])
 {
-    (void)sArgC;
+    (void)s8ArgC;
     (void)pacArgV;
 #endif
+    Sint8     s8ReturnValue = 0;
+    SDL_bool  bIsRunning    = 1;
+    double    dTimeA        = 0.f;
+    double    dTimeB        = 0.f;
+    SDL_bool  bIsOnPlatform = 1;
+    SDL_bool  bOrientation  = LEFT;
+    SDL_bool  bIsCrouching  = 0;
+    SDL_bool  bIsMoving     = 0;
+    SDL_Event stEvent;
 
-    int        sReturnValue  = 0;
-    bool       bIsRunning    = true;
-    double     dTimeA        = 0.f;
-    double     dTimeB        = 0.f;
-    bool       bIsOnPlatform = true;
-    bool       bOrientation  = LEFT;
-    bool       bIsCrouching  = false;
-    bool       bIsMoving     = false;
-    SDL_Event  stEvent;
-
-    sReturnValue = Init();
-    sReturnValue = Render();
-    if (-1 == sReturnValue)
+    s8ReturnValue = Init();
+    s8ReturnValue = Render();
+    if (-1 == s8ReturnValue)
     {
-        bIsRunning = false;
+        bIsRunning = 0;
     }
 
     #ifdef __ANDROID__
-    double  dZoomLevel;
-    double  dZoomLevelMin;
-    double  dZoomLevelMax;
-    int32_t s32TouchPosX;
-    int32_t s32TouchPosY;
-    int32_t s32WindowW;
-    int32_t s32WindowH;
+    double dZoomLevel;
+    double dZoomLevelMin;
+    double dZoomLevelMax;
+    Sint32 s32TouchPosX;
+    Sint32 s32TouchPosY;
+    Sint32 s32WindowW;
+    Sint32 s32WindowH;
 
     if (bIsRunning)
     {
@@ -83,12 +79,12 @@ int SDL_main(int sArgC, char *pacArgV[])
         LimitFramerate(60, &dTimeA, &dTimeB, &dDeltaTime);
 
         // Render scene.
-        sReturnValue = Render();
+        s8ReturnValue = Render();
         RenderScene(pstVideo->pstRenderer);
 
-        if (-1 == sReturnValue)
+        if (-1 == s8ReturnValue)
         {
-            bIsRunning = false;
+            bIsRunning = 0;
             continue;
         }
 
@@ -100,29 +96,29 @@ int SDL_main(int sArgC, char *pacArgV[])
         {
             if (stEvent.type == SDL_QUIT)
             {
-                bIsRunning = false;
+                bIsRunning = 0;
             }
             #ifndef __ANDROID__
             else if (SDL_KEYDOWN == stEvent.type)
             {
-                bIsCrouching = false;
+                bIsCrouching = 0;
 
                 switch(stEvent.key.keysym.sym)
                 {
                   case SDLK_q:
-                      bIsRunning = false;
+                      bIsRunning = 0;
                       break;
                   case SDLK_LEFT:
                       bOrientation = LEFT;
-                      bIsMoving    = true;
+                      bIsMoving    = 1;
                       break;
                   case SDLK_RIGHT:
                       bOrientation = RIGHT;
-                      bIsMoving    = true;
+                      bIsMoving    = 1;
                       break;
                   case SDLK_DOWN:
-                      bIsCrouching = true;
-                      bIsMoving    = false;
+                      bIsCrouching = 1;
+                      bIsMoving    = 0;
                       break;
                   case SDLK_SPACE:
                       JumpEntity(3.5f, pstEntity[0]);
@@ -137,14 +133,14 @@ int SDL_main(int sArgC, char *pacArgV[])
                 switch(stEvent.key.keysym.sym)
                 {
                   case SDLK_LEFT:
-                      bIsMoving = false;
+                      bIsMoving = 0;
                       break;
                   case SDLK_RIGHT:
-                      bIsMoving = false;
+                      bIsMoving = 0;
                       break;
                   case SDLK_DOWN:
-                      bIsCrouching = false;
-                      bIsMoving    = false;
+                      bIsCrouching = 0;
+                      bIsMoving    = 0;
                       break;
                   case SDLK_LSHIFT:
                       LockCamera(pstCamera);
@@ -156,35 +152,35 @@ int SDL_main(int sArgC, char *pacArgV[])
             {
                 if (stEvent.key.keysym.sym == SDLK_AC_BACK)
                 {
-                    bIsRunning = false;
+                    bIsRunning = 0;
                 }
             }
             else if (SDL_FINGERDOWN == stEvent.type)
             {
-                s32TouchPosX = (int32_t)round(stEvent.tfinger.x * s32WindowW);
-                s32TouchPosY = (int32_t)round(stEvent.tfinger.y * s32WindowH);
+                s32TouchPosX = (Sint32)SDL_round(stEvent.tfinger.x * s32WindowW);
+                s32TouchPosY = (Sint32)SDL_round(stEvent.tfinger.y * s32WindowH);
 
                 if (s32TouchPosX < (s32WindowW / 2))
                 {
                     bOrientation = LEFT;
-                    bIsMoving    = true;
+                    bIsMoving    = 1;
                 }
                 else
                 {
                     bOrientation = RIGHT;
-                    bIsMoving    = true;
+                    bIsMoving    = 1;
                 }
 
                 if (s32TouchPosY > (s32WindowH - 32))
                 {
-                    bIsCrouching = true;
-                    bIsMoving    = false;
+                    bIsCrouching = 1;
+                    bIsMoving    = 0;
                 }
             }
             else if (SDL_FINGERUP == stEvent.type)
             {
-                bIsCrouching = false;
-                bIsMoving    = false;
+                bIsCrouching = 0;
+                bIsMoving    = 0;
             }
             else if (SDL_FINGERMOTION == stEvent.type)
             {
@@ -196,7 +192,7 @@ int SDL_main(int sArgC, char *pacArgV[])
             }
             else if (SDL_MULTIGESTURE == stEvent.type)
             {
-                bIsMoving  = false;
+                bIsMoving  = 0;
                 dZoomLevel = pstVideo->dZoomLevel;
                 if (0.002 < fabs(stEvent.mgesture.dDist))
                 {
@@ -229,7 +225,7 @@ int SDL_main(int sArgC, char *pacArgV[])
         // Set the player's idle animation.
         if (! IsEntityMoving(pstEntity[0]))
         {
-            AnimateEntity(true, pstEntity[0]);
+            AnimateEntity(1, pstEntity[0]);
             SetFrameOffset(0, 1, pstEntity[0]);
             SetAnimation(0, 3, 5.f, pstEntity[0]);
         }
@@ -237,7 +233,7 @@ int SDL_main(int sArgC, char *pacArgV[])
         // Move player entity.
         if (bIsMoving)
         {
-            AnimateEntity(true, pstEntity[0]);
+            AnimateEntity(1, pstEntity[0]);
             MoveEntityFull(
                 bOrientation, 6.0, 3.0, 0, 15,
                 24.f,
@@ -247,7 +243,7 @@ int SDL_main(int sArgC, char *pacArgV[])
 
         if (bIsCrouching)
         {
-            AnimateEntity(false, pstEntity[0]);
+            AnimateEntity(0, pstEntity[0]);
             SetFrameOffset(0, 0, pstEntity[0]);
             SetOrientation(bOrientation, pstEntity[0]);
             SetAnimation(22, 22, 0.f, pstEntity[0]);
@@ -260,16 +256,16 @@ int SDL_main(int sArgC, char *pacArgV[])
                 "Platform", pstEntity[0]->dPosX, pstEntity[0]->dPosY,
                 pstEntity[0]->u16Height, pstMap))
         {
-            bIsOnPlatform = true;
+            bIsOnPlatform = 1;
         }
         else
         {
-            bIsOnPlatform = false;
+            bIsOnPlatform = 0;
         }
 
         if (pstEntity[0]->dPosX < 0.f || pstEntity[0]->dPosX > pstMap->u16Width)
         {
-            bIsOnPlatform = true;
+            bIsOnPlatform = 1;
         }
 
         if (! bIsOnPlatform)
@@ -286,8 +282,9 @@ int SDL_main(int sArgC, char *pacArgV[])
             DropEntity(pstEntity[0]);
         }
 
+        // Update game entities.
         UpdateEntity(dDeltaTime, pstMap->dGravitation, pstMap->u8MeterInPixel, pstEntity[0]);
-        for (uint8_t u8Index = 1; u8Index <= 3; u8Index++)
+        for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
         {
             UpdateEntity(dDeltaTime, 0, 24, pstEntity[u8Index]);
         }
@@ -296,8 +293,8 @@ int SDL_main(int sArgC, char *pacArgV[])
         SetCameraTargetEntity(
             pstVideo->s32LogicalWindowWidth,
             pstVideo->s32LogicalWindowHeight,
-            pstCamera,
-            pstEntity[0]);
+            pstEntity[0],
+            pstCamera);
 
         if (SetCameraBoundariesToMapSize(
             pstVideo->s32LogicalWindowWidth,
@@ -325,7 +322,7 @@ int SDL_main(int sArgC, char *pacArgV[])
         }
 
         // Move background vehicles.
-        for (uint8_t u8Index = 1; u8Index <= 3; u8Index++)
+        for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
         {
             ConnectHorizontalMapEndsForEntity(pstMap->u16Width, pstEntity[u8Index]);
         }
@@ -335,7 +332,7 @@ int SDL_main(int sArgC, char *pacArgV[])
 
     Quit();
 
-    if (-1 == sReturnValue)
+    if (-1 == s8ReturnValue)
     {
         return EXIT_FAILURE;
     }
@@ -345,10 +342,10 @@ int SDL_main(int sArgC, char *pacArgV[])
     }
 }
 
-static int Init()
+static Sint8 Init()
 {
-    bool bFullscreen  = false;
-    int  sReturnValue = 0;
+    SDL_bool bFullscreen   = 0;
+    Sint8    s8ReturnValue = 0;
 
     const char *pacBgFileNames[3] = {
         "res/backgrounds/city-bg0.png",
@@ -356,79 +353,79 @@ static int Init()
         "res/backgrounds/city-bg2.png"
     };
 
-    sReturnValue = InitVideo("Tau Ceti", 640, 360, 384, 216, bFullscreen, &pstVideo);
-    RETURN_ON_ERROR(sReturnValue);
+    s8ReturnValue = InitVideo("Tau Ceti", 640, 360, 384, 216, bFullscreen, &pstVideo);
+    RETURN_ON_ERROR(s8ReturnValue);
 
-    sReturnValue = InitCamera(&pstCamera);
-    RETURN_ON_ERROR(sReturnValue);
+    s8ReturnValue = InitCamera(&pstCamera);
+    RETURN_ON_ERROR(s8ReturnValue);
 
-    sReturnValue = InitEntity(112, 192, 64, 64, &pstEntity[0]);
+    s8ReturnValue = InitEntity(112, 192, 64, 64, &pstEntity[0]);
     SetSpawnPosition(112, 192, pstEntity[0]);
-    RETURN_ON_ERROR(sReturnValue);
+    RETURN_ON_ERROR(s8ReturnValue);
 
     // Set up background vehicles.
-    sReturnValue = InitEntity(-257, 192, 264, 104, &pstEntity[1]); // Truck.
-    RETURN_ON_ERROR(sReturnValue);
+    s8ReturnValue = InitEntity(-257, 192, 264, 104, &pstEntity[1]); // Truck.
+    RETURN_ON_ERROR(s8ReturnValue);
     SetOrientation(LEFT, pstEntity[1]);
     SetSpeed(5.f, 2.f, pstEntity[1]);
     MoveEntity(pstEntity[1]);
 
-    sReturnValue = InitEntity(1000, 300, 168, 64, &pstEntity[2]);  // Police.
-    RETURN_ON_ERROR(sReturnValue);
+    s8ReturnValue = InitEntity(1000, 300, 168, 64, &pstEntity[2]);  // Police.
+    RETURN_ON_ERROR(s8ReturnValue);
     SetFrameOffset(0, 2, pstEntity[2]);
     SetSpeed(50.f, 10.f, pstEntity[2]);
     MoveEntity(pstEntity[2]);
 
-    sReturnValue = InitEntity(128, 150, 96, 64, &pstEntity[3]);    // Misc 1.
-    RETURN_ON_ERROR(sReturnValue);
+    s8ReturnValue = InitEntity(128, 150, 96, 64, &pstEntity[3]);    // Misc 1.
+    RETURN_ON_ERROR(s8ReturnValue);
     SetFrameOffset(1, 3, pstEntity[3]);
     SetSpeed(50.f, 8.f, pstEntity[2]);
     SetOrientation(LEFT, pstEntity[3]);
     MoveEntity(pstEntity[3]);
 
-    sReturnValue = InitEntity(800, 416, 96, 64, &pstEntity[4]);    // Misc 2.
-    RETURN_ON_ERROR(sReturnValue);
+    s8ReturnValue = InitEntity(800, 416, 96, 64, &pstEntity[4]);    // Misc 2.
+    RETURN_ON_ERROR(s8ReturnValue);
     SetFrameOffset(0, 3, pstEntity[4]);
     SetSpeed(50.f, 5.f, pstEntity[2]);
     MoveEntity(pstEntity[4]);
 
-    sReturnValue = InitMap("res/maps/city.tmx", "res/tilesets/city.png", 32, &pstMap);
+    s8ReturnValue = InitMap("res/maps/city.tmx", "res/tilesets/city.png", 32, &pstMap);
     SetTileAnimationSpeed(5.f, pstMap);
-    RETURN_ON_ERROR(sReturnValue);
+    RETURN_ON_ERROR(s8ReturnValue);
 
-    sReturnValue = InitBackground(
+    s8ReturnValue = InitBackground(
         3, pacBgFileNames, pstVideo->s32WindowWidth, BOTTOM,
         pstVideo->pstRenderer, &pstBg);
-    RETURN_ON_ERROR(sReturnValue);
+    RETURN_ON_ERROR(s8ReturnValue);
 
-    sReturnValue = InitSprite(
+    s8ReturnValue = InitSprite(
         "res/sprites/player.png", 1536, 128, 0, 0, &pstSpPlayer, pstVideo->pstRenderer);
-    RETURN_ON_ERROR(sReturnValue);
+    RETURN_ON_ERROR(s8ReturnValue);
 
-    sReturnValue = InitSprite(
+    s8ReturnValue = InitSprite(
         "res/sprites/vehicles.png", 264, 256, 0, 0, &pstSpVehicles, pstVideo->pstRenderer);
-    RETURN_ON_ERROR(sReturnValue);
+    RETURN_ON_ERROR(s8ReturnValue);
 
-    sReturnValue = InitAudio(&pstAudio);
-    RETURN_ON_ERROR(sReturnValue);
+    s8ReturnValue = InitAudio(&pstAudio);
+    RETURN_ON_ERROR(s8ReturnValue);
 
-    sReturnValue = InitMusic(
+    s8ReturnValue = InitMusic(
         "res/music/FutureAmbient_3.ogg", -1,
         &pstMusic);
-    RETURN_ON_ERROR(sReturnValue);
+    RETURN_ON_ERROR(s8ReturnValue);
 
     LockCamera(pstCamera);
     PlayMusic(2000, pstMusic);
     SetFrameOffset(0, 0, pstEntity[0]);
 
-    return sReturnValue;
+    return s8ReturnValue;
 }
 
-static int Render()
+static Sint8 Render()
 {
-    int sReturnValue = 0;
+    int s8ReturnValue = 0;
 
-    sReturnValue = DrawBackground(
+    s8ReturnValue = DrawBackground(
         pstEntity[0]->bOrientation,
         pstVideo->s32LogicalWindowHeight,
         pstCamera->dPosY,
@@ -436,38 +433,38 @@ static int Render()
         pstVideo->pstRenderer,
         pstBg);
 
-    for (uint8_t u8Index = 1; u8Index <= 3; u8Index++)
+    for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
     {
-        sReturnValue = DrawEntity(
+        s8ReturnValue = DrawEntity(
             pstEntity[u8Index],
             pstCamera,
             pstSpVehicles,
             pstVideo->pstRenderer);
     }
 
-    sReturnValue = DrawMap(
-        0, true, true, "BG",
+    s8ReturnValue = DrawMap(
+        0, 1, 1, "BG",
         pstCamera->dPosX,
         pstCamera->dPosY,
         dDeltaTime,
         pstMap,
         pstVideo->pstRenderer);
 
-    sReturnValue = DrawEntity(
+    s8ReturnValue = DrawEntity(
         pstEntity[0],
         pstCamera,
         pstSpPlayer,
         pstVideo->pstRenderer);
 
-    sReturnValue = DrawMap(
-        1, false, false, "FG",
+    s8ReturnValue = DrawMap(
+        1, 0, 0, "FG",
         pstCamera->dPosX,
         pstCamera->dPosY,
         dDeltaTime,
         pstMap,
         pstVideo->pstRenderer);
 
-    return sReturnValue;
+    return s8ReturnValue;
 }
 
 static void Quit()
