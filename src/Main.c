@@ -60,7 +60,7 @@ int SDL_main(int sArgC, char *pacArgV[])
     if (bGameIsRunning)
     {
         dZoomLevel    = 0.f;
-        dZoomLevelMin = (double)pstVideo->s32WindowHeight / ((double)pstMap->u16Height / 3.f);
+        dZoomLevelMin = (double)pstVideo->s32WindowHeight / ((double)pstMap->u16Height);
         dZoomLevelMax = pstVideo->dInitialZoomLevel;
         s32TouchPosX  = 0;
         s32WindowW    = pstVideo->s32LogicalWindowWidth;
@@ -167,7 +167,7 @@ int SDL_main(int sArgC, char *pacArgV[])
                     bIsMoving  = 1;
                 }
 
-                if (s32TouchPosY > (s32WindowH - 32))
+                if (s32TouchPosY > (s32WindowH - 48))
                 {
                     bIsCrouching = 1;
                     bIsMoving    = 0;
