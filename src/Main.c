@@ -18,9 +18,7 @@ static Music      *pstMusic;
 static Sprite     *pstSpPlayer;
 static Sprite     *pstSpVehicles;
 static Video      *pstVideo;
-
 static double      dBgVelocityX;
-static double      dDeltaTime = 0.f;
 
 static Sint8 Init();
 static Sint8 Render();
@@ -35,21 +33,19 @@ int SDL_main(int sArgC, char *pacArgV[])
     (void)sArgC;
     (void)pacArgV;
 #endif
-    Sint8     s8ReturnValue = 0;
-    SDL_bool  bIsRunning    = 1;
-    double    dTimeA        = 0.f;
-    double    dTimeB        = 0.f;
-    SDL_bool  bIsOnPlatform = 1;
-    Direction eDirection    = LEFT;
-    SDL_bool  bIsCrouching  = 0;
-    SDL_bool  bIsMoving     = 0;
+    Sint8     s8ReturnValue  = 0;
+    Direction eDirection     = LEFT;
+    SDL_bool  bGameIsRunning = 1;
+    SDL_bool  bIsOnPlatform  = 1;
+    SDL_bool  bIsCrouching   = 0;
+    SDL_bool  bIsMoving      = 0;
     SDL_Event stEvent;
 
     s8ReturnValue = Init();
     s8ReturnValue = Render();
     if (-1 == s8ReturnValue)
     {
-        bIsRunning = 0;
+        bGameIsRunning = 0;
     }
 
     #ifdef __ANDROID__
@@ -61,10 +57,10 @@ int SDL_main(int sArgC, char *pacArgV[])
     Sint32 s32WindowW;
     Sint32 s32WindowH;
 
-    if (bIsRunning)
+    if (bGameIsRunning)
     {
         dZoomLevel    = 0.f;
-        dZoomLevelMin = (double)pstVideo->s32WindowHeight / (double)pstMap->u16Height;
+        dZoomLevelMin = (double)pstVideo->s32WindowHeight / ((double)pstMap->u16Height / 3.f);
         dZoomLevelMax = pstVideo->dInitialZoomLevel;
         s32TouchPosX  = 0;
         s32WindowW    = pstVideo->s32LogicalWindowWidth;
@@ -72,19 +68,14 @@ int SDL_main(int sArgC, char *pacArgV[])
     }
     #endif
 
-    InitFPSLimiter(&dTimeA, &dTimeB, &dDeltaTime);
-    while (bIsRunning)
+    while (bGameIsRunning)
     {
-        // Calculate delta time.
-        LimitFramerate(60, &dTimeA, &dTimeB, &dDeltaTime);
-
         // Render scene.
         s8ReturnValue = Render();
-        RenderScene(pstVideo->pstRenderer);
-
+        RenderScene(pstVideo);
         if (-1 == s8ReturnValue)
         {
-            bIsRunning = 0;
+            bGameIsRunning = 0;
             continue;
         }
 
@@ -96,17 +87,15 @@ int SDL_main(int sArgC, char *pacArgV[])
         {
             if (stEvent.type == SDL_QUIT)
             {
-                bIsRunning = 0;
+                bGameIsRunning = 0;
             }
             #ifndef __ANDROID__
             else if (SDL_KEYDOWN == stEvent.type)
             {
-                bIsCrouching = 0;
-
                 switch(stEvent.key.keysym.sym)
                 {
                   case SDLK_q:
-                      bIsRunning = 0;
+                      bGameIsRunning = 0;
                       break;
                   case SDLK_LEFT:
                       eDirection = LEFT;
@@ -121,7 +110,14 @@ int SDL_main(int sArgC, char *pacArgV[])
                       bIsMoving    = 0;
                       break;
                   case SDLK_SPACE:
-                      JumpEntity(3.5f, pstEntity[0]);
+                      if (! bIsCrouching)
+                      {
+                          JumpEntity(4.f, pstEntity[0]);
+                      }
+                      else
+                      {
+                          pstEntity[0]->dPosY += 8.f;
+                      }
                       break;
                   case SDLK_f:
                       ToggleFullscreen(pstVideo);
@@ -152,7 +148,7 @@ int SDL_main(int sArgC, char *pacArgV[])
             {
                 if (stEvent.key.keysym.sym == SDLK_AC_BACK)
                 {
-                    bIsRunning = 0;
+                    bGameIsRunning = 0;
                 }
             }
             else if (SDL_FINGERDOWN == stEvent.type)
@@ -187,7 +183,14 @@ int SDL_main(int sArgC, char *pacArgV[])
                 double dDY = fabs(stEvent.tfinger.dy);
                 if (0.03 < dDY)
                 {
-                    JumpEntity(3.5f, pstEntity[0]);
+                    if (! bIsCrouching)
+                    {
+                        JumpEntity(4.f, pstEntity[0]);
+                    }
+                    else
+                    {
+                        pstEntity[0]->dPosY += 8.f;
+                    }
                 }
             }
             else if (SDL_MULTIGESTURE == stEvent.type)
@@ -199,12 +202,12 @@ int SDL_main(int sArgC, char *pacArgV[])
                     if (0 < stEvent.mgesture.dDist)
                     {
                         // Pinch open.
-                        dZoomLevel += 5.f * dDeltaTime;
+                        dZoomLevel += 5.f * pstVideo->dDeltaTime;
                     }
                     else
                     {
                         // Pinch close.
-                        dZoomLevel -= 5.f * dDeltaTime;
+                        dZoomLevel -= 5.f * pstVideo->dDeltaTime;
                     }
 
                     if (dZoomLevel <= dZoomLevelMin)
@@ -231,11 +234,11 @@ int SDL_main(int sArgC, char *pacArgV[])
         }
 
         // Move player entity.
-        if (bIsMoving)
+        if (bIsMoving && ! bIsCrouching)
         {
             AnimateEntity(1, pstEntity[0]);
             MoveEntityFull(
-                eDirection, 6.0, 3.0, 0, 15,
+                eDirection, 5.0f, 2.5f, 0, 15,
                 24.f,
                 0,
                 pstEntity[0]);
@@ -250,7 +253,7 @@ int SDL_main(int sArgC, char *pacArgV[])
         }
 
         // ** Game logic start **
-        // Collision detection.
+        // Set-up basic collision detection.
         if (IsOnTileOfType(
                 "Platform", pstEntity[0]->dPosX, pstEntity[0]->dPosY,
                 pstEntity[0]->u16Height, pstMap))
@@ -260,11 +263,6 @@ int SDL_main(int sArgC, char *pacArgV[])
         else
         {
             bIsOnPlatform = 0;
-        }
-
-        if (pstEntity[0]->dPosX < 0.f || pstEntity[0]->dPosX > pstMap->u16Width)
-        {
-            bIsOnPlatform = 1;
         }
 
         if (! bIsOnPlatform)
@@ -285,7 +283,7 @@ int SDL_main(int sArgC, char *pacArgV[])
         UpdateEntity(pstMap->dGravitation, pstMap->u8MeterInPixel, pstEntity[0]);
         for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
         {
-            UpdateEntity(0, 24, pstEntity[u8Index]);
+            UpdateEntity(0, pstMap->u8MeterInPixel, pstEntity[u8Index]);
         }
 
         // Follow player entity and set camera boudnaries to map size.
@@ -310,18 +308,12 @@ int SDL_main(int sArgC, char *pacArgV[])
             dBgVelocityX = pstEntity[0]->dVelocityX;
         }
 
-        if (pstEntity[0]->dPosX <= (pstEntity[0]->u16Width / 3))
-        {
-            pstEntity[0]->dPosX = (pstEntity[0]->u16Width / 3);
-        }
-
         if (pstEntity[0]->dPosY > (pstMap->u16Height + pstEntity[0]->u16Height))
         {
             ResetEntityToSpawnPosition(pstEntity[0]);
         }
 
-        // Move background vehicles.
-        for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
+        for (Uint8 u8Index = 0; u8Index <= 3; u8Index++)
         {
             ConnectHorizontalMapEndsForEntity(pstMap->u16Width, pstEntity[u8Index]);
         }
@@ -342,7 +334,7 @@ int SDL_main(int sArgC, char *pacArgV[])
 
 static Sint8 Init()
 {
-    SDL_bool bFullscreen   = 1;
+    SDL_bool bFullscreen   = 0;
     Sint8    s8ReturnValue = 0;
 
     const char *pacBgFileNames[3] = {
@@ -365,29 +357,29 @@ static Sint8 Init()
     s8ReturnValue = InitEntity(-257, 192, 264, 104, &pstEntity[1]); // Truck.
     RETURN_ON_ERROR(s8ReturnValue);
     SetDirection(LEFT, pstEntity[1]);
-    SetSpeed(5.f, 2.f, pstEntity[1]);
+    SetSpeed(3.5f, 2.f, pstEntity[1]);
     MoveEntity(pstEntity[1]);
 
     s8ReturnValue = InitEntity(1000, 300, 168, 64, &pstEntity[2]);  // Police.
     RETURN_ON_ERROR(s8ReturnValue);
     SetFrameOffset(0, 2, pstEntity[2]);
-    SetSpeed(50.f, 10.f, pstEntity[2]);
+    SetSpeed(45.f, 10.f, pstEntity[2]);
     MoveEntity(pstEntity[2]);
 
     s8ReturnValue = InitEntity(128, 150, 96, 64, &pstEntity[3]);    // Misc 1.
     RETURN_ON_ERROR(s8ReturnValue);
     SetFrameOffset(1, 3, pstEntity[3]);
-    SetSpeed(50.f, 8.f, pstEntity[2]);
+    SetSpeed(45.f, 8.f, pstEntity[2]);
     SetDirection(LEFT, pstEntity[3]);
     MoveEntity(pstEntity[3]);
 
     s8ReturnValue = InitEntity(800, 416, 96, 64, &pstEntity[4]);    // Misc 2.
     RETURN_ON_ERROR(s8ReturnValue);
     SetFrameOffset(0, 3, pstEntity[4]);
-    SetSpeed(50.f, 5.f, pstEntity[2]);
+    SetSpeed(45.f, 5.f, pstEntity[2]);
     MoveEntity(pstEntity[4]);
 
-    s8ReturnValue = InitMap("res/maps/city.tmx", "res/tilesets/city.png", 32, &pstMap);
+    s8ReturnValue = InitMap("res/maps/city.tmx", "res/tilesets/city.png", 42, &pstMap);
     SetTileAnimationSpeed(5.f, pstMap);
     RETURN_ON_ERROR(s8ReturnValue);
 
