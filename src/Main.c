@@ -343,6 +343,15 @@ static Sint8 Init()
         "res/backgrounds/city-bg2.png"
     };
 
+    const char *pacMusicFileNames[4] = {
+        "res/music/FutureAmbient_1.ogg",
+        "res/music/FutureAmbient_2.ogg",
+        "res/music/FutureAmbient_3.ogg",
+        "res/music/FutureAmbient_4.ogg"
+    };
+
+    (void)pacMusicFileNames;
+
     s8ReturnValue = InitVideo("Tau Ceti", 640, 360, 384, 216, bFullscreen, &pstVideo);
     RETURN_ON_ERROR(s8ReturnValue);
 
@@ -400,7 +409,7 @@ static Sint8 Init()
     RETURN_ON_ERROR(s8ReturnValue);
 
     s8ReturnValue = InitMusic(
-        "res/music/FutureAmbient_3.ogg", -1,
+        "res/music/FutureAmbient_2.ogg", -1,
         &pstMusic);
     RETURN_ON_ERROR(s8ReturnValue);
 
