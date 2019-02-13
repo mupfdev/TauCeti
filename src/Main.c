@@ -20,6 +20,7 @@ static Sprite     *pstSpVehicles;
 static Video      *pstVideo;
 static double      dBgVelocityX;
 static Uint32      u32PrngSeed;
+static SDL_bool    bThreadIsRunning;
 
 static Sint8 Init();
 static int   Render(void *pData);
@@ -44,6 +45,7 @@ int SDL_main(int sArgC, char *pacArgV[])
     SDL_Thread *hRenderThread;
 
     s8ReturnValue = Init();
+    bThreadIsRunning = 1;
     hRenderThread = SDL_CreateThread(Render, "RenderThread", (void *)NULL);
     if (! hRenderThread)
     {
@@ -69,6 +71,10 @@ int SDL_main(int sArgC, char *pacArgV[])
         s32WindowW    = pstVideo->s32LogicalWindowWidth;
         s32WindowH    = pstVideo->s32LogicalWindowHeight;
     }
+    else
+    {
+        bThreadIsRunning = 0;
+    }
     #endif
 
     while (bGameIsRunning)
@@ -81,7 +87,8 @@ int SDL_main(int sArgC, char *pacArgV[])
         {
             if (stEvent.type == SDL_QUIT)
             {
-                bGameIsRunning = 0;
+                bThreadIsRunning = 0;
+                bGameIsRunning   = 0;
             }
             #ifndef __ANDROID__
             else if (SDL_KEYDOWN == stEvent.type)
@@ -89,7 +96,8 @@ int SDL_main(int sArgC, char *pacArgV[])
                 switch(stEvent.key.keysym.sym)
                 {
                   case SDLK_q:
-                      bGameIsRunning = 0;
+                      bThreadIsRunning = 0;
+                      bGameIsRunning   = 0;
                       break;
                   case SDLK_LEFT:
                       eDirection = LEFT;
@@ -142,7 +150,8 @@ int SDL_main(int sArgC, char *pacArgV[])
             {
                 if (stEvent.key.keysym.sym == SDLK_AC_BACK)
                 {
-                    bGameIsRunning = 0;
+                    bThreadIsRunning = 0;
+                    bGameIsRunning   = 0;
                 }
             }
             else if (SDL_FINGERDOWN == stEvent.type)
@@ -316,6 +325,7 @@ int SDL_main(int sArgC, char *pacArgV[])
         SDL_Delay(APPROX_TIME_PER_FRAME);
     }
 
+    SDL_WaitThread(hRenderThread, NULL);
     Quit();
 
     if (-1 == s8ReturnValue)
@@ -418,8 +428,7 @@ static Sint8 Init()
 
 static int Render(void *pData)
 {
-    SDL_bool bThreadIsRunning = 1;
-    int sReturnValue          = 0;
+    int sReturnValue = 0;
     (void)pData;
 
     while (bThreadIsRunning)
@@ -461,12 +470,11 @@ static int Render(void *pData)
             pstMap,
             pstVideo->pstRenderer);
 
+        RenderScene(60, pstVideo);
         if (0 != sReturnValue)
         {
             bThreadIsRunning = 0;
         }
-
-        RenderScene(60, pstVideo);
     }
 
     return sReturnValue;
