@@ -19,9 +19,10 @@ static Sprite     *pstSpPlayer;
 static Sprite     *pstSpVehicles;
 static Video      *pstVideo;
 static double      dBgVelocityX;
+static Uint32      u32PrngSeed;
 
 static Sint8 Init();
-static Sint8 Render();
+static int   Render(void *pData);
 static void  Quit();
 
 #ifndef __ANDROID__
@@ -33,18 +34,20 @@ int SDL_main(int sArgC, char *pacArgV[])
     (void)sArgC;
     (void)pacArgV;
 #endif
-    Sint8     s8ReturnValue  = 0;
-    Direction eDirection     = LEFT;
-    SDL_bool  bGameIsRunning = 1;
-    SDL_bool  bIsOnPlatform  = 1;
-    SDL_bool  bIsCrouching   = 0;
-    SDL_bool  bIsMoving      = 0;
-    SDL_Event stEvent;
+    Sint8       s8ReturnValue  = 0;
+    Direction   eDirection     = LEFT;
+    SDL_bool    bGameIsRunning = 1;
+    SDL_bool    bIsOnPlatform  = 1;
+    SDL_bool    bIsCrouching   = 0;
+    SDL_bool    bIsMoving      = 0;
+    SDL_Event   stEvent;
+    SDL_Thread *hRenderThread;
 
     s8ReturnValue = Init();
-    s8ReturnValue = Render();
-    if (-1 == s8ReturnValue)
+    hRenderThread = SDL_CreateThread(Render, "RenderThread", (void *)NULL);
+    if (! hRenderThread)
     {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s\n", SDL_GetError());
         bGameIsRunning = 0;
     }
 
@@ -70,15 +73,6 @@ int SDL_main(int sArgC, char *pacArgV[])
 
     while (bGameIsRunning)
     {
-        // Render scene.
-        s8ReturnValue = Render();
-        RenderScene(pstVideo);
-        if (-1 == s8ReturnValue)
-        {
-            bGameIsRunning = 0;
-            continue;
-        }
-
         // Reset entity flags.
         ResetEntity(pstEntity[0]);
 
@@ -280,10 +274,10 @@ int SDL_main(int sArgC, char *pacArgV[])
         }
 
         // Update game entities.
-        UpdateEntity(pstMap->dGravitation, pstMap->u8MeterInPixel, pstEntity[0]);
+        UpdateEntity(pstVideo->dDeltaTime, pstMap->dGravitation, pstMap->u8MeterInPixel, pstEntity[0]);
         for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
         {
-            UpdateEntity(0, pstMap->u8MeterInPixel, pstEntity[u8Index]);
+            UpdateEntity(pstVideo->dDeltaTime, 0, pstMap->u8MeterInPixel, pstEntity[u8Index]);
         }
 
         // Follow player entity and set camera boudnaries to map size.
@@ -318,6 +312,8 @@ int SDL_main(int sArgC, char *pacArgV[])
             ConnectHorizontalMapEndsForEntity(pstMap->u16Width, pstEntity[u8Index]);
         }
         // ** Game logic end **
+
+        SDL_Delay(APPROX_TIME_PER_FRAME);
     }
 
     Quit();
@@ -409,7 +405,7 @@ static Sint8 Init()
     RETURN_ON_ERROR(s8ReturnValue);
 
     s8ReturnValue = InitMusic(
-        "res/music/FutureAmbient_2.ogg", -1,
+        pacMusicFileNames[Xorshift(&u32PrngSeed) % 4], -1,
         &pstMusic);
     RETURN_ON_ERROR(s8ReturnValue);
 
@@ -420,48 +416,60 @@ static Sint8 Init()
     return s8ReturnValue;
 }
 
-static Sint8 Render()
+static int Render(void *pData)
 {
-    int s8ReturnValue = 0;
+    SDL_bool bThreadIsRunning = 1;
+    int sReturnValue          = 0;
+    (void)pData;
 
-    s8ReturnValue = DrawBackground(
-        pstEntity[0]->eDirection,
-        pstVideo->s32LogicalWindowHeight,
-        pstCamera->dPosY,
-        dBgVelocityX,
-        pstVideo->pstRenderer,
-        pstBg);
-
-    for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
+    while (bThreadIsRunning)
     {
-        s8ReturnValue = DrawEntity(
-            pstEntity[u8Index],
-            pstCamera,
-            pstSpVehicles,
+        sReturnValue = DrawBackground(
+            pstEntity[0]->eDirection,
+            pstVideo->s32LogicalWindowHeight,
+            pstCamera->dPosY,
+            dBgVelocityX,
+            pstVideo->pstRenderer,
+            pstBg);
+
+        for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
+        {
+            sReturnValue = DrawEntity(
+                pstEntity[u8Index],
+                pstCamera,
+                pstSpVehicles,
+                pstVideo->pstRenderer);
+        }
+
+        sReturnValue = DrawMap(
+            0, 1, 1, "BG",
+            pstCamera->dPosX,
+            pstCamera->dPosY,
+            pstMap,
             pstVideo->pstRenderer);
+
+        sReturnValue = DrawEntity(
+            pstEntity[0],
+            pstCamera,
+            pstSpPlayer,
+            pstVideo->pstRenderer);
+
+        sReturnValue = DrawMap(
+            1, 0, 0, "FG",
+            pstCamera->dPosX,
+            pstCamera->dPosY,
+            pstMap,
+            pstVideo->pstRenderer);
+
+        if (0 != sReturnValue)
+        {
+            bThreadIsRunning = 0;
+        }
+
+        RenderScene(60, pstVideo);
     }
 
-    s8ReturnValue = DrawMap(
-        0, 1, 1, "BG",
-        pstCamera->dPosX,
-        pstCamera->dPosY,
-        pstMap,
-        pstVideo->pstRenderer);
-
-    s8ReturnValue = DrawEntity(
-        pstEntity[0],
-        pstCamera,
-        pstSpPlayer,
-        pstVideo->pstRenderer);
-
-    s8ReturnValue = DrawMap(
-        1, 0, 0, "FG",
-        pstCamera->dPosX,
-        pstCamera->dPosY,
-        pstMap,
-        pstVideo->pstRenderer);
-
-    return s8ReturnValue;
+    return sReturnValue;
 }
 
 static void Quit()
