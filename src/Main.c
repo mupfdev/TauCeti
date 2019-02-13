@@ -414,6 +414,7 @@ static Sint8 Init()
     s8ReturnValue = InitAudio(&pstAudio);
     RETURN_ON_ERROR(s8ReturnValue);
 
+    u32PrngSeed   = SDL_GetTicks();
     s8ReturnValue = InitMusic(
         pacMusicFileNames[Xorshift(&u32PrngSeed) % 4], -1,
         &pstMusic);
