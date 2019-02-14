@@ -20,11 +20,13 @@ static Sprite     *pstSpVehicles;
 static Video      *pstVideo;
 static double      dBgVelocityX;
 static Uint32      u32PrngSeed;
+static SDL_bool    bGameIsRunning;
 static SDL_bool    bThreadIsRunning;
 
-static Sint8 Init();
-static int   Render(void *pData);
-static void  Quit();
+static Sint8 Init(void);
+static Sint8 Render(void);
+static int   UpdateWorld(void *pData);
+static void  Quit(void);
 
 #ifndef __ANDROID__
 int main()
@@ -36,22 +38,190 @@ int SDL_main(int sArgC, char *pacArgV[])
     (void)pacArgV;
 #endif
     Sint8       s8ReturnValue  = 0;
-    Direction   eDirection     = LEFT;
-    SDL_bool    bGameIsRunning = 1;
-    SDL_bool    bIsOnPlatform  = 1;
-    SDL_bool    bIsCrouching   = 0;
-    SDL_bool    bIsMoving      = 0;
-    SDL_Event   stEvent;
-    SDL_Thread *hRenderThread;
+    SDL_Thread *hUpdateWorldThread;
 
     s8ReturnValue = Init();
-    bThreadIsRunning = 1;
-    hRenderThread = SDL_CreateThread(Render, "RenderThread", (void *)NULL);
-    if (! hRenderThread)
+    if (0 == s8ReturnValue)
     {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s\n", SDL_GetError());
+        bGameIsRunning     = 1;
+        bThreadIsRunning   = 1;
+        hUpdateWorldThread = SDL_CreateThread(UpdateWorld, "UpdateWorldThread", (void *)NULL);
+        if (! hUpdateWorldThread)
+        {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s\n", SDL_GetError());
+            bGameIsRunning = 0;
+        }
+    }
+    else
+    {
         bGameIsRunning = 0;
     }
+
+    while (bGameIsRunning)
+    {
+        s8ReturnValue = Render();
+        if (s8ReturnValue != 0)
+        {
+            bGameIsRunning = 0;
+            continue;
+        }
+    }
+
+    SDL_WaitThread(hUpdateWorldThread, NULL);
+    Quit();
+
+    if (-1 == s8ReturnValue)
+    {
+        return EXIT_FAILURE;
+    }
+    else
+    {
+        return EXIT_SUCCESS;
+    }
+}
+
+static Sint8 Init(void)
+{
+    SDL_bool bFullscreen   = 0;
+    Sint8    s8ReturnValue = 0;
+
+    const char *pacBgFileNames[3] = {
+        "res/backgrounds/city-bg0.png",
+        "res/backgrounds/city-bg1.png",
+        "res/backgrounds/city-bg2.png"
+    };
+
+    const char *pacMusicFileNames[4] = {
+        "res/music/FutureAmbient_1.ogg",
+        "res/music/FutureAmbient_2.ogg",
+        "res/music/FutureAmbient_3.ogg",
+        "res/music/FutureAmbient_4.ogg"
+    };
+
+    (void)pacMusicFileNames;
+
+    s8ReturnValue = InitVideo("Tau Ceti", 640, 360, 384, 216, bFullscreen, &pstVideo);
+    RETURN_ON_ERROR(s8ReturnValue);
+
+    s8ReturnValue = InitCamera(&pstCamera);
+    RETURN_ON_ERROR(s8ReturnValue);
+
+    s8ReturnValue = InitEntity(112, 192, 64, 64, &pstEntity[0]);
+    SetSpawnPosition(112, 192, pstEntity[0]);
+    RETURN_ON_ERROR(s8ReturnValue);
+
+    // Set up background vehicles.
+    s8ReturnValue = InitEntity(-257, 192, 264, 104, &pstEntity[1]); // Truck.
+    RETURN_ON_ERROR(s8ReturnValue);
+    SetDirection(LEFT, pstEntity[1]);
+    SetSpeed(3.5f, 2.f, pstEntity[1]);
+    MoveEntity(pstEntity[1]);
+
+    s8ReturnValue = InitEntity(1000, 300, 168, 64, &pstEntity[2]);  // Police.
+    RETURN_ON_ERROR(s8ReturnValue);
+    SetFrameOffset(0, 2, pstEntity[2]);
+    SetSpeed(45.f, 10.f, pstEntity[2]);
+    MoveEntity(pstEntity[2]);
+
+    s8ReturnValue = InitEntity(128, 150, 96, 64, &pstEntity[3]);    // Misc 1.
+    RETURN_ON_ERROR(s8ReturnValue);
+    SetFrameOffset(1, 3, pstEntity[3]);
+    SetSpeed(45.f, 8.f, pstEntity[2]);
+    SetDirection(LEFT, pstEntity[3]);
+    MoveEntity(pstEntity[3]);
+
+    s8ReturnValue = InitEntity(800, 416, 96, 64, &pstEntity[4]);    // Misc 2.
+    RETURN_ON_ERROR(s8ReturnValue);
+    SetFrameOffset(0, 3, pstEntity[4]);
+    SetSpeed(45.f, 5.f, pstEntity[2]);
+    MoveEntity(pstEntity[4]);
+
+    s8ReturnValue = InitMap("res/maps/city.tmx", "res/tilesets/city.png", 42, &pstMap);
+    SetTileAnimationSpeed(5.f, pstMap);
+    RETURN_ON_ERROR(s8ReturnValue);
+
+    s8ReturnValue = InitBackground(
+        3, pacBgFileNames, pstVideo->s32WindowWidth, BOTTOM,
+        pstVideo->pstRenderer, &pstBg);
+    RETURN_ON_ERROR(s8ReturnValue);
+
+    s8ReturnValue = InitSprite(
+        "res/sprites/player.png", 1536, 128, 0, 0, &pstSpPlayer, pstVideo->pstRenderer);
+    RETURN_ON_ERROR(s8ReturnValue);
+
+    s8ReturnValue = InitSprite(
+        "res/sprites/vehicles.png", 264, 256, 0, 0, &pstSpVehicles, pstVideo->pstRenderer);
+    RETURN_ON_ERROR(s8ReturnValue);
+
+    s8ReturnValue = InitAudio(&pstAudio);
+    RETURN_ON_ERROR(s8ReturnValue);
+
+    u32PrngSeed   = SDL_GetTicks();
+    s8ReturnValue = InitMusic(
+        pacMusicFileNames[Xorshift(&u32PrngSeed) % 4], -1,
+        &pstMusic);
+    RETURN_ON_ERROR(s8ReturnValue);
+
+    LockCamera(pstCamera);
+    PlayMusic(2000, pstMusic);
+    SetFrameOffset(0, 0, pstEntity[0]);
+
+    return s8ReturnValue;
+}
+
+static Sint8 Render(void)
+{
+    Sint8 s8ReturnValue = 0;
+
+    s8ReturnValue = DrawBackground(
+        pstEntity[0]->eDirection,
+        pstVideo->s32LogicalWindowHeight,
+        pstCamera->dPosY,
+        dBgVelocityX,
+        pstVideo->pstRenderer,
+        pstBg);
+
+    for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
+    {
+        s8ReturnValue = DrawEntity(
+            pstEntity[u8Index],
+            pstCamera,
+            pstSpVehicles,
+            pstVideo->pstRenderer);
+    }
+
+    s8ReturnValue = DrawMap(
+        0, 1, 1, "BG",
+        pstCamera->dPosX,
+        pstCamera->dPosY,
+        pstMap,
+        pstVideo->pstRenderer);
+
+    s8ReturnValue = DrawEntity(
+        pstEntity[0],
+        pstCamera,
+        pstSpPlayer,
+        pstVideo->pstRenderer);
+
+    s8ReturnValue = DrawMap(
+        1, 0, 0, "FG",
+        pstCamera->dPosX,
+        pstCamera->dPosY,
+        pstMap,
+        pstVideo->pstRenderer);
+
+    RenderScene(pstVideo);
+    return s8ReturnValue;
+}
+
+static int UpdateWorld(void *pData)
+{
+    Direction eDirection     = LEFT;
+    SDL_bool  bIsOnPlatform  = 1;
+    SDL_bool  bIsCrouching   = 0;
+    SDL_bool  bIsMoving      = 0;
+    SDL_Event stEvent;
+    (void)pData;
 
     #ifdef __ANDROID__
     double dZoomLevel;
@@ -77,12 +247,12 @@ int SDL_main(int sArgC, char *pacArgV[])
     }
     #endif
 
-    while (bGameIsRunning)
+    while (bThreadIsRunning)
     {
         // Reset entity flags.
         ResetEntity(pstEntity[0]);
 
-        // Handle events.
+        // Handle SDL events.
         while(SDL_PollEvent(&stEvent) != 0)
         {
             if (stEvent.type == SDL_QUIT)
@@ -255,7 +425,6 @@ int SDL_main(int sArgC, char *pacArgV[])
             SetAnimation(22, 22, 0.f, pstEntity[0]);
         }
 
-        // ** Game logic start **
         // Set-up basic collision detection.
         if (IsOnTileOfType(
                 "Platform", pstEntity[0]->dPosX, pstEntity[0]->dPosY,
@@ -297,11 +466,11 @@ int SDL_main(int sArgC, char *pacArgV[])
             pstCamera);
 
         if (SetCameraBoundariesToMapSize(
-            pstVideo->s32LogicalWindowWidth,
-            pstVideo->s32LogicalWindowHeight,
-            pstMap->u16Width,
-            pstMap->u16Height,
-            pstCamera))
+                pstVideo->s32LogicalWindowWidth,
+                pstVideo->s32LogicalWindowHeight,
+                pstMap->u16Width,
+                pstMap->u16Height,
+                pstCamera))
         {
             // Do not move background when camera hits boundaries.
             dBgVelocityX = 0;
@@ -320,168 +489,14 @@ int SDL_main(int sArgC, char *pacArgV[])
         {
             ConnectHorizontalMapEndsForEntity(pstMap->u16Width, pstEntity[u8Index]);
         }
-        // ** Game logic end **
 
         SDL_Delay(APPROX_TIME_PER_FRAME);
     }
 
-    SDL_WaitThread(hRenderThread, NULL);
-    Quit();
-
-    if (-1 == s8ReturnValue)
-    {
-        return EXIT_FAILURE;
-    }
-    else
-    {
-        return EXIT_SUCCESS;
-    }
+    return 0;
 }
 
-static Sint8 Init()
-{
-    SDL_bool bFullscreen   = 0;
-    Sint8    s8ReturnValue = 0;
-
-    const char *pacBgFileNames[3] = {
-        "res/backgrounds/city-bg0.png",
-        "res/backgrounds/city-bg1.png",
-        "res/backgrounds/city-bg2.png"
-    };
-
-    const char *pacMusicFileNames[4] = {
-        "res/music/FutureAmbient_1.ogg",
-        "res/music/FutureAmbient_2.ogg",
-        "res/music/FutureAmbient_3.ogg",
-        "res/music/FutureAmbient_4.ogg"
-    };
-
-    (void)pacMusicFileNames;
-
-    s8ReturnValue = InitVideo("Tau Ceti", 640, 360, 384, 216, bFullscreen, &pstVideo);
-    RETURN_ON_ERROR(s8ReturnValue);
-
-    s8ReturnValue = InitCamera(&pstCamera);
-    RETURN_ON_ERROR(s8ReturnValue);
-
-    s8ReturnValue = InitEntity(112, 192, 64, 64, &pstEntity[0]);
-    SetSpawnPosition(112, 192, pstEntity[0]);
-    RETURN_ON_ERROR(s8ReturnValue);
-
-    // Set up background vehicles.
-    s8ReturnValue = InitEntity(-257, 192, 264, 104, &pstEntity[1]); // Truck.
-    RETURN_ON_ERROR(s8ReturnValue);
-    SetDirection(LEFT, pstEntity[1]);
-    SetSpeed(3.5f, 2.f, pstEntity[1]);
-    MoveEntity(pstEntity[1]);
-
-    s8ReturnValue = InitEntity(1000, 300, 168, 64, &pstEntity[2]);  // Police.
-    RETURN_ON_ERROR(s8ReturnValue);
-    SetFrameOffset(0, 2, pstEntity[2]);
-    SetSpeed(45.f, 10.f, pstEntity[2]);
-    MoveEntity(pstEntity[2]);
-
-    s8ReturnValue = InitEntity(128, 150, 96, 64, &pstEntity[3]);    // Misc 1.
-    RETURN_ON_ERROR(s8ReturnValue);
-    SetFrameOffset(1, 3, pstEntity[3]);
-    SetSpeed(45.f, 8.f, pstEntity[2]);
-    SetDirection(LEFT, pstEntity[3]);
-    MoveEntity(pstEntity[3]);
-
-    s8ReturnValue = InitEntity(800, 416, 96, 64, &pstEntity[4]);    // Misc 2.
-    RETURN_ON_ERROR(s8ReturnValue);
-    SetFrameOffset(0, 3, pstEntity[4]);
-    SetSpeed(45.f, 5.f, pstEntity[2]);
-    MoveEntity(pstEntity[4]);
-
-    s8ReturnValue = InitMap("res/maps/city.tmx", "res/tilesets/city.png", 42, &pstMap);
-    SetTileAnimationSpeed(5.f, pstMap);
-    RETURN_ON_ERROR(s8ReturnValue);
-
-    s8ReturnValue = InitBackground(
-        3, pacBgFileNames, pstVideo->s32WindowWidth, BOTTOM,
-        pstVideo->pstRenderer, &pstBg);
-    RETURN_ON_ERROR(s8ReturnValue);
-
-    s8ReturnValue = InitSprite(
-        "res/sprites/player.png", 1536, 128, 0, 0, &pstSpPlayer, pstVideo->pstRenderer);
-    RETURN_ON_ERROR(s8ReturnValue);
-
-    s8ReturnValue = InitSprite(
-        "res/sprites/vehicles.png", 264, 256, 0, 0, &pstSpVehicles, pstVideo->pstRenderer);
-    RETURN_ON_ERROR(s8ReturnValue);
-
-    s8ReturnValue = InitAudio(&pstAudio);
-    RETURN_ON_ERROR(s8ReturnValue);
-
-    u32PrngSeed   = SDL_GetTicks();
-    s8ReturnValue = InitMusic(
-        pacMusicFileNames[Xorshift(&u32PrngSeed) % 4], -1,
-        &pstMusic);
-    RETURN_ON_ERROR(s8ReturnValue);
-
-    LockCamera(pstCamera);
-    PlayMusic(2000, pstMusic);
-    SetFrameOffset(0, 0, pstEntity[0]);
-
-    return s8ReturnValue;
-}
-
-static int Render(void *pData)
-{
-    int sReturnValue = 0;
-    (void)pData;
-
-    while (bThreadIsRunning)
-    {
-        sReturnValue = DrawBackground(
-            pstEntity[0]->eDirection,
-            pstVideo->s32LogicalWindowHeight,
-            pstCamera->dPosY,
-            dBgVelocityX,
-            pstVideo->pstRenderer,
-            pstBg);
-
-        for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
-        {
-            sReturnValue = DrawEntity(
-                pstEntity[u8Index],
-                pstCamera,
-                pstSpVehicles,
-                pstVideo->pstRenderer);
-        }
-
-        sReturnValue = DrawMap(
-            0, 1, 1, "BG",
-            pstCamera->dPosX,
-            pstCamera->dPosY,
-            pstMap,
-            pstVideo->pstRenderer);
-
-        sReturnValue = DrawEntity(
-            pstEntity[0],
-            pstCamera,
-            pstSpPlayer,
-            pstVideo->pstRenderer);
-
-        sReturnValue = DrawMap(
-            1, 0, 0, "FG",
-            pstCamera->dPosX,
-            pstCamera->dPosY,
-            pstMap,
-            pstVideo->pstRenderer);
-
-        RenderScene(60, pstVideo);
-        if (0 != sReturnValue)
-        {
-            bThreadIsRunning = 0;
-        }
-    }
-
-    return sReturnValue;
-}
-
-static void Quit()
+static void Quit(void)
 {
     FreeMusic(pstMusic);
     FreeAudio(pstAudio);
