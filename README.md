@@ -19,8 +19,7 @@ An Android version is available on Google Play:
 
 To play the game using the touch screen, simply hold your finger in the
 direction you want to go.  To jump, swipe your finger up and to crouch,
-hold your finger on the bottom of the screen.  You can also zoom in and
-out using a pinch gesture.
+hold your finger on the bottom of the screen.
 
 ```
 F:       toggle fullscreen
