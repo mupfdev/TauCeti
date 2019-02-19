@@ -8,9 +8,6 @@
 
 #include <SDL.h>
 #include "EventHandler.h"
-#ifdef __ANDROID__
-#include "Resources.h"
-#endif
 
 void FreeEvents(Events *pstEvents)
 {

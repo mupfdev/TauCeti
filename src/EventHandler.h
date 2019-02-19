@@ -8,9 +8,6 @@
 
 #include <SDL.h>
 #include <eszfw.h>
-#ifdef __ANDROID__
-#include "Resources.h"
-#endif
 
 typedef struct Events_t
 {
