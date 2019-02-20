@@ -56,8 +56,8 @@ int SDL_main(int sArgC, char *pacArgV[])
 
     if (-1 == s8ReturnValue)
     {
-        return EXIT_FAILURE;
+        return 1;
     }
 
-    return EXIT_SUCCESS;
+    return 0;
 }
