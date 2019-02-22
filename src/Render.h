@@ -10,5 +10,6 @@
 #include "Resources.h"
 
 Sint8 Render(Res *pstRes);
+void UpdateZoomLevel(Res *pstRes);
 
 #endif // _RENDER_H_

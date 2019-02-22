@@ -11,6 +11,7 @@
 
 int UpdateWorld(void *pData); // Main thread.
 void DetectCollisions(Events *pstEvents, Res *pstRes);
+void UpdateCamera(Res *pstRes);
 void UpdateEntities(Events *pstEvents, Res *pstR);
 
 #endif // _WORLD_H_

@@ -55,3 +55,25 @@ Sint8 Render(Res *pstRes)
     RenderScene(pstRes->pstVideo);
     return s8ReturnValue;
 }
+
+void UpdateZoomLevel(Res *pstRes)
+{
+    // Set zoom level dynamically in relation to vertical velocity.
+    if (0.0 < pstRes->pstEntity[0]->dVelocityY)
+    {
+        pstRes->pstVideo->dZoomLevel -= pstRes->pstVideo->dDeltaTime / 5.f;
+        if (1.0 > pstRes->pstVideo->dZoomLevel)
+        {
+            pstRes->pstVideo->dZoomLevel = 1;
+        }
+    }
+    else
+    {
+        pstRes->pstVideo->dZoomLevel += pstRes->pstVideo->dDeltaTime / 1.75f;
+        if (pstRes->pstVideo->dZoomLevel > pstRes->pstVideo->dInitialZoomLevel)
+        {
+            pstRes->pstVideo->dZoomLevel = pstRes->pstVideo->dInitialZoomLevel;
+        }
+    }
+    SetZoomLevel(pstRes->pstVideo->dZoomLevel, pstRes->pstVideo);
+}

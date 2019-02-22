@@ -18,8 +18,7 @@ int main()
 #else
 int SDL_main(int sArgC, char *pacArgV[])
 {
-    (void)sArgC;
-    (void)pacArgV;
+    (void)sArgC; (void)pacArgV;
 #endif
     Res         stRes          = { 0 };
     Sint8       s8ReturnValue  = 0;
@@ -42,6 +41,7 @@ int SDL_main(int sArgC, char *pacArgV[])
 
     while (stRes.bGameIsRunning)
     {
+        UpdateZoomLevel(&stRes);
         s8ReturnValue = Render(&stRes);
         if (s8ReturnValue != 0)
         {

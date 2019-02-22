@@ -48,41 +48,8 @@ int UpdateWorld(void *pData)
             LockCamera(pstRes->pstCamera);
         }
 
-        // Update game entities.
         UpdateEntities(pstEvents, pstRes);
-
-        // Follow player entity and set camera boudnaries to map size.
-        SetCameraTargetEntity(
-            pstRes->pstVideo->s32LogicalWindowWidth,
-            pstRes->pstVideo->s32LogicalWindowHeight,
-            pstRes->pstEntity[0],
-            pstRes->pstCamera);
-
-        if (SetCameraBoundariesToMapSize(
-                pstRes->pstVideo->s32LogicalWindowWidth,
-                pstRes->pstVideo->s32LogicalWindowHeight,
-                pstRes->pstMap->u16Width,
-                pstRes->pstMap->u16Height,
-                pstRes->pstCamera))
-        {
-            // Do not move background when camera hits boundaries.
-            pstRes->dBgVelocityX = 0;
-        }
-        else
-        {
-            pstRes->dBgVelocityX = pstRes->pstEntity[0]->dVelocityX;
-        }
-
-        // Do not move background when camera is locked.
-        if (! IsCameraLocked(pstRes->pstCamera))
-        {
-            pstRes->dBgVelocityX = 0;
-        }
-
-        for (Uint8 u8Index = 0; u8Index <= 3; u8Index++)
-        {
-            ConnectHorizontalMapEndsForEntity(pstRes->pstMap->u16Width, pstRes->pstEntity[u8Index]);
-        }
+        UpdateCamera(pstRes);
 
         SDL_Delay(APPROX_TIME_PER_FRAME);
     }
@@ -118,6 +85,38 @@ void DetectCollisions(Events *pstEvents, Res *pstRes)
         DropEntity(pstRes->pstEntity[0]);
     }
 }
+
+void UpdateCamera(Res *pstRes)
+{
+    // Follow player entity and set camera boudnaries to map size.
+    SetCameraTargetEntity(
+        pstRes->pstVideo->s32LogicalWindowWidth,
+        pstRes->pstVideo->s32LogicalWindowHeight,
+        pstRes->pstEntity[0],
+        pstRes->pstCamera);
+
+    if (SetCameraBoundariesToMapSize(
+            pstRes->pstVideo->s32LogicalWindowWidth,
+            pstRes->pstVideo->s32LogicalWindowHeight,
+            pstRes->pstMap->u16Width,
+            pstRes->pstMap->u16Height,
+            pstRes->pstCamera))
+    {
+        // Do not move background when camera hits boundaries.
+        pstRes->dBgVelocityX = 0;
+    }
+    else
+    {
+        pstRes->dBgVelocityX = pstRes->pstEntity[0]->dVelocityX;
+    }
+
+    // Do not move background when camera is locked.
+    if (! IsCameraLocked(pstRes->pstCamera))
+    {
+        pstRes->dBgVelocityX = 0;
+    }
+}
+
 
 void UpdateEntities(Events *pstEvents, Res *pstRes)
 {
@@ -192,5 +191,10 @@ void UpdateEntities(Events *pstEvents, Res *pstRes)
     if (pstRes->pstEntity[0]->dPosY > (pstRes->pstMap->u16Height + pstRes->pstEntity[0]->u16Height))
     {
         ResetEntityToSpawnPosition(pstRes->pstEntity[0]);
+    }
+
+    for (Uint8 u8Index = 0; u8Index <= 3; u8Index++)
+    {
+        ConnectHorizontalMapEndsForEntity(pstRes->pstMap->u16Width, pstRes->pstEntity[u8Index]);
     }
 }
