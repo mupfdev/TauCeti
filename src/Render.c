@@ -58,10 +58,12 @@ Sint8 Render(Res *pstRes)
 
 void UpdateZoomLevel(Res *pstRes)
 {
+    double dTime = (double)APPROX_TIME_PER_FRAME / (double)TIME_FACTOR;
+
     // Set zoom level dynamically in relation to vertical velocity.
     if (0.0 < pstRes->pstEntity[0]->dVelocityY)
     {
-        pstRes->pstVideo->dZoomLevel -= pstRes->pstVideo->dDeltaTime / 5.f;
+        pstRes->pstVideo->dZoomLevel -= dTime / 5.f;
         if (1.0 > pstRes->pstVideo->dZoomLevel)
         {
             pstRes->pstVideo->dZoomLevel = 1;
@@ -69,7 +71,7 @@ void UpdateZoomLevel(Res *pstRes)
     }
     else
     {
-        pstRes->pstVideo->dZoomLevel += pstRes->pstVideo->dDeltaTime / 1.75f;
+        pstRes->pstVideo->dZoomLevel += dTime / 1.75f;
         if (pstRes->pstVideo->dZoomLevel > pstRes->pstVideo->dInitialZoomLevel)
         {
             pstRes->pstVideo->dZoomLevel = pstRes->pstVideo->dInitialZoomLevel;
