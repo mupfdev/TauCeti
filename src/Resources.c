@@ -7,7 +7,7 @@
  */
 
 #include <SDL.h>
-#include <eszfw.h>
+#include <eszFW.h>
 #include "Resources.h"
 
 void Free(Res *pstRes)

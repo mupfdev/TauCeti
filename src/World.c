@@ -7,7 +7,7 @@
  */
 
 #include <SDL.h>
-#include <eszfw.h>
+#include <eszFW.h>
 #include "EventHandler.h"
 #include "Resources.h"
 #include "World.h"
@@ -116,7 +116,6 @@ void UpdateCamera(Res *pstRes)
         pstRes->dBgVelocityX = 0;
     }
 }
-
 
 void UpdateEntities(Events *pstEvents, Res *pstRes)
 {

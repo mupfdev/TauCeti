@@ -7,7 +7,7 @@
  */
 
 #include <SDL.h>
-#include <eszfw.h>
+#include <eszFW.h>
 #include "Render.h"
 #include "Resources.h"
 #include "World.h"

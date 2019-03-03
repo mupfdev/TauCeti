@@ -7,7 +7,7 @@
 #define _EVENT_HANDLER_H_
 
 #include <SDL.h>
-#include <eszfw.h>
+#include <eszFW.h>
 
 typedef struct Events_t
 {

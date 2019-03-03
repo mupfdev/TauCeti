@@ -7,7 +7,7 @@
 #define _RESOURCES_H_
 
 #include <SDL.h>
-#include <eszfw.h>
+#include <eszFW.h>
 
 typedef struct Res_t
 {
