@@ -13,11 +13,13 @@ typedef struct Res_t
 {
     SDL_bool    bGameIsRunning;
     SDL_bool    bThreadIsRunning;
+    SDL_bool    bShowMessage;
 
     Audio      *pstAudio;
     Background *pstBg;
     Camera     *pstCamera;
     Entity     *pstEntity[5];
+    Font       *pstFont;
     Map        *pstMap;
     Music      *pstMusic;
     Sprite     *pstSpPlayer;
@@ -26,6 +28,7 @@ typedef struct Res_t
 
     double      dBgVelocityX;
     Uint32      u32PrngSeed;
+    char        acMessage[OBJECT_NAME_LEN];
 } Res;
 
 void Free(Res *pstRes);

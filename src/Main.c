@@ -6,6 +6,10 @@
  * @copyright "THE BEER-WARE LICENCE" (Revision 42)
  */
 
+#ifdef _WIN32
+#define SDL_MAIN_HANDLED
+#endif
+
 #include <SDL.h>
 #include <eszFW.h>
 #include "Render.h"
@@ -43,6 +47,7 @@ int SDL_main(int sArgC, char *pacArgV[])
     {
         UpdateZoomLevel(&stRes);
         s8ReturnValue = Render(&stRes);
+
         if (s8ReturnValue != 0)
         {
             stRes.bGameIsRunning = 0;

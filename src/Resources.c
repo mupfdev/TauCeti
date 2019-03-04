@@ -24,6 +24,7 @@ void Free(Res *pstRes)
         FreeEntity(pstRes->pstEntity[u8Index]);
     }
 
+    FreeFont(pstRes->pstFont);
     FreeCamera(pstRes->pstCamera);
     FreeVideo(pstRes->pstVideo);
 }
@@ -32,6 +33,8 @@ Sint8 Init(Res *pstRes)
 {
     SDL_bool bFullscreen   = 0;
     Sint8    s8ReturnValue = 0;
+    double   dPlayerSpawnX = 0.f;
+    double   dPlayerSpawnY = 0.f;
 
     const char *pacBgFileNames[3] = {
         "res/backgrounds/city-bg0.png",
@@ -52,9 +55,12 @@ Sint8 Init(Res *pstRes)
     s8ReturnValue = InitCamera(&pstRes->pstCamera);
     if (-1 == s8ReturnValue) { return s8ReturnValue; };
 
-    s8ReturnValue = InitEntity(112, 192, 64, 64, &pstRes->pstEntity[0]);
+    s8ReturnValue = InitFont("res/fonts/samus.ttf", &pstRes->pstFont);
     if (-1 == s8ReturnValue) { return s8ReturnValue; };
-    SetSpawnPosition(112, 192, pstRes->pstEntity[0]);
+    SetFontColour(0xff, 0xff, 0xff, pstRes->pstFont);
+
+    s8ReturnValue = InitEntity(0, 0, 64, 64, &pstRes->pstEntity[0]);
+    if (-1 == s8ReturnValue) { return s8ReturnValue; };
 
     // Set up background vehicles.
     s8ReturnValue = InitEntity(-257, 192, 264, 104, &pstRes->pstEntity[1]); // Truck.
@@ -85,6 +91,20 @@ Sint8 Init(Res *pstRes)
     s8ReturnValue = InitMap("res/maps/city.tmx", "res/tilesets/city.png", 42, &pstRes->pstMap);
     SetTileAnimationSpeed(5.f, pstRes->pstMap);
     if (-1 == s8ReturnValue) { return s8ReturnValue; };
+
+    for (Uint16 u16Index = 0; u16Index < pstRes->pstMap->u16ObjectCount; u16Index++)
+    {
+        Object *pstObject = &pstRes->pstMap->astObject[u16Index];
+
+        if (IsObjectOfType("PlayerSpawn", pstObject))
+        {
+            dPlayerSpawnX = (double)pstObject->u32PosX;
+            dPlayerSpawnY = (double)pstObject->u32PosY;
+            break;
+        }
+    }
+    SetPosition(dPlayerSpawnX, dPlayerSpawnY, pstRes->pstEntity[0]);
+    SetSpawnPosition(dPlayerSpawnX, dPlayerSpawnY, pstRes->pstEntity[0]);
 
     s8ReturnValue = InitBackground(
         3, pacBgFileNames, pstRes->pstVideo->s32WindowWidth, BOTTOM,

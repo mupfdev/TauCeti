@@ -3,15 +3,17 @@ PROJECT=TauCeti
 ifeq ($(OS),Windows_NT)
 	OUT=$(PROJECT).exe
 	TOOLCHAIN=i686-w64-mingw32
-	CC=$(TOOLCHAIN)-cc
+	CC=$(TOOLCHAIN)-gcc
 	LIBESZFW=external/eszFW/lib/libeszFW.lib
 	LIBTMX=external/eszFW/lib/libtmx.lib
+	INCPATH=/mingw32/include
 else
 	OUT=$(PROJECT)
 	TOOLCHAIN=local
 	UNAME_S := $(shell uname -s)
 	LIBESZFW=external/eszFW/lib/libeszFW.a
 	LIBTMX=external/eszFW/lib/libtmx.a
+	INCPATH=/usr/include
 endif
 
 LIBS=\
@@ -26,8 +28,8 @@ CFLAGS=\
 	-DWANT_ZLIB\
 	-Iexternal/eszFW/src\
 	-Iexternal/eszFW/external/tmx/src\
-	-isystem /usr/$(TOOLCHAIN)/include/libxml2\
-	-isystem /usr/$(TOOLCHAIN)/include/SDL2\
+	-isystem $(INCPATH)/libxml2\
+	-isystem $(INCPATH)/include/SDL2\
 	-O2\
 	-pedantic-errors\
 	-std=c99\

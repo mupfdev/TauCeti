@@ -171,6 +171,42 @@ void UpdateEntities(Events *pstEvents, Res *pstRes)
     // Collision detecion.
     DetectCollisions(pstEvents, pstRes);
 
+    // Process map objects.
+    for (Uint16 u16Index = 0; u16Index < pstRes->pstMap->u16ObjectCount; u16Index++)
+    {
+        Object *pstObject = &pstRes->pstMap->astObject[u16Index];
+        AABB    stBB      = pstObject->stBB;
+
+        #ifdef __ANDROID__
+        if (IsObjectOfType("AndroidMsg", pstObject))
+        {
+            if (BoxesDoIntersect(pstRes->pstEntity[0]->stBB, stBB))
+            {
+                SDL_strlcpy(pstRes->acMessage, GetObjectName(pstObject), OBJECT_NAME_LEN - 1);
+                pstRes->bShowMessage = 1;
+                break;
+            }
+            else
+            {
+                pstRes->bShowMessage = 0;
+            }
+        }
+        #endif
+        if (IsObjectOfType("GenericMsg", pstObject))
+        {
+            if (BoxesDoIntersect(pstRes->pstEntity[0]->stBB, stBB))
+            {
+                SDL_strlcpy(pstRes->acMessage, GetObjectName(pstObject), OBJECT_NAME_LEN - 1);
+                pstRes->bShowMessage = 1;
+                break;
+            }
+            else
+            {
+                pstRes->bShowMessage = 0;
+            }
+        }
+    }
+
     // Update entity state.
     UpdateEntity(
         pstRes->pstVideo->dDeltaTime,

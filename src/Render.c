@@ -52,6 +52,15 @@ Sint8 Render(Res *pstRes)
         pstRes->pstMap,
         pstRes->pstVideo->pstRenderer);
 
+    if (pstRes->bShowMessage)
+    {
+        Sint32 s32PosX = (Sint32)(pstRes->pstEntity[0]->dPosX - pstRes->pstCamera->dPosX);
+        Sint32 s32PosY = (Sint32)(pstRes->pstEntity[0]->dPosY - pstRes->pstCamera->dPosY);
+        s32PosY       += pstRes->pstEntity[0]->u16Height / 4;
+
+        PrintText(pstRes->acMessage, s32PosX, s32PosY, pstRes->pstFont, pstRes->pstVideo->pstRenderer);
+    }
+
     RenderScene(pstRes->pstVideo);
     return s8ReturnValue;
 }

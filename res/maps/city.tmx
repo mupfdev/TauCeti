@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="75" height="25" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextobjectid="7">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="75" height="25" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextobjectid="14">
  <properties>
   <property name="Gravitation" type="float" value="9.80665"/>
  </properties>
@@ -25,14 +25,13 @@
   </data>
  </layer>
  <objectgroup name="Object Layer 1">
-  <object id="1" name="Player" type="PlayerSpawn" x="112" y="192">
+  <object id="1" name="Player" type="PlayerSpawn" x="32" y="192">
    <point/>
   </object>
-  <object id="2" name="Enemy" type="EnemySpawn" x="240" y="64">
-   <point/>
-  </object>
-  <object id="6" name="Enemy" type="EnemySpawn" x="112" y="272">
-   <point/>
-  </object>
+  <object id="12" name="Nice jump!" type="GenericMsg" x="1072" y="144" width="80" height="64"/>
+  <object id="7" name="Swipe up to jump" type="AndroidMsg" x="128" y="160" width="48" height="48"/>
+  <object id="8" name="Touch the screen to walk around" type="AndroidMsg" x="16" y="160" width="48" height="48"/>
+  <object id="11" name="Touch the lower screen to crouch" type="AndroidMsg" x="224" y="112" width="48" height="48"/>
+  <object id="13" name="Crouch and swipe down to fall trough" type="AndroidMsg" x="416" y="96" width="64" height="64"/>
  </objectgroup>
 </map>
