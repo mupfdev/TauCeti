@@ -29,7 +29,7 @@ CFLAGS=\
 	-Iexternal/eszFW/src\
 	-Iexternal/eszFW/external/tmx/src\
 	-isystem $(INCPATH)/libxml2\
-	-isystem $(INCPATH)/include/SDL2\
+	-isystem $(INCPATH)/SDL2\
 	-O2\
 	-pedantic-errors\
 	-std=c99\
