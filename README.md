@@ -1,5 +1,7 @@
 # Tau Ceti
 
+[![Build status](https://ci.appveyor.com/api/projects/status/tdq0ucj0wqtso8gy?svg=true)](https://ci.appveyor.com/project/mupfelofen-de/tauceti)
+
 ## About
 
 Tau Ceti will be a cross-platform 2D sci-fi platformer game written in C
