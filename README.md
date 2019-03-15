@@ -1,7 +1,5 @@
 # Tau Ceti
 
-## Continuous Integration
-
 [![Build status](https://ci.appveyor.com/api/projects/status/hg87r0evoqu6lfgr?svg=true)](https://ci.appveyor.com/project/mupfelofen-de/tauceti)
 
 ## About
