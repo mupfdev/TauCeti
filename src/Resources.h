@@ -3,9 +3,7 @@
  * @ingroup Resources
  */
 
-#ifndef _RESOURCES_H_
-#define _RESOURCES_H_
-
+#pragma once
 #include <SDL.h>
 #include <eszFW.h>
 
@@ -33,5 +31,3 @@ typedef struct Res_t
 
 void Free(Res *pstRes);
 Sint8 Init(Res *pstRes);
-
-#endif // _RESOURCES_H_

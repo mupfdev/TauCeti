@@ -16,3 +16,5 @@ FILE(GLOB TauCeti_SRCS src/*.c)
 add_executable(TauCeti ${TauCeti_SRCS})
 target_link_libraries(TauCeti eszFW)
 target_compile_options(TauCeti PRIVATE -pedantic-errors -Wall -Werror -Wextra)
+
+set_property(TARGET TauCeti PROPERTY INTERPROCEDURAL_OPTIMIZATION True)

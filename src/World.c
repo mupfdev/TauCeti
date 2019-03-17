@@ -171,7 +171,38 @@ void UpdateEntities(Events *pstEvents, Res *pstRes)
     // Collision detecion.
     DetectCollisions(pstEvents, pstRes);
 
-    // Process map objects.
+    // Update map objects.
+    UpdateMapObjects(pstRes);
+
+    // Update entity state.
+    UpdateEntity(
+        pstRes->pstVideo->dDeltaTime,
+        pstRes->pstMap->dGravitation,
+        pstRes->pstMap->u8MeterInPixel,
+        pstRes->pstEntity[0]);
+
+    for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
+    {
+        UpdateEntity(
+            pstRes->pstVideo->dDeltaTime,
+            0,
+            pstRes->pstMap->u8MeterInPixel,
+            pstRes->pstEntity[u8Index]);
+    }
+
+    if (pstRes->pstEntity[0]->dPosY > (pstRes->pstMap->u16Height + pstRes->pstEntity[0]->u16Height))
+    {
+        ResetEntityToSpawnPosition(pstRes->pstEntity[0]);
+    }
+
+    for (Uint8 u8Index = 0; u8Index <= 3; u8Index++)
+    {
+        ConnectHorizontalMapEndsForEntity(pstRes->pstMap->u16Width, pstRes->pstEntity[u8Index]);
+    }
+}
+
+void UpdateMapObjects(Res *pstRes)
+{
     for (Uint16 u16Index = 0; u16Index < pstRes->pstMap->u16ObjectCount; u16Index++)
     {
         Object *pstObject = &pstRes->pstMap->astObject[u16Index];
@@ -205,31 +236,5 @@ void UpdateEntities(Events *pstEvents, Res *pstRes)
                 pstRes->bShowMessage = 0;
             }
         }
-    }
-
-    // Update entity state.
-    UpdateEntity(
-        pstRes->pstVideo->dDeltaTime,
-        pstRes->pstMap->dGravitation,
-        pstRes->pstMap->u8MeterInPixel,
-        pstRes->pstEntity[0]);
-
-    for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
-    {
-        UpdateEntity(
-            pstRes->pstVideo->dDeltaTime,
-            0,
-            pstRes->pstMap->u8MeterInPixel,
-            pstRes->pstEntity[u8Index]);
-    }
-
-    if (pstRes->pstEntity[0]->dPosY > (pstRes->pstMap->u16Height + pstRes->pstEntity[0]->u16Height))
-    {
-        ResetEntityToSpawnPosition(pstRes->pstEntity[0]);
-    }
-
-    for (Uint8 u8Index = 0; u8Index <= 3; u8Index++)
-    {
-        ConnectHorizontalMapEndsForEntity(pstRes->pstMap->u16Width, pstRes->pstEntity[u8Index]);
     }
 }

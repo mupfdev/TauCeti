@@ -34,11 +34,16 @@ DOWN:    crouch
 
 ## Compiling
 
-To compile _TauCeti_ under Linux simply enter:
+First clone the repository including the submodules:
 ```
 git clone --recurse-submodules -j2 https://github.com/mupfelofen-de/TauCeti.git
-cd TauCeti
+cd eszFW
+```
+
+To compile _TauCeti_ under Linux use CMake as follows:
+```
 mkdir build
+cd build
 cmake ..
 make
 ```
