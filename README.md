@@ -9,7 +9,7 @@ using SDL2 and [eszFW](https://github.com/mupfelofen-de/eszFW): a
 cross-platform game development framework written in C.
 
 [![Tau Ceti](.media/01-tn.png)](.media/01.png?raw=true "01")
-[![Tau Ceti](.media/02-tn.png)](.media/01.png?raw=true "02")
+[![Tau Ceti](.media/02-tn.png)](.media/02.png?raw=true "02")
 
 ## Android version
 
