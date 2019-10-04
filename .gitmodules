@@ -1,9 +1,6 @@
 [submodule "external/eszFW"]
 	path = external/eszFW
-	url = https://github.com/mupfelofen-de/eszFW.git
+	url = https://github.com/mupfelofen-de/eszFW
 [submodule "external/inih"]
 	path = external/inih
 	url = https://github.com/benhoyt/inih.git
-[submodule "external/clang-format"]
-	path = external/clang-format
-	url = https://github.com/mupfelofen-de/clang-format.git
