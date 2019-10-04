@@ -10,9 +10,11 @@ add_subdirectory(external/eszFW)
 include_directories(SYSTEM external/eszFW/src
         SYSTEM ${SDL2_INCLUDE_DIR}
         SYSTEM external/eszFW/external/tmx/src
+        SYSTEM external/inih
         )
 
-FILE(GLOB TauCeti_SRCS src/*.c)
+FILE(GLOB TauCeti_SRCS src/*.c external/inih/ini.c)
+
 add_executable(TauCeti ${TauCeti_SRCS})
 target_link_libraries(TauCeti eszFW)
 target_compile_options(TauCeti PRIVATE -pedantic-errors -Wall -Werror -Wextra)

@@ -1,23 +1,21 @@
 /**
- * @file EventHandler.c
- * @ingroup EventHandler
- * @defgroup EventHandler
- * @author Michael Fitzmayer
+ * @file      EventHandler.c
+ * @author    Michael Fitzmayer
  * @copyright "THE BEER-WARE LICENCE" (Revision 42)
  */
 
 #include <SDL.h>
 #include "EventHandler.h"
 
-void FreeEvents(Events *pstEvents)
+void FreeEvents(Events* pstEvents)
 {
     free(pstEvents);
 }
 
-Sint8 InitEvents(Events **pstEvents)
+Sint8 InitEvents(Events** pstEvents)
 {
     *pstEvents = SDL_calloc(sizeof(struct Events_t), sizeof(Sint8));
-    if (! *pstEvents)
+    if (!*pstEvents)
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "InitEvents(): error allocating memory.\n");
         return -1;
@@ -29,14 +27,14 @@ Sint8 InitEvents(Events **pstEvents)
     return 0;
 }
 
-Sint8 UpdateEvents(Events *pstEvents)
+Sint8 UpdateEvents(Events* pstEvents)
 {
     #ifdef __ANDROID__
-    Sint32 s32TouchPosX  = 0;
-    Sint32 s32TouchPosY  = 0;
+    Sint32 s32TouchPosX = 0;
+    Sint32 s32TouchPosY = 0;
     #endif
 
-    while(SDL_PollEvent(&pstEvents->stEvent) != 0)
+    while (SDL_PollEvent(&pstEvents->stEvent) != 0)
     {
         if (pstEvents->stEvent.type == SDL_QUIT)
         {
@@ -45,49 +43,49 @@ Sint8 UpdateEvents(Events *pstEvents)
         #ifndef __ANDROID__
         else if (SDL_KEYDOWN == pstEvents->stEvent.type)
         {
-            switch(pstEvents->stEvent.key.keysym.sym)
+            switch (pstEvents->stEvent.key.keysym.sym)
             {
-              case SDLK_q:
-                  return 0;
-              case SDLK_LEFT:
-                  pstEvents->eDirection = LEFT;
-                  pstEvents->bIsMoving  = 1;
-                  break;
-              case SDLK_RIGHT:
-                  pstEvents->eDirection = RIGHT;
-                  pstEvents->bIsMoving  = 1;
-                  break;
-              case SDLK_DOWN:
-                  pstEvents->bIsCrouching = 1;
-                  pstEvents->bIsMoving    = 0;
-                  break;
-              case SDLK_SPACE:
-                  pstEvents->bIsJumping = 1;
-                  break;
-              case SDLK_f:
-                  pstEvents->bToggleFullscreen = 1;
-                  break;
-              case SDLK_LSHIFT:
-                  pstEvents->bIsCameraUnlocked = 1;
+                case SDLK_q:
+                    return 0;
+                case SDLK_LEFT:
+                    pstEvents->eDirection = LEFT;
+                    pstEvents->bIsMoving  = 1;
+                    break;
+                case SDLK_RIGHT:
+                    pstEvents->eDirection = RIGHT;
+                    pstEvents->bIsMoving  = 1;
+                    break;
+                case SDLK_DOWN:
+                    pstEvents->bIsCrouching = 1;
+                    pstEvents->bIsMoving    = 0;
+                    break;
+                case SDLK_SPACE:
+                    pstEvents->bIsJumping = 1;
+                    break;
+                case SDLK_f:
+                    pstEvents->bToggleFullscreen = 1;
+                    break;
+                case SDLK_LSHIFT:
+                    pstEvents->bIsCameraUnlocked = 1;
             }
         }
         else if (SDL_KEYUP == pstEvents->stEvent.type)
         {
-            switch(pstEvents->stEvent.key.keysym.sym)
+            switch (pstEvents->stEvent.key.keysym.sym)
             {
-              case SDLK_LEFT:
-                  pstEvents->bIsMoving = 0;
-                  break;
-              case SDLK_RIGHT:
-                  pstEvents->bIsMoving = 0;
-                  break;
-              case SDLK_DOWN:
-                  pstEvents->bIsCrouching = 0;
-                  pstEvents->bIsMoving    = 0;
-                  break;
-              case SDLK_LSHIFT:
-                  pstEvents->bIsCameraUnlocked = 0;
-                  break;
+                case SDLK_LEFT:
+                    pstEvents->bIsMoving = 0;
+                    break;
+                case SDLK_RIGHT:
+                    pstEvents->bIsMoving = 0;
+                    break;
+                case SDLK_DOWN:
+                    pstEvents->bIsCrouching = 0;
+                    pstEvents->bIsMoving    = 0;
+                    break;
+                case SDLK_LSHIFT:
+                    pstEvents->bIsCameraUnlocked = 0;
+                    break;
             }
         }
         #else // __ANDROID__

@@ -4,9 +4,10 @@
 
 ## About
 
-Tau Ceti will be a cross-platform 2D sci-fi platformer game written in C
-using SDL2 and [eszFW](https://github.com/mupfelofen-de/eszFW): a
-cross-platform game development framework written in C.
+Tau Ceti is a cross-platform 2D sci-fi themed tech demo written in C
+using SDL2 to demonstrate the capabilities of
+[eszFW](https://github.com/mupfelofen-de/eszFW): a cross-platform game
+development framework written in C.
 
 [![Tau Ceti](.media/01-tn.png)](.media/01.png?raw=true "01")
 [![Tau Ceti](.media/02-tn.png)](.media/02.png?raw=true "02")

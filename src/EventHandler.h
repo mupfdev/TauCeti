@@ -1,10 +1,7 @@
 /**
  * @file EventHandler.h
- * @ingroup EventHandler
  */
-
-#ifndef _EVENT_HANDLER_H_
-#define _EVENT_HANDLER_H_
+#pragma once
 
 #include <SDL.h>
 #include <eszFW.h>
@@ -20,15 +17,13 @@ typedef struct Events_t
     SDL_bool  bToggleFullscreen;
     SDL_Event stEvent;
     #ifdef __ANDROID__
-    SDL_bool  bPinchClose;
-    SDL_bool  bPinchOpen;
-    Sint32    s32WindowW;
-    Sint32    s32WindowH;
+    SDL_bool bPinchClose;
+    SDL_bool bPinchOpen;
+    Sint32   s32WindowW;
+    Sint32   s32WindowH;
     #endif
 } Events;
 
-void FreeEvents(Events *pstEvents);
-Sint8 InitEvents(Events **pstEvents);
-Sint8 UpdateEvents(Events *pstEvents);
-
-#endif // _EVENT_HANDLER_H_
+void  FreeEvents(Events* pstEvents);
+Sint8 InitEvents(Events** pstEvents);
+Sint8 UpdateEvents(Events* pstEvents);

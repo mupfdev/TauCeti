@@ -1,8 +1,6 @@
 /**
- * @file Render.c
- * @ingroup Render
- * @defgroup Render
- * @author Michael Fitzmayer
+ * @file      Render.c
+ * @author    Michael Fitzmayer
  * @copyright "THE BEER-WARE LICENCE" (Revision 42)
  */
 
@@ -11,7 +9,7 @@
 #include "Render.h"
 #include "Resources.h"
 
-Sint8 Render(Res *pstRes)
+Sint8 Render(Res* pstRes)
 {
     Sint8 s8ReturnValue = 0;
 
@@ -22,6 +20,10 @@ Sint8 Render(Res *pstRes)
         pstRes->dBgVelocityX,
         pstRes->pstVideo->pstRenderer,
         pstRes->pstBg);
+    if (s8ReturnValue < 0)
+    {
+        return s8ReturnValue;
+    }
 
     for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
     {
@@ -33,39 +35,58 @@ Sint8 Render(Res *pstRes)
     }
 
     s8ReturnValue = DrawMap(
-        0, 1, 1, "BG",
+        0,
+        1,
+        1,
+        "BG",
         pstRes->pstCamera->dPosX,
         pstRes->pstCamera->dPosY,
         pstRes->pstMap,
         pstRes->pstVideo->pstRenderer);
+    if (s8ReturnValue < 0)
+    {
+        return s8ReturnValue;
+    }
 
     s8ReturnValue = DrawEntity(
         pstRes->pstEntity[0],
         pstRes->pstCamera,
         pstRes->pstSpPlayer,
         pstRes->pstVideo->pstRenderer);
+    if (s8ReturnValue < 0)
+    {
+        return s8ReturnValue;
+    }
 
     s8ReturnValue = DrawMap(
-        1, 0, 0, "FG",
+        1,
+        0,
+        0,
+        "FG",
         pstRes->pstCamera->dPosX,
         pstRes->pstCamera->dPosY,
         pstRes->pstMap,
         pstRes->pstVideo->pstRenderer);
+    if (s8ReturnValue < 0)
+    {
+        return s8ReturnValue;
+    }
 
     if (pstRes->bShowMessage)
     {
         Sint32 s32PosX = (Sint32)(pstRes->pstEntity[0]->dPosX - pstRes->pstCamera->dPosX);
         Sint32 s32PosY = (Sint32)(pstRes->pstEntity[0]->dPosY - pstRes->pstCamera->dPosY);
-        s32PosY       += pstRes->pstEntity[0]->u16Height / 4;
+        s32PosY += pstRes->pstEntity[0]->u16Height / 4;
 
-        PrintText(pstRes->acMessage, s32PosX, s32PosY, pstRes->pstFont, pstRes->pstVideo->pstRenderer);
+        PrintText(
+            pstRes->acMessage, s32PosX, s32PosY, pstRes->pstFont, pstRes->pstVideo->pstRenderer);
     }
 
     RenderScene(pstRes->pstVideo);
     return s8ReturnValue;
 }
 
-void UpdateZoomLevel(Res *pstRes)
+void UpdateZoomLevel(Res* pstRes)
 {
     double dTime = (double)APPROX_TIME_PER_FRAME / (double)TIME_FACTOR;
 

@@ -1,8 +1,6 @@
 /**
- * @file World.c
- * @ingroup World
- * @defgroup World
- * @author Michael Fitzmayer
+ * @file      World.c
+ * @author    Michael Fitzmayer
  * @copyright "THE BEER-WARE LICENCE" (Revision 42)
  */
 
@@ -12,11 +10,11 @@
 #include "Resources.h"
 #include "World.h"
 
-int UpdateWorld(void *pData)
+int UpdateWorld(void* pData)
 {
     Sint8   s8ReturnValue = 0;
-    Res    *pstRes        = (Res *)pData;
-    Events *pstEvents;
+    Res*    pstRes        = (Res*)pData;
+    Events* pstEvents;
 
     s8ReturnValue = InitEvents(&pstEvents);
     if (-1 == s8ReturnValue)
@@ -58,11 +56,14 @@ int UpdateWorld(void *pData)
     return 0;
 }
 
-void DetectCollisions(Events *pstEvents, Res *pstRes)
+void DetectCollisions(Events* pstEvents, Res* pstRes)
 {
     if (IsOnTileOfType(
-            "Platform", pstRes->pstEntity[0]->dPosX, pstRes->pstEntity[0]->dPosY,
-            pstRes->pstEntity[0]->u16Height, pstRes->pstMap))
+            "Platform",
+            pstRes->pstEntity[0]->dPosX,
+            pstRes->pstEntity[0]->dPosY,
+            pstRes->pstEntity[0]->u16Height,
+            pstRes->pstMap))
     {
         pstEvents->bIsOnPlatform = 1;
     }
@@ -71,7 +72,7 @@ void DetectCollisions(Events *pstEvents, Res *pstRes)
         pstEvents->bIsOnPlatform = 0;
     }
 
-    if (! pstEvents->bIsOnPlatform)
+    if (!pstEvents->bIsOnPlatform)
     {
         SetFrameOffset(0, 1, pstRes->pstEntity[0]);
         if (IsEntityRising(pstRes->pstEntity[0]))
@@ -86,7 +87,7 @@ void DetectCollisions(Events *pstEvents, Res *pstRes)
     }
 }
 
-void UpdateCamera(Res *pstRes)
+void UpdateCamera(Res* pstRes)
 {
     // Follow player entity and set camera boudnaries to map size.
     SetCameraTargetEntity(
@@ -111,24 +112,24 @@ void UpdateCamera(Res *pstRes)
     }
 
     // Do not move background when camera is locked.
-    if (! IsCameraLocked(pstRes->pstCamera))
+    if (!IsCameraLocked(pstRes->pstCamera))
     {
         pstRes->dBgVelocityX = 0;
     }
 }
 
-void UpdateEntities(Events *pstEvents, Res *pstRes)
+void UpdateEntities(Events* pstEvents, Res* pstRes)
 {
     // Reset entity flags.
     ResetEntity(pstRes->pstEntity[0]);
-    if (! UpdateEvents(pstEvents))
+    if (!UpdateEvents(pstEvents))
     {
         pstRes->bGameIsRunning   = 0;
         pstRes->bThreadIsRunning = 0;
     }
 
     // Set the player's idle animation.
-    if (! IsEntityMoving(pstRes->pstEntity[0]))
+    if (!IsEntityMoving(pstRes->pstEntity[0]))
     {
         AnimateEntity(1, pstRes->pstEntity[0]);
         SetFrameOffset(0, 1, pstRes->pstEntity[0]);
@@ -144,19 +145,15 @@ void UpdateEntities(Events *pstEvents, Res *pstRes)
         SetAnimation(22, 22, 0.f, pstRes->pstEntity[0]);
     }
 
-    if (pstEvents->bIsMoving && ! pstEvents->bIsCrouching)
+    if (pstEvents->bIsMoving && !pstEvents->bIsCrouching)
     {
         AnimateEntity(1, pstRes->pstEntity[0]);
-        MoveEntityFull(
-            pstEvents->eDirection, 5.0f, 2.5f, 0, 15,
-            24.f,
-            0,
-            pstRes->pstEntity[0]);
+        MoveEntityFull(pstEvents->eDirection, 5.0f, 2.5f, 0, 15, 24.f, 0, pstRes->pstEntity[0]);
     }
 
     if (pstEvents->bIsJumping)
     {
-        if (! pstEvents->bIsCrouching)
+        if (!pstEvents->bIsCrouching)
         {
             JumpEntity(4.f, pstRes->pstEntity[0]);
             pstEvents->bIsJumping = 0;
@@ -201,11 +198,11 @@ void UpdateEntities(Events *pstEvents, Res *pstRes)
     }
 }
 
-void UpdateMapObjects(Res *pstRes)
+void UpdateMapObjects(Res* pstRes)
 {
     for (Uint16 u16Index = 0; u16Index < pstRes->pstMap->u16ObjectCount; u16Index++)
     {
-        Object *pstObject = &pstRes->pstMap->astObject[u16Index];
+        Object* pstObject = &pstRes->pstMap->astObject[u16Index];
         AABB    stBB      = pstObject->stBB;
 
         #ifdef __ANDROID__
