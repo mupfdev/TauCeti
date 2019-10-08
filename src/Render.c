@@ -13,7 +13,7 @@ Sint8 Render(Res* pstRes)
 {
     Sint8 s8ReturnValue = 0;
 
-    s8ReturnValue = DrawBackground(
+    s8ReturnValue = Background_Draw(
         pstRes->pstEntity[0]->eDirection,
         pstRes->pstVideo->s32LogicalWindowHeight,
         pstRes->pstCamera->dPosY,
@@ -27,14 +27,14 @@ Sint8 Render(Res* pstRes)
 
     for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
     {
-        s8ReturnValue = DrawEntity(
+        s8ReturnValue = Entity_Draw(
             pstRes->pstEntity[u8Index],
             pstRes->pstCamera,
             pstRes->pstSpVehicles,
             pstRes->pstVideo->pstRenderer);
     }
 
-    s8ReturnValue = DrawMap(
+    s8ReturnValue = Map_Draw(
         0,
         1,
         1,
@@ -48,7 +48,7 @@ Sint8 Render(Res* pstRes)
         return s8ReturnValue;
     }
 
-    s8ReturnValue = DrawEntity(
+    s8ReturnValue = Entity_Draw(
         pstRes->pstEntity[0],
         pstRes->pstCamera,
         pstRes->pstSpPlayer,
@@ -58,7 +58,7 @@ Sint8 Render(Res* pstRes)
         return s8ReturnValue;
     }
 
-    s8ReturnValue = DrawMap(
+    s8ReturnValue = Map_Draw(
         1,
         0,
         0,
@@ -78,11 +78,11 @@ Sint8 Render(Res* pstRes)
         Sint32 s32PosY = (Sint32)(pstRes->pstEntity[0]->dPosY - pstRes->pstCamera->dPosY);
         s32PosY += pstRes->pstEntity[0]->u16Height / 4;
 
-        PrintText(
+        Font_PrintText(
             pstRes->acMessage, s32PosX, s32PosY, pstRes->pstFont, pstRes->pstVideo->pstRenderer);
     }
 
-    RenderScene(pstRes->pstVideo);
+    Video_RenderScene(pstRes->pstVideo);
     return s8ReturnValue;
 }
 
@@ -107,5 +107,5 @@ void UpdateZoomLevel(Res* pstRes)
             pstRes->pstVideo->dZoomLevel = pstRes->pstVideo->dInitialZoomLevel;
         }
     }
-    SetZoomLevel(pstRes->pstVideo->dZoomLevel, pstRes->pstVideo);
+    Video_SetZoomLevel(pstRes->pstVideo->dZoomLevel, pstRes->pstVideo);
 }

@@ -1,10 +1,19 @@
 # Tau Ceti
 
-[![Build status](https://ci.appveyor.com/api/projects/status/hg87r0evoqu6lfgr?svg=true)](https://ci.appveyor.com/project/mupfelofen-de/tauceti)
+<p>
+<a href="https://ci.appveyor.com/project/mupfelofen-de/tauceti">
+    <img src="https://ci.appveyor.com/api/projects/status/hg87r0evoqu6lfgr?svg=true" alt="Build status" />
+</a>
+<a href="https://github.com/mupfelofen-de/TauCeti/blob/master/LICENCE.md">
+    <img src="https://img.shields.io/badge/licence-BEER--WARE-brightgreen?style=flat" alt="Licence" />
+</a>
+</p>
+
+[![Build status]()]()
 
 ## About
 
-Tau Ceti is a cross-platform 2D sci-fi themed tech demo written in C
+Tau Ceti is a cross-platform 2D sci-fi themed tech demo written in C99
 using SDL2 to demonstrate the capabilities of
 [eszFW](https://github.com/mupfelofen-de/eszFW): a cross-platform game
 development framework written in C.
@@ -16,7 +25,7 @@ development framework written in C.
 
 An Android version is available on Google Play:
 
-[![Tau Ceti](.media/badge_new.png)](https://play.google.com/store/apps/details?id=de.mupfelofen.TauCeti)
+[![Get it on Google Play](https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=de.mupfelofen.TauCeti)
 
 ## Controls
 
@@ -55,8 +64,8 @@ This project is licenced under the "THE BEER-WARE LICENCE".  See the
 file [LICENCE.md](LICENCE.md) for details.
 
 [Warped City](https://ansimuz.itch.io/warped-city) by Luis Zuno
-(@ansimuz).  Licenced under a [CC-BY-3.0
-Licence](http://creativecommons.org/licenses/by/3.0/).
+(@ansimuz).  Dedicated to [public
+domain](https://creativecommons.org/publicdomain/zero/1.0/).
 
-Every other work is dedicated to [public
+Every other work is also dedicated to [public
 domain](https://creativecommons.org/publicdomain/zero/1.0/).

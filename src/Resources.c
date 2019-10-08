@@ -41,21 +41,21 @@ int ConfigHandler(void* pConfig, const char* pacSection, const char* pacName, co
 
 void Free(Res* pstRes)
 {
-    FreeMusic(pstRes->pstMusic);
-    FreeAudio(pstRes->pstAudio);
-    FreeSprite(pstRes->pstSpPlayer);
-    FreeSprite(pstRes->pstSpVehicles);
-    FreeBackground(pstRes->pstBg);
-    FreeMap(pstRes->pstMap);
+    Audio_FreeMusic(pstRes->pstMusic);
+    Audio_Free(pstRes->pstAudio);
+    Entity_FreeSprite(pstRes->pstSpPlayer);
+    Entity_FreeSprite(pstRes->pstSpVehicles);
+    Background_Free(pstRes->pstBg);
+    Map_Free(pstRes->pstMap);
 
     for (Uint8 u8Index = 0; u8Index <= 4; u8Index++)
     {
-        FreeEntity(pstRes->pstEntity[u8Index]);
+        Entity_Free(pstRes->pstEntity[u8Index]);
     }
 
-    FreeFont(pstRes->pstFont);
-    FreeCamera(pstRes->pstCamera);
-    FreeVideo(pstRes->pstVideo);
+    Font_Free(pstRes->pstFont);
+    Entity_FreeCamera(pstRes->pstCamera);
+    Video_Free(pstRes->pstVideo);
 }
 
 Sint8 Init(Config* pstConfig, Res* pstRes)
@@ -66,75 +66,76 @@ Sint8 Init(Config* pstConfig, Res* pstRes)
     double   dPlayerSpawnY = 0.f;
     (void)pstConfig;
 
-    const char* pacBgFileNames[3] = { "res/backgrounds/city-bg0.png",
-                                      "res/backgrounds/city-bg1.png",
-                                      "res/backgrounds/city-bg2.png" };
+    const char* pacBgFileNames[3] =
+        { "res/backgrounds/city-bg0.png",
+          "res/backgrounds/city-bg1.png",
+          "res/backgrounds/city-bg2.png" };
 
-    s8ReturnValue = InitVideo("Tau Ceti", 640, 360, 384, 216, bFullscreen, &pstRes->pstVideo);
+    s8ReturnValue = Video_Init("Tau Ceti", 640, 360, 384, 216, bFullscreen, &pstRes->pstVideo);
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
     }
 
-    s8ReturnValue = InitCamera(&pstRes->pstCamera);
+    s8ReturnValue = Entity_InitCamera(&pstRes->pstCamera);
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
     };
 
-    s8ReturnValue = InitFont("res/fonts/samus.ttf", &pstRes->pstFont);
+    s8ReturnValue = Font_Init("res/fonts/samus.ttf", &pstRes->pstFont);
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
     };
-    SetFontColour(0xff, 0xff, 0xff, pstRes->pstFont);
+    Font_SetColour(0xff, 0xff, 0xff, pstRes->pstFont);
 
-    s8ReturnValue = InitEntity(0, 0, 64, 64, &pstRes->pstEntity[0]);
+    s8ReturnValue = Entity_Init(0, 0, 64, 64, &pstRes->pstEntity[0]);
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
     };
 
     // Set up background vehicles.
-    s8ReturnValue = InitEntity(-257, 192, 264, 104, &pstRes->pstEntity[1]);  // Truck.
+    s8ReturnValue = Entity_Init(-257, 192, 264, 104, &pstRes->pstEntity[1]);  // Truck.
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
     };
-    SetDirection(LEFT, pstRes->pstEntity[1]);
-    SetSpeed(3.5f, 2.f, pstRes->pstEntity[1]);
-    MoveEntity(pstRes->pstEntity[1]);
+    Entity_SetDirection(LEFT, pstRes->pstEntity[1]);
+    Entity_SetSpeed(3.5f, 2.f, pstRes->pstEntity[1]);
+    Entity_Move(pstRes->pstEntity[1]);
 
-    s8ReturnValue = InitEntity(1000, 300, 168, 64, &pstRes->pstEntity[2]);  // Police.
+    s8ReturnValue = Entity_Init(1000, 300, 168, 64, &pstRes->pstEntity[2]);  // Police.
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
     };
-    SetFrameOffset(0, 2, pstRes->pstEntity[2]);
-    SetSpeed(45.f, 10.f, pstRes->pstEntity[2]);
-    MoveEntity(pstRes->pstEntity[2]);
+    Entity_SetFrameOffset(0, 2, pstRes->pstEntity[2]);
+    Entity_SetSpeed(45.f, 10.f, pstRes->pstEntity[2]);
+    Entity_Move(pstRes->pstEntity[2]);
 
-    s8ReturnValue = InitEntity(128, 150, 96, 64, &pstRes->pstEntity[3]);  // Misc 1.
+    s8ReturnValue = Entity_Init(128, 150, 96, 64, &pstRes->pstEntity[3]);  // Misc 1.
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
     };
-    SetFrameOffset(1, 3, pstRes->pstEntity[3]);
-    SetSpeed(45.f, 8.f, pstRes->pstEntity[2]);
-    SetDirection(LEFT, pstRes->pstEntity[3]);
-    MoveEntity(pstRes->pstEntity[3]);
+    Entity_SetFrameOffset(1, 3, pstRes->pstEntity[3]);
+    Entity_SetSpeed(45.f, 8.f, pstRes->pstEntity[2]);
+    Entity_SetDirection(LEFT, pstRes->pstEntity[3]);
+    Entity_Move(pstRes->pstEntity[3]);
 
-    s8ReturnValue = InitEntity(800, 416, 96, 64, &pstRes->pstEntity[4]);  // Misc 2.
+    s8ReturnValue = Entity_Init(800, 416, 96, 64, &pstRes->pstEntity[4]);  // Misc 2.
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
     };
-    SetFrameOffset(0, 3, pstRes->pstEntity[4]);
-    SetSpeed(45.f, 5.f, pstRes->pstEntity[2]);
-    MoveEntity(pstRes->pstEntity[4]);
+    Entity_SetFrameOffset(0, 3, pstRes->pstEntity[4]);
+    Entity_SetSpeed(45.f, 5.f, pstRes->pstEntity[2]);
+    Entity_Move(pstRes->pstEntity[4]);
 
-    s8ReturnValue = InitMap("res/maps/city.tmx", "res/tilesets/city.png", 42, &pstRes->pstMap);
-    SetTileAnimationSpeed(5.f, pstRes->pstMap);
+    s8ReturnValue = Map_Init("res/maps/city.tmx", "res/tilesets/city.png", 42, &pstRes->pstMap);
+    Map_SetTileAnimationSpeed(5.f, pstRes->pstMap);
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
@@ -144,17 +145,17 @@ Sint8 Init(Config* pstConfig, Res* pstRes)
     {
         Object* pstObject = &pstRes->pstMap->astObject[u16Index];
 
-        if (IsObjectOfType("PlayerSpawn", pstObject))
+        if (Map_IsObjectOfType("PlayerSpawn", pstObject))
         {
             dPlayerSpawnX = (double)pstObject->u32PosX;
             dPlayerSpawnY = (double)pstObject->u32PosY;
             break;
         }
     }
-    SetPosition(dPlayerSpawnX, dPlayerSpawnY, pstRes->pstEntity[0]);
-    SetSpawnPosition(dPlayerSpawnX, dPlayerSpawnY, pstRes->pstEntity[0]);
+    Entity_SetPosition(dPlayerSpawnX, dPlayerSpawnY, pstRes->pstEntity[0]);
+    Entity_SetSpawnPosition(dPlayerSpawnX, dPlayerSpawnY, pstRes->pstEntity[0]);
 
-    s8ReturnValue = InitBackground(
+    s8ReturnValue = Background_Init(
         3,
         pacBgFileNames,
         pstRes->pstVideo->s32WindowWidth,
@@ -166,7 +167,7 @@ Sint8 Init(Config* pstConfig, Res* pstRes)
         return s8ReturnValue;
     };
 
-    s8ReturnValue = InitSprite(
+    s8ReturnValue = Entity_InitSprite(
         "res/sprites/player.png",
         1536,
         128,
@@ -179,7 +180,7 @@ Sint8 Init(Config* pstConfig, Res* pstRes)
         return s8ReturnValue;
     };
 
-    s8ReturnValue = InitSprite(
+    s8ReturnValue = Entity_InitSprite(
         "res/sprites/vehicles.png",
         264,
         256,
@@ -192,7 +193,7 @@ Sint8 Init(Config* pstConfig, Res* pstRes)
         return s8ReturnValue;
     };
 
-    s8ReturnValue = InitAudio(&pstRes->pstAudio);
+    s8ReturnValue = Audio_Init(&pstRes->pstAudio);
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
@@ -200,15 +201,15 @@ Sint8 Init(Config* pstConfig, Res* pstRes)
 
     pstRes->u32PrngSeed = SDL_GetTicks();
     s8ReturnValue =
-        InitMusic("res/music/Dreams_of_Vain.ogg", -1, &pstRes->pstMusic);
+        Audio_InitMusic("res/music/Dreams_of_Vain.ogg", -1, &pstRes->pstMusic);
     if (-1 == s8ReturnValue)
     {
         return s8ReturnValue;
     };
 
-    LockCamera(pstRes->pstCamera);
-    PlayMusic(2000, pstRes->pstMusic);
-    SetFrameOffset(0, 0, pstRes->pstEntity[0]);
+    Entity_LockCamera(pstRes->pstCamera);
+    Audio_PlayMusic(2000, pstRes->pstMusic);
+    Entity_SetFrameOffset(0, 0, pstRes->pstEntity[0]);
 
     pstRes->bGameIsRunning   = 1;
     pstRes->bThreadIsRunning = 1;

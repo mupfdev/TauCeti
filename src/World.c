@@ -32,18 +32,18 @@ int UpdateWorld(void* pData)
         // Check if fullscreen state has been toggled.
         if (pstEvents->bToggleFullscreen)
         {
-            ToggleFullscreen(pstRes->pstVideo);
+            Video_ToggleFullscreen(pstRes->pstVideo);
             pstEvents->bToggleFullscreen = 0;
         }
 
         // Lock / Unlock camera.
         if (pstEvents->bIsCameraUnlocked)
         {
-            UnlockCamera(pstRes->pstCamera);
+            Entity_UnlockCamera(pstRes->pstCamera);
         }
         else
         {
-            LockCamera(pstRes->pstCamera);
+            Entity_LockCamera(pstRes->pstCamera);
         }
 
         UpdateEntities(pstEvents, pstRes);
@@ -58,7 +58,7 @@ int UpdateWorld(void* pData)
 
 void DetectCollisions(Events* pstEvents, Res* pstRes)
 {
-    if (IsOnTileOfType(
+    if (Map_IsOnTileOfType(
             "Platform",
             pstRes->pstEntity[0]->dPosX,
             pstRes->pstEntity[0]->dPosY,
@@ -72,31 +72,31 @@ void DetectCollisions(Events* pstEvents, Res* pstRes)
         pstEvents->bIsOnPlatform = 0;
     }
 
-    if (!pstEvents->bIsOnPlatform)
+    if (! pstEvents->bIsOnPlatform)
     {
-        SetFrameOffset(0, 1, pstRes->pstEntity[0]);
-        if (IsEntityRising(pstRes->pstEntity[0]))
+        Entity_SetFrameOffset(0, 1, pstRes->pstEntity[0]);
+        if (Entity_IsRising(pstRes->pstEntity[0]))
         {
-            SetAnimation(12, 15, 12.5f, pstRes->pstEntity[0]);
+            Entity_SetAnimation(12, 15, 12.5f, pstRes->pstEntity[0]);
         }
         else
         {
-            SetAnimation(15, 15, 12.5f, pstRes->pstEntity[0]);
+            Entity_SetAnimation(15, 15, 12.5f, pstRes->pstEntity[0]);
         }
-        DropEntity(pstRes->pstEntity[0]);
+        Entity_Drop(pstRes->pstEntity[0]);
     }
 }
 
 void UpdateCamera(Res* pstRes)
 {
     // Follow player entity and set camera boudnaries to map size.
-    SetCameraTargetEntity(
+    Entity_SetCameraTarget(
         pstRes->pstVideo->s32LogicalWindowWidth,
         pstRes->pstVideo->s32LogicalWindowHeight,
         pstRes->pstEntity[0],
         pstRes->pstCamera);
 
-    if (SetCameraBoundariesToMapSize(
+    if (Entity_SetCameraBoundariesToMapSize(
             pstRes->pstVideo->s32LogicalWindowWidth,
             pstRes->pstVideo->s32LogicalWindowHeight,
             pstRes->pstMap->u16Width,
@@ -112,7 +112,7 @@ void UpdateCamera(Res* pstRes)
     }
 
     // Do not move background when camera is locked.
-    if (!IsCameraLocked(pstRes->pstCamera))
+    if (! Entity_IsCameraLocked(pstRes->pstCamera))
     {
         pstRes->dBgVelocityX = 0;
     }
@@ -121,41 +121,41 @@ void UpdateCamera(Res* pstRes)
 void UpdateEntities(Events* pstEvents, Res* pstRes)
 {
     // Reset entity flags.
-    ResetEntity(pstRes->pstEntity[0]);
-    if (!UpdateEvents(pstEvents))
+    Entity_Reset(pstRes->pstEntity[0]);
+    if (! UpdateEvents(pstEvents))
     {
         pstRes->bGameIsRunning   = 0;
         pstRes->bThreadIsRunning = 0;
     }
 
     // Set the player's idle animation.
-    if (!IsEntityMoving(pstRes->pstEntity[0]))
+    if (! Entity_IsMoving(pstRes->pstEntity[0]))
     {
-        AnimateEntity(1, pstRes->pstEntity[0]);
-        SetFrameOffset(0, 1, pstRes->pstEntity[0]);
-        SetAnimation(0, 3, 5.f, pstRes->pstEntity[0]);
+        Entity_Animate(1, pstRes->pstEntity[0]);
+        Entity_SetFrameOffset(0, 1, pstRes->pstEntity[0]);
+        Entity_SetAnimation(0, 3, 5.f, pstRes->pstEntity[0]);
     }
 
     // Process events.
     if (pstEvents->bIsCrouching)
     {
-        AnimateEntity(0, pstRes->pstEntity[0]);
-        SetFrameOffset(0, 0, pstRes->pstEntity[0]);
-        SetDirection(pstEvents->eDirection, pstRes->pstEntity[0]);
-        SetAnimation(22, 22, 0.f, pstRes->pstEntity[0]);
+        Entity_Animate(0, pstRes->pstEntity[0]);
+        Entity_SetFrameOffset(0, 0, pstRes->pstEntity[0]);
+        Entity_SetDirection(pstEvents->eDirection, pstRes->pstEntity[0]);
+        Entity_SetAnimation(22, 22, 0.f, pstRes->pstEntity[0]);
     }
 
     if (pstEvents->bIsMoving && !pstEvents->bIsCrouching)
     {
-        AnimateEntity(1, pstRes->pstEntity[0]);
-        MoveEntityFull(pstEvents->eDirection, 5.0f, 2.5f, 0, 15, 24.f, 0, pstRes->pstEntity[0]);
+        Entity_Animate(1, pstRes->pstEntity[0]);
+        Entity_MoveFull(pstEvents->eDirection, 5.0f, 2.5f, 0, 15, 24.f, 0, pstRes->pstEntity[0]);
     }
 
     if (pstEvents->bIsJumping)
     {
-        if (!pstEvents->bIsCrouching)
+        if (! pstEvents->bIsCrouching)
         {
-            JumpEntity(4.f, pstRes->pstEntity[0]);
+            Entity_Jump(4.f, pstRes->pstEntity[0]);
             pstEvents->bIsJumping = 0;
         }
         else
@@ -172,7 +172,7 @@ void UpdateEntities(Events* pstEvents, Res* pstRes)
     UpdateMapObjects(pstRes);
 
     // Update entity state.
-    UpdateEntity(
+    Entity_Update(
         pstRes->pstVideo->dDeltaTime,
         pstRes->pstMap->dGravitation,
         pstRes->pstMap->u8MeterInPixel,
@@ -180,7 +180,7 @@ void UpdateEntities(Events* pstEvents, Res* pstRes)
 
     for (Uint8 u8Index = 1; u8Index <= 3; u8Index++)
     {
-        UpdateEntity(
+        Entity_Update(
             pstRes->pstVideo->dDeltaTime,
             0,
             pstRes->pstMap->u8MeterInPixel,
@@ -189,12 +189,12 @@ void UpdateEntities(Events* pstEvents, Res* pstRes)
 
     if (pstRes->pstEntity[0]->dPosY > (pstRes->pstMap->u16Height + pstRes->pstEntity[0]->u16Height))
     {
-        ResetEntityToSpawnPosition(pstRes->pstEntity[0]);
+        Entity_ResetToSpawnPosition(pstRes->pstEntity[0]);
     }
 
     for (Uint8 u8Index = 0; u8Index <= 3; u8Index++)
     {
-        ConnectHorizontalMapEndsForEntity(pstRes->pstMap->u16Width, pstRes->pstEntity[u8Index]);
+        Entity_ConnectHorizontalMapEnds(pstRes->pstMap->u16Width, pstRes->pstEntity[u8Index]);
     }
 }
 
@@ -206,11 +206,11 @@ void UpdateMapObjects(Res* pstRes)
         AABB    stBB      = pstObject->stBB;
 
         #ifdef __ANDROID__
-        if (IsObjectOfType("AndroidMsg", pstObject))
+        if (Map_IsObjectOfType("AndroidMsg", pstObject))
         {
-            if (BoxesDoIntersect(pstRes->pstEntity[0]->stBB, stBB))
+            if (AABB_BoxesDoIntersect(pstRes->pstEntity[0]->stBB, stBB))
             {
-                SDL_strlcpy(pstRes->acMessage, GetObjectName(pstObject), OBJECT_NAME_LEN - 1);
+                SDL_strlcpy(pstRes->acMessage, Map_GetObjectName(pstObject), OBJECT_NAME_LEN - 1);
                 pstRes->bShowMessage = 1;
                 break;
             }
@@ -220,11 +220,11 @@ void UpdateMapObjects(Res* pstRes)
             }
         }
         #endif
-        if (IsObjectOfType("GenericMsg", pstObject))
+        if (Map_IsObjectOfType("GenericMsg", pstObject))
         {
-            if (BoxesDoIntersect(pstRes->pstEntity[0]->stBB, stBB))
+            if (AABB_BoxesDoIntersect(pstRes->pstEntity[0]->stBB, stBB))
             {
-                SDL_strlcpy(pstRes->acMessage, GetObjectName(pstObject), OBJECT_NAME_LEN - 1);
+                SDL_strlcpy(pstRes->acMessage, Map_GetObjectName(pstObject), OBJECT_NAME_LEN - 1);
                 pstRes->bShowMessage = 1;
                 break;
             }
