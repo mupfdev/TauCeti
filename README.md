@@ -58,6 +58,12 @@ cmake ..
 make
 ```
 
+You can run the demo by entering:
+```
+ln -s ../res
+./TauCeti
+```
+
 ## Licence and Credits
 
 This project is licenced under the "THE BEER-WARE LICENCE".  See the
