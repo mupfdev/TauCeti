@@ -4,11 +4,11 @@
 <a href="https://ci.appveyor.com/project/mupfelofen-de/tauceti">
   <img src="https://ci.appveyor.com/api/projects/status/hg87r0evoqu6lfgr?svg=true" alt="Build status" />
 </a>
-<a href="https://lgtm.com/projects/g/mupfelofen-de/TauCeti/alerts/">
-  <img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/mupfelofen-de/TauCeti.svg?logo=lgtm&amp;logoWidth=18?svg=true" />
+<a href="https://lgtm.com/projects/g/mupfelofen-de/TauCeti/context:cpp">
+  <img alt="Language grade: C/C++" src="https://img.shields.io/lgtm/grade/cpp/g/mupfelofen-de/TauCeti.svg?logo=lgtm&amp;logoWidth=18?style=flat?svg=true" />
 </a>
 <a href="https://github.com/mupfelofen-de/TauCeti/blob/master/LICENCE.md">
-  <img src="https://img.shields.io/badge/licence-BEER--WARE-brightgreen?style=flat" alt="Licence" />
+  <img src="https://img.shields.io/badge/licence-BEER--WARE-brightgreen?style=flat?svg=true" alt="Licence" />
 </a>
 </p>
 
