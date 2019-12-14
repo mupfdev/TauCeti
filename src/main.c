@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Beerware
 /**
  * @file      main.c
  * @author    Michael Fitzmayer
