@@ -5,73 +5,66 @@
  * @copyright "THE BEER-WARE LICENCE" (Revision 42)
  */
 
+#define SDL_MAIN_HANDLED
+
+#include <stdlib.h>
 #include <SDL.h>
-#include <eszFW.h>
-#include <ini.h>
-#include "Render.h"
-#include "Resources.h"
-#include "World.h"
+#include <esz.h>
 
-int main(int argc, char* argv[])
+static void CoreStartedCallback_(void* core);
+static void KeyDownCallback_(void* core);
+
+int main()
 {
-    char        pacIni[20]    = "res/default.ini";
-    Config      stConfig      = { 0 };
-    Res         stRes         = { 0 };
-    Sint8       s8ReturnValue = 0;
-    SDL_Thread* hUpdateWorldThread;
+    esz_Status status = ESZ_OK;
+    esz_Core*  core   = NULL;
+    esz_Config config = { 640, 360, 384, 216, SDL_FALSE };
 
-    SDL_SetMainReady();
-
-    if (argc <= 1)
+    status = esz_InitCore(&config, &core);
+    if (ESZ_OK != status)
     {
-        #ifdef __ANDROID__
-        SDL_strlcpy(pacIni, "res/android.ini", 15);
-        #endif
-    }
-    else
-    {
-        SDL_strlcpy(pacIni, argv[1], 20);
-    }
-    SDL_Log("Load INI configuration file: %s.\n", pacIni);
-    ini_parse(pacIni, ConfigHandler, &stConfig);
-    // TODO check if ini_parse fails!
-    
-    //
-    s8ReturnValue = Init(&stConfig, &stRes);
-    if (0 == s8ReturnValue)
-    {
-        hUpdateWorldThread = SDL_CreateThread(UpdateWorld, "UpdateWorldThread", &stRes);
-        if (!hUpdateWorldThread)
-        {
-            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s\n", SDL_GetError());
-            stRes.bGameIsRunning = 0;
-        }
-    }
-    else
-    {
-        stRes.bGameIsRunning = 0;
+        goto quit;
     }
 
-    while (stRes.bGameIsRunning)
-    {
-        UpdateZoomLevel(&stRes);
-        s8ReturnValue = Render(&stRes);
+    SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
+    esz_RegisterEventCallback(EVENT_CORE_STARTED, &CoreStartedCallback_, (void*)core);
+    esz_RegisterEventCallback(EVENT_KEYDOWN,      &KeyDownCallback_,     (void*)core);
 
-        if (s8ReturnValue != 0)
-        {
-            stRes.bGameIsRunning = 0;
-            continue;
-        }
+    status = esz_StartCore("Tau Ceti", core);
+    if (ESZ_OK != status)
+    {
+        goto quit;
     }
 
-    SDL_WaitThread(hUpdateWorldThread, NULL);
-    Free(&stRes);
-    SDL_Quit();
-
-    if (-1 == s8ReturnValue)
+quit:
+    if (ESZ_OK != status)
     {
-        return 1;
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
+}
+
+static void CoreStartedCallback_(void* core)
+{
+    esz_LoadMap("res/maps/city.tmx", core);
+}
+
+static void KeyDownCallback_(void* core)
+{
+    switch (esz_GetKeycode(core))
+    {
+        case SDLK_f:
+            esz_ToggleFullscreen(core);
+            break;
+        case SDLK_q:
+            esz_ExitCore(core);
+            break;
+        case SDLK_F4:
+            esz_LoadMap("res/maps/city.tmx", core);
+            break;
+        case SDLK_F5:
+            esz_UnloadMap(core);
+            break;
+    }
 }

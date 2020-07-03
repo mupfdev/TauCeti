@@ -10,7 +10,6 @@ add_subdirectory(external/eszFW)
 include_directories(SYSTEM external/eszFW/src
         SYSTEM ${SDL2_INCLUDE_DIR}
         SYSTEM external/eszFW/external/tmx/src
-        SYSTEM external/inih
         )
 
 FILE(GLOB TauCeti_SRCS src/*.c external/inih/ini.c)
