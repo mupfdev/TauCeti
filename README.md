@@ -70,7 +70,7 @@ ln -s ../res
 
 ## Licence and Credits
 
-This project is licenced under the "THE BEER-WARE LICENCE".  See the
+This project is licensed under the "THE BEER-WARE LICENCE".  See the
 file [LICENCE.md](LICENCE.md) for details.
 
 [Warped City](https://ansimuz.itch.io/warped-city) by Luis Zuno
