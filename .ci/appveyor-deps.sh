@@ -7,6 +7,6 @@ for pkg in $LIBSDL $LIBXML; do
     if dpkg --get-selections | grep -q "^$pkg[[:space:]]*install$" >/dev/null; then
         echo -e "$pkg is already installed"
     else
-        apt-get -y -qq install $pkg
+        apt-get -y -qq install "$pkg"
     fi
 done
