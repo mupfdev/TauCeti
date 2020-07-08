@@ -37,12 +37,14 @@ To play the game using the touch screen, simply hold your finger in the
 direction you want to go.  To jump, swipe your finger up and to crouch,
 hold your finger on the bottom of the screen.
 
-> F:       toggle fullscreen
-> Q:       quit
-> SPACE:   jump
-> LEFT:    walk left
-> RIGHT:   walk right
-> DOWN:    crouch
+```text
+F:       toggle fullscreen
+Q:       quit
+SPACE:   jump
+LEFT:    walk left
+RIGHT:   walk right
+DOWN:    crouch
+```
 
 ## Compiling
 
