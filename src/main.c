@@ -15,12 +15,16 @@ static void key_down_callback_1(void* window, void* core);
 
 int main()
 {
-    esz_status        status = ESZ_OK;
+    esz_status        status;
     esz_window*       window = NULL;
     esz_window_config config = { 640, 360, 384, 216, SDL_FALSE, SDL_FALSE };
     esz_core*         core_1 = NULL;
 
     status = esz_create_window("Tau Ceti", &config, &window);
+    if (ESZ_OK != status)
+    {
+        goto quit;
+    }
 
     status = esz_init_core(&core_1);
     if (ESZ_OK != status)
