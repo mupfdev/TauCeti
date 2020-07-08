@@ -55,7 +55,7 @@ cd eszFW
 ```
 
 To compile _TauCeti_ under Linux use CMake as follows:
-```
+```bash
 mkdir build
 cd build
 cmake ..
