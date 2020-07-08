@@ -15,38 +15,43 @@ static void key_down_callback_1(void* window, void* core);
 
 int main()
 {
-    esz_Status       status = ESZ_OK;
-    esz_Window*      window = NULL;
-    esz_WindowConfig config = { 640, 360, 384, 216, SDL_FALSE };
-    esz_Core*        core_1 = NULL;
+    esz_status        status = ESZ_OK;
+    esz_window*       window = NULL;
+    esz_window_config config = { 640, 360, 384, 216, SDL_FALSE, SDL_FALSE };
+    esz_core*         core_1 = NULL;
 
-    status = esz_CreateWindow("Tau Ceti", &config, &window);
+    status = esz_create_window("Tau Ceti", &config, &window);
 
-    status = esz_InitCore(&core_1);
+    status = esz_init_core(&core_1);
     if (ESZ_OK != status)
     {
         goto quit;
     }
 
-    esz_LoadMap("res/maps/city.tmx", window, core_1);
+    // DEBUG!
+    core_1->camera.pos_x = 128;
+    core_1->camera.pos_y = 500;
+    // DEBUG!
+
+    esz_load_map("res/maps/city.tmx", window, core_1);
 
     SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
-    esz_RegisterEventCallback(EVENT_KEYDOWN, &key_down_callback_1, (void*)core_1);
+    esz_register_event_callback(EVENT_KEYDOWN, &key_down_callback_1, (void*)core_1);
 
-    while (esz_IsCoreActive(core_1))
+    while (esz_is_core_active(core_1))
     {
         Uint32 time_a = 0;
         Uint32 time_b = 0;
 
-        esz_UpdateCore(window, core_1);
+        esz_update_core(window, core_1);
 
-        esz_DrawFrame(&time_a, &time_b, window, core_1);
+        esz_draw_frame(&time_a, &time_b, window, core_1);
     }
 
 quit:
-    esz_UnloadMap(window, core_1);
-    esz_DestroyCore(core_1);
-    esz_DestroyWindow(window);
+    esz_unload_map(window, core_1);
+    esz_destroy_core(core_1);
+    esz_destroy_window(window);
 
     if (ESZ_OK != status)
     {
@@ -58,18 +63,18 @@ quit:
 
 static void key_down_callback_1(void* window, void* core)
 {
-    switch (esz_GetKeycode(core))
+    switch (esz_get_keycode(core))
     {
         case SDLK_f:
-            esz_ToggleFullscreen(window);
+            esz_toggle_fullscreen(window);
             break;
         case SDLK_q:
-            esz_DeactivateCore(core);
+            esz_deactivate_core(core);
             break;
         case SDLK_F4:
-            esz_LoadMap("res/maps/city.tmx", window, core);
+            esz_load_map("res/maps/city.tmx", window, core);
             break;
         case SDLK_F5:
-            esz_UnloadMap(window, core);
+            esz_unload_map(window, core);
     }
 }

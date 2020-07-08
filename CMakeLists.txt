@@ -12,10 +12,9 @@ include_directories(SYSTEM external/eszFW/src
         SYSTEM external/eszFW/external/tmx/src
         )
 
-FILE(GLOB TauCeti_SRCS src/*.c external/inih/ini.c)
+set(TauCeti_SRCS
+  src/main.c
+  )
 
 add_executable(TauCeti ${TauCeti_SRCS})
 target_link_libraries(TauCeti eszFW)
-target_compile_options(TauCeti PRIVATE -pedantic-errors -Wall -Werror -Wextra)
-
-set_property(TARGET TauCeti PROPERTY INTERPROCEDURAL_OPTIMIZATION True)
