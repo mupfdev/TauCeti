@@ -1,37 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="75" height="25" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextobjectid="14">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="75" height="50" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextlayerid="9" nextobjectid="22">
  <properties>
-  <property name="Gravitation" type="float" value="9.80665"/>
+  <property name="animated_tile_fps" type="int" value="5"/>
+  <property name="background_is_top_aligned" type="bool" value="false"/>
+  <property name="background_layer_0" type="file" value="../backgrounds/city-bg0.png"/>
+  <property name="background_layer_1" type="file" value="../backgrounds/city-bg1.png"/>
+  <property name="background_layer_2" type="file" value="../backgrounds/city-bg2.png"/>
+  <property name="background_layer_count" type="int" value="3"/>
+  <property name="font" type="file" value="../fonts/samus.ttf"/>
+  <property name="font_color" type="color" value="#ffffff00"/>
+  <property name="gravitation" type="float" value="9.80665"/>
+  <property name="meter_in_pixel" type="int" value="42"/>
+  <property name="music" type="file" value="../music/Dreams_of_Vain.ogg"/>
+  <property name="sprite_sheet_0" type="file" value="../sprites/player.png"/>
+  <property name="sprite_sheet_1" type="file" value="../sprites/vehicle-misc1.png"/>
+  <property name="sprite_sheet_2" type="file" value="../sprites/vehicle-misc2.png"/>
+  <property name="sprite_sheet_3" type="file" value="../sprites/vehicle-police.png"/>
+  <property name="sprite_sheet_4" type="file" value="../sprites/vehicle-truck.png"/>
+  <property name="sprite_sheet_count" type="int" value="5"/>
+  <property name="tileset_image" type="file" value="../tilesets/city.png"/>
  </properties>
  <tileset firstgid="1" source="../tilesets/city.tsx"/>
- <layer name="Tile Layer BG 1" width="75" height="25">
+ <layer id="1" name="Tile Layer BG 1" width="75" height="50">
+  <properties>
+   <property name="is_in_foreground" type="bool" value="false"/>
+  </properties>
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
- <layer name="Tile Layer BG 2" width="75" height="25">
+ <layer id="2" name="Tile Layer BG 2" width="75" height="50">
+  <properties>
+   <property name="is_in_foreground" type="bool" value="false"/>
+  </properties>
   <data encoding="base64" compression="zlib">
-   eJztl7FOwkAYx6/lCfAFxEcQVvUFJHGAVX0BNUbbFXkB2GRVXgCcZEU3J3A0LqKbEzgSB38mTbhEvZxwtLR3v+SftE3z9btfv/RSIcyx6wlR9gwWzDBHeDp2rrRo4KnpXGnRwVPXudJigKehc6XFGE8T58rhWAnyvhBrftJdpIMinkrOlRYVPFUtd3Um7XN7ij0vwFNosasBax9K6z9VuLrkvpbFrsasfSKtXzVXt9zXs9hVPsfelpudq+bKdop4KkmuVHP1G+vMWYFs+Itdj5ObOeehgqfqP12dpHz2HufsP8BTGLnaosY22YlqPZtpbSX4lI4/DLzrfWockEPvZ/04eSGjJdR9MFirhqMLUiebUZLA47n+Ep5t0tUV/V2Tdsq/R39h0lUfR3fkPoOunoRZVyMcvZK3DLqakvekm0gB3/+75yQgYQbnIC6+ALI/L3o=
+   eJztl8EuxFAUhm87TzBeAI9gZosXILGY2eIFEKHdDi/Aji1eACu22FnNWIqNYWc1YykWfkkTTXBT47adtt+X/EnbNKfnfj3pTY0BAAAAAAAAAAAAAAAAAIA0WfCMWfTy7qIYrMnTOq4SsSdP+7hKxKk8neEqEV156uEqEQN5GuIKYCyo+8ZM+Hl3UQwa8tTEVSJa8tSuuKut2D63ZNnzAnkKK+yqq7X3YuvftLg60H2HFXY10NqHsfXb5upC911W2FW9pr2t9nVum6uq05CnZsyVba5+YlJzNqVM+/+7niXnI85DS57af3S1UfDZuxux/0CewsjVrGrMKfNRrQc3rY0F77HjVwfvelk1VpRV73v9LHlU+inUvXVYqyNHO8quMhMlDzw910/h2S5dHam/Y+Wk4N+j33Dp6kqOrpWbErq6N25d9eXoSXkuoas35SXvJgrA5//uthIoYQnnICs+AM+LL3o=
   </data>
  </layer>
- <layer name="Tile Layer BG 3" width="75" height="25">
+ <layer id="3" name="Tile Layer BG 3" width="75" height="50">
+  <properties>
+   <property name="is_in_foreground" type="bool" value="false"/>
+  </properties>
   <data encoding="base64" compression="zlib">
-   eJztmEsKwkAQRGfcC7rzHIKCp3Cn4CnE6Mk8hqD4OYDuBcXP3lokMIghnYaQjF0PCgLpQPECDTPOEUIIIUTKwjuXpFl+PYdZ+bqbkjX/gZhTA1ydkUuJ+T1yQI6VtMnn3QBXHh1aaY+eYP6BPJFXhZ1iYFTwPtzlifF9PisxO4CfoUFHGibwNKUrUsAW2dVdIhJuyF35rTXHHeyernL/aB3HTF/pSuvYIlrH1tg4upJyRcZ0JaLt6SqP8J4hO+fQ1W/Ce4bsnDP/c1cfw2wjKg==
+   eJzt2EsKwjAUheHEuaAz1yEouApnCq5CrK7MZQiKjwXoXFB8zL2DFoJYml4obcz/wYFCU7icQiAxBgAAAAAAAAAAAAAAAAD0FtaYJM3y69nNytY9Kdb8A2+nBnR1llxKrN9LDpJjJdPkezegKysztNI5eh7rH5Kn5FXhTCEYFbx39/Ik8v18VmLtQPoZRtiRxkR6mtIVCmwlu7qHCMRNcld+G1vHHdl7usr9R9txyPrKrrQdx0jbcWw2hq58XSVjuvLStnSVx71nyM45dPWbe8+QnXPmf97VB+C4Iyo=
   </data>
  </layer>
- <layer name="Tile Layer FG 1" width="75" height="25">
+ <layer id="4" name="Tile Layer FG 1" width="75" height="50">
+  <properties>
+   <property name="is_in_foreground" type="bool" value="true"/>
+  </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1skNgkAYhmGmBAtQtASnALdG3FpyqUSlC2+KXXBzOfke0ERIZDFxBL8neQ9MOAx/MhM8T+Q37V1voEIi1xuokIZxvYPvaVKLfGpTJ+P9rnnNmvRaXfWoTwMa0iheD/nmU42/u4wxTWhKM5rH61fmdNOsxBGd1fx0Vv+X/q2zPWYUJZ4lzSb+F63uFZHCFpybJa1orTP01ob5bGlHgWYlIvJ04E486l7M5cycLpqVfOAO3sUb1w==
+   eJzt1skNgkAYhmGmBAtwK8EpQNFG3FpyqUSxC2+gXXBzOfkd0ERIBDVxMvg+yXtgwmH4k5kQBAAAAAAAAAAAAAAAwBd71xvwSOp6Ax5pGNc7+J2maqm26qhuyfs985w1xbW66quBCtVQjbL1g775WOPv/sRYTdRUzdQ8W79oTldmBUc4q9VxVv8X/9bl7jNKc88osrn/Rcu9ArxtoXOzVCu15gy9tNF8tipSO2YFAA+x7sSEe7GSk+Z0Zlb4wg38ERvX
   </data>
  </layer>
- <objectgroup name="Object Layer 1">
-  <object id="1" name="Player" type="PlayerSpawn" x="32" y="192">
+ <objectgroup id="5" name="Object Layer 1">
+  <object id="1" name="Player" type="Entity" x="32" y="592">
+   <properties>
+    <property name="acceleration" type="float" value="8"/>
+    <property name="animation_end" type="int" value="3"/>
+    <property name="animation_speed" type="float" value="12.5"/>
+    <property name="animation_start" type="int" value="0"/>
+    <property name="connect_horizontal_map_ends" type="bool" value="true"/>
+    <property name="connect_vertical_map_ends" type="bool" value="false"/>
+    <property name="frame_offset_x" type="int" value="0"/>
+    <property name="frame_offset_y" type="int" value="1"/>
+    <property name="height" type="int" value="64"/>
+    <property name="is_affected_by_gravity" type="bool" value="true"/>
+    <property name="is_animated" type="bool" value="true"/>
+    <property name="is_left_oriented" type="bool" value="false"/>
+    <property name="is_moving" type="bool" value="false"/>
+    <property name="is_player" type="bool" value="true"/>
+    <property name="max_velocity_x" type="float" value="4.5"/>
+    <property name="sprite_sheet_id" type="int" value="0"/>
+    <property name="width" type="int" value="64"/>
+   </properties>
    <point/>
   </object>
-  <object id="12" name="Nice jump!" type="GenericMsg" x="1072" y="144" width="80" height="64"/>
-  <object id="7" name="Swipe up to jump" type="AndroidMsg" x="128" y="160" width="48" height="48"/>
-  <object id="8" name="Touch the screen to walk around" type="AndroidMsg" x="16" y="160" width="48" height="48"/>
-  <object id="11" name="Touch the lower screen to crouch" type="AndroidMsg" x="224" y="112" width="48" height="48"/>
-  <object id="13" name="Crouch and swipe down to fall trough" type="AndroidMsg" x="416" y="96" width="64" height="64"/>
+  <object id="17" name="Truck" type="Entity" x="-256" y="192">
+   <properties>
+    <property name="acceleration" type="float" value="3.5"/>
+    <property name="animation_end" type="int" value="0"/>
+    <property name="animation_speed" type="float" value="0"/>
+    <property name="animation_start" type="int" value="0"/>
+    <property name="connect_horizontal_map_ends" type="bool" value="true"/>
+    <property name="connect_vertical_map_ends" type="bool" value="false"/>
+    <property name="frame_offset_x" type="int" value="0"/>
+    <property name="frame_offset_y" type="int" value="0"/>
+    <property name="height" type="int" value="264"/>
+    <property name="is_affected_by_gravity" type="bool" value="false"/>
+    <property name="is_animated" type="bool" value="false"/>
+    <property name="is_left_oriented" type="bool" value="true"/>
+    <property name="is_moving" type="bool" value="true"/>
+    <property name="is_player" type="bool" value="false"/>
+    <property name="max_velocity_x" type="float" value="2"/>
+    <property name="sprite_sheet_id" type="int" value="4"/>
+    <property name="width" type="int" value="104"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="18" name="Police" type="Entity" x="1000" y="300">
+   <properties>
+    <property name="acceleration" type="float" value="45"/>
+    <property name="animation_end" type="int" value="0"/>
+    <property name="animation_speed" type="float" value="0"/>
+    <property name="animation_start" type="int" value="0"/>
+    <property name="connect_horizontal_map_ends" type="bool" value="true"/>
+    <property name="connect_vertical_map_ends" type="bool" value="false"/>
+    <property name="frame_offset_x" type="int" value="0"/>
+    <property name="frame_offset_y" type="int" value="0"/>
+    <property name="height" type="int" value="168"/>
+    <property name="is_affected_by_gravity" type="bool" value="false"/>
+    <property name="is_animated" type="bool" value="false"/>
+    <property name="is_left_oriented" type="bool" value="false"/>
+    <property name="is_moving" type="bool" value="true"/>
+    <property name="is_player" type="bool" value="true"/>
+    <property name="max_velocity_x" type="float" value="10"/>
+    <property name="sprite_sheet_id" type="int" value="3"/>
+    <property name="width" type="int" value="64"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="20" name="MiscVehicle2" type="Entity" x="800" y="416">
+   <properties>
+    <property name="acceleration" type="float" value="45"/>
+    <property name="animation_end" type="int" value="0"/>
+    <property name="animation_speed" type="float" value="0"/>
+    <property name="animation_start" type="int" value="0"/>
+    <property name="connect_horizontal_map_ends" type="bool" value="true"/>
+    <property name="connect_vertical_map_ends" type="bool" value="false"/>
+    <property name="frame_offset_x" type="int" value="0"/>
+    <property name="frame_offset_y" type="int" value="1"/>
+    <property name="height" type="int" value="96"/>
+    <property name="is_affected_by_gravity" type="bool" value="false"/>
+    <property name="is_animated" type="bool" value="false"/>
+    <property name="is_left_oriented" type="bool" value="false"/>
+    <property name="is_moving" type="bool" value="true"/>
+    <property name="is_player" type="bool" value="true"/>
+    <property name="max_velocity_x" type="float" value="5"/>
+    <property name="sprite_sheet_id" type="int" value="2"/>
+    <property name="width" type="int" value="64"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="19" name="MiscVehicle1" type="Entity" x="128" y="150">
+   <properties>
+    <property name="acceleration" type="float" value="45"/>
+    <property name="animation_end" type="int" value="0"/>
+    <property name="animation_speed" type="float" value="0"/>
+    <property name="animation_start" type="int" value="0"/>
+    <property name="connect_horizontal_map_ends" type="bool" value="true"/>
+    <property name="connect_vertical_map_ends" type="bool" value="false"/>
+    <property name="frame_offset_x" type="int" value="0"/>
+    <property name="frame_offset_y" type="int" value="0"/>
+    <property name="height" type="int" value="96"/>
+    <property name="is_affected_by_gravity" type="bool" value="false"/>
+    <property name="is_animated" type="bool" value="false"/>
+    <property name="is_left_oriented" type="bool" value="true"/>
+    <property name="is_moving" type="bool" value="true"/>
+    <property name="is_player" type="bool" value="true"/>
+    <property name="max_velocity_x" type="float" value="8"/>
+    <property name="sprite_sheet_id" type="int" value="1"/>
+    <property name="width" type="int" value="64"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="12" name="MessageBox" type="GenericMsg" x="1072" y="560" width="80" height="64">
+   <properties>
+    <property name="message" value="Nice jump!"/>
+   </properties>
+  </object>
+  <object id="7" name="MessageBox" type="AndroidMsg" x="128" y="560" width="48" height="48">
+   <properties>
+    <property name="message" value="Swipe up to jump"/>
+   </properties>
+  </object>
+  <object id="8" name="MessageBox" type="AndroidMsg" x="16" y="560" width="48" height="48">
+   <properties>
+    <property name="message" value="Touch the screen to walk around"/>
+   </properties>
+  </object>
+  <object id="11" name="MessageBox" type="AndroidMsg" x="224" y="512" width="48" height="48">
+   <properties>
+    <property name="message" value="Touch the lower screen to crouch"/>
+   </properties>
+  </object>
+  <object id="13" name="MessageBox" type="AndroidMsg" x="416" y="496" width="64" height="64">
+   <properties>
+    <property name="message" value="Crouch and swipe down to fall trough"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="city" tilewidth="16" tileheight="16" tilecount="891" columns="33">
+<tileset version="1.2" tiledversion="1.3.5" name="city" tilewidth="16" tileheight="16" tilecount="891" columns="33">
  <image source="city.png" width="528" height="432"/>
  <tile id="23">
   <animation>
@@ -37,6 +37,8 @@
    <frame tileid="123" duration="100"/>
    <frame tileid="124" duration="100"/>
    <frame tileid="125" duration="100"/>
+   <frame tileid="124" duration="100"/>
+   <frame tileid="123" duration="100"/>
   </animation>
  </tile>
  <tile id="155">
@@ -45,6 +47,8 @@
    <frame tileid="156" duration="100"/>
    <frame tileid="157" duration="100"/>
    <frame tileid="158" duration="100"/>
+   <frame tileid="157" duration="100"/>
+   <frame tileid="156" duration="100"/>
   </animation>
  </tile>
  <tile id="188">
@@ -53,6 +57,8 @@
    <frame tileid="189" duration="100"/>
    <frame tileid="190" duration="100"/>
    <frame tileid="191" duration="100"/>
+   <frame tileid="190" duration="100"/>
+   <frame tileid="189" duration="100"/>
   </animation>
  </tile>
  <tile id="200" type="Ladder"/>

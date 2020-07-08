@@ -1,6 +1,4 @@
-build
-doc
-release
+build*
 *.a
 *.dll
 *.exe

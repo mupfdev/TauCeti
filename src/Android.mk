@@ -2,27 +2,15 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_C_INCLUDES := \
-	$(LOCAL_PATH)\
-	$(LOCAL_PATH)/../external/inih
+LOCAL_C_INCLUDES := $(LOCAL_PATH)
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
 
 LOCAL_MODULE := main
 
-LOCAL_SRC_FILES := \
-	$(wildcard $(LOCAL_PATH)/*.c)\
-	$(wildcard $(LOCAL_PATH)/../external/inih/ini.c)
+LOCAL_SRC_FILES := $(LOCAL_PATH)/main.c
 
-LOCAL_CFLAGS := \
-	-D_REENTRANT\
-	-DWANT_ZLIB\
-	-O2\
-	-pedantic-errors\
-	-std=c99\
-	-Wall\
-	-Werror\
-	-Wextra
+LOCAL_CFLAGS := -D_REENTRANT -DWANT_ZLIB
 
 LOCAL_LDLIBS := -lz
 
