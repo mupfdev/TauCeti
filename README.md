@@ -10,8 +10,8 @@
 <a href="https://ci.appveyor.com/project/mupfelofen-de/tauceti">
   <img src="https://ci.appveyor.com/api/projects/status/hg87r0evoqu6lfgr?svg=true" alt="Build status" />
 </a>
-<a href="https://lgtm.com/projects/g/mupfelofen-de/TauCeti/context:cpp">
-  <img alt="Language grade: C/C++" src="https://img.shields.io/lgtm/grade/cpp/g/mupfelofen-de/TauCeti.svg?logo=lgtm&amp;logoWidth=18?style=flat?svg=true" />
+<a href="https://www.codacy.com/manual/mupf/TauCeti?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mupfelofen-de/TauCeti&amp;utm_campaign=Badge_Grade">
+  <img src="https://app.codacy.com/project/badge/Grade/4c19342f6cda4cc3b8b9bbb773406599" alt="Codacy Badge" />
 </a>
 </p>
 
