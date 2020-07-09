@@ -18,3 +18,7 @@ set(TauCeti_SRCS
 
 add_executable(TauCeti ${TauCeti_SRCS})
 target_link_libraries(TauCeti eszFW)
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  target_compile_options(eszFW PRIVATE -pedantic-errors -Wall -Wextra)
+endif()
