@@ -11,14 +11,16 @@
 #include <SDL.h>
 #include <esz.h>
 
-static void key_down_callback_1(void* window, void* core);
+static void key_down_callback(void* window, void* core);
 
 int main()
 {
+    const Uint8* keystate = esz_get_keyboard_state();
+
     esz_status        status;
     esz_window*       window = NULL;
-    esz_window_config config = { 640, 360, 384, 216, SDL_FALSE, SDL_FALSE };
-    esz_core*         core_1 = NULL;
+    esz_window_config config = { 640, 360, 384, 216, SDL_FALSE, SDL_TRUE };
+    esz_core*         core   = NULL;
 
     status = esz_create_window("Tau Ceti", &config, &window);
     if (ESZ_OK != status)
@@ -26,35 +28,51 @@ int main()
         goto quit;
     }
 
-    status = esz_init_core(&core_1);
+    status = esz_init_core(&core);
     if (ESZ_OK != status)
     {
         goto quit;
     }
 
-    // DEBUG!
-    core_1->camera.pos_x = 128;
-    core_1->camera.pos_y = 500;
-    // DEBUG!
+    esz_load_map("res/maps/city.tmx", window, core);
+    esz_register_event_callback(EVENT_KEYDOWN, &key_down_callback, (void*)core);
+    // DEBUG
+    esz_set_camera_position(128.f, 500.f, SDL_FALSE, window, core);
+    // DEBUG
 
-    esz_load_map("res/maps/city.tmx", window, core_1);
-
-    SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
-    esz_register_event_callback(EVENT_KEYDOWN, &key_down_callback_1, (void*)core_1);
-
-    while (esz_is_core_active(core_1))
+    while (esz_is_core_active(core))
     {
-        Uint32 time_a = 0;
-        Uint32 time_b = 0;
+        double camera_x = 0;
+        double camera_y = 0;
+        Uint32 time_a   = 0;
+        Uint32 time_b   = 0;
 
-        esz_update_core(window, core_1);
+        esz_update_core(window, core);
 
-        esz_draw_frame(&time_a, &time_b, window, core_1);
+        if (keystate[SDL_SCANCODE_UP])
+        {
+            camera_y -= 0.3f;
+        }
+        if (keystate[SDL_SCANCODE_DOWN])
+        {
+            camera_y += 0.3f;
+        }
+        if (keystate[SDL_SCANCODE_LEFT])
+        {
+            camera_x -= 0.3f;
+        }
+        if (keystate[SDL_SCANCODE_RIGHT])
+        {
+            camera_x += 0.3f;
+        }
+
+        esz_set_camera_position(camera_x, camera_y, SDL_TRUE, window, core);
+        esz_draw_frame(&time_a, &time_b, window, core);
     }
 
 quit:
-    esz_unload_map(window, core_1);
-    esz_destroy_core(core_1);
+    esz_unload_map(window, core);
+    esz_destroy_core(core);
     esz_destroy_window(window);
 
     if (ESZ_OK != status)
@@ -65,7 +83,7 @@ quit:
     return EXIT_SUCCESS;
 }
 
-static void key_down_callback_1(void* window, void* core)
+static void key_down_callback(void* window, void* core)
 {
     switch (esz_get_keycode(core))
     {
