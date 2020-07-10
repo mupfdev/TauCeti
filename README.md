@@ -27,8 +27,8 @@ engine written.
 
 ## Status
 
-I am currently completely rewriting this project.  Expect nothing until
-the next release!
+**Update**: I started by rewriting the entire engine from scratch.
+  Until the next release this project is in an incomplete state.
 
 ## Android version
 
