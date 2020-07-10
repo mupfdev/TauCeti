@@ -11,7 +11,7 @@
 #include <SDL.h>
 #include <esz.h>
 
-static void key_down_callback(void* window, void* core);
+static void key_down_callback(esz_window* window, esz_core* core);
 
 int main()
 {
@@ -35,7 +35,7 @@ int main()
     }
 
     esz_load_map("res/maps/city.tmx", window, core);
-    esz_register_event_callback(EVENT_KEYDOWN, &key_down_callback, (void*)core);
+    esz_register_event_callback(EVENT_KEYDOWN, &key_down_callback, core);
     // DEBUG
     esz_set_camera_position(128.f, 500.f, SDL_FALSE, window, core);
     // DEBUG
@@ -44,8 +44,6 @@ int main()
     {
         double camera_x = 0;
         double camera_y = 0;
-        Uint32 time_a   = 0;
-        Uint32 time_b   = 0;
 
         esz_update_core(window, core);
 
@@ -67,13 +65,22 @@ int main()
         }
 
         esz_set_camera_position(camera_x, camera_y, SDL_TRUE, window, core);
-        esz_draw_frame(&time_a, &time_b, window, core);
+        esz_draw_frame(window, core);
     }
 
 quit:
-    esz_unload_map(window, core);
-    esz_destroy_core(core);
-    esz_destroy_window(window);
+    if (esz_is_map_loaded(core))
+    {
+        esz_unload_map(window, core);
+    }
+    if (core)
+    {
+        esz_destroy_core(core);
+    }
+    if (window)
+    {
+        esz_destroy_window(window);
+    }
 
     if (ESZ_OK != status)
     {
@@ -83,7 +90,7 @@ quit:
     return EXIT_SUCCESS;
 }
 
-static void key_down_callback(void* window, void* core)
+static void key_down_callback(esz_window* window, esz_core* core)
 {
     switch (esz_get_keycode(core))
     {
@@ -95,6 +102,9 @@ static void key_down_callback(void* window, void* core)
             break;
         case SDLK_F4:
             esz_load_map("res/maps/city.tmx", window, core);
+            // DEBUG
+            esz_set_camera_position(128.f, 500.f, SDL_FALSE, window, core);
+            // DEBUG
             break;
         case SDLK_F5:
             esz_unload_map(window, core);

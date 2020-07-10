@@ -18,12 +18,17 @@
 ## About
 
 Tau Ceti is a cross-platform 2D sci-fi themed tech demo written in C99
-using SDL2 to demonstrate the capabilities of
+to demonstrate the capabilities of
 [eszFW](https://github.com/mupfelofen-de/eszFW): a cross-platform game
-development framework written in C.
+engine written.
 
 [![Tau Ceti](https://media.eszfw.de/tc-01-tn.png)](https://media.eszfw.de/tc-01.png?raw=true "Tau Ceti 1")
 [![Tau Ceti](https://media.eszfw.de/tc-02-tn.png)](https://media.eszfw.de/tc-02.png?raw=true "Tau Ceti 2")
+
+## Status
+
+I am currently completely rewriting this project.  Expect nothing until
+the next release!
 
 ## Android version
 
@@ -70,8 +75,8 @@ ln -s ../res
 
 ## Licence and Credits
 
-This project is licensed under the "THE BEER-WARE LICENCE".  See the
-file [LICENCE.md](LICENCE.md) for details.
+This project is licensed under the "The MIT License".  See the file
+[LICENSE.md](LICENSE.md) for details.
 
 [Warped City](https://ansimuz.itch.io/warped-city) by Luis Zuno
 (@ansimuz).  Dedicated to [public
