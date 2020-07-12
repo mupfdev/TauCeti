@@ -65,7 +65,11 @@ int main()
         }
 
         esz_set_camera_position(camera_x, camera_y, SDL_TRUE, window, core);
-        esz_draw_frame(window, core);
+        status = esz_draw_frame(window, core);
+        if (ESZ_ERROR_CRITICAL == status)
+        {
+            break;
+        }
     }
 
 quit:

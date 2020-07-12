@@ -68,6 +68,7 @@
     <property name="height" type="int" value="64"/>
     <property name="is_affected_by_gravity" type="bool" value="true"/>
     <property name="is_animated" type="bool" value="true"/>
+    <property name="is_in_background" type="bool" value="false"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="false"/>
     <property name="is_player" type="bool" value="true"/>
@@ -90,6 +91,7 @@
     <property name="height" type="int" value="264"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
+    <property name="is_in_background" type="bool" value="true"/>
     <property name="is_left_oriented" type="bool" value="true"/>
     <property name="is_moving" type="bool" value="true"/>
     <property name="is_player" type="bool" value="false"/>
@@ -112,6 +114,7 @@
     <property name="height" type="int" value="168"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
+    <property name="is_in_background" type="bool" value="true"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="true"/>
     <property name="is_player" type="bool" value="true"/>
@@ -134,6 +137,7 @@
     <property name="height" type="int" value="96"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
+    <property name="is_in_background" type="bool" value="true"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="true"/>
     <property name="is_player" type="bool" value="true"/>
@@ -156,6 +160,7 @@
     <property name="height" type="int" value="96"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
+    <property name="is_in_background" type="bool" value="true"/>
     <property name="is_left_oriented" type="bool" value="true"/>
     <property name="is_moving" type="bool" value="true"/>
     <property name="is_player" type="bool" value="true"/>
