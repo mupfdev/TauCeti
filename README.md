@@ -17,8 +17,8 @@
 
 ## About
 
-Tau Ceti is a cross-platform 2D sci-fi themed tech demo written in C99
-to demonstrate the capabilities of
+Tau Ceti is a cross-platform 2D sci-fi themed tech demo written in C to
+demonstrate the capabilities of
 [eszFW](https://github.com/mupfelofen-de/eszFW): a cross-platform game
 engine written.
 
