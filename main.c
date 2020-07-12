@@ -11,16 +11,16 @@
 #include <SDL.h>
 #include <esz.h>
 
-static void key_down_callback(esz_window_t* window, esz_core_t* core);
+static void key_down_callback(esz_window* window, esz_core* core);
 
 int main()
 {
     const Uint8* keystate = esz_get_keyboard_state();
 
-    esz_status          status;
-    esz_window_t*       window = NULL;
-    esz_window_config_t config = { 640, 360, 384, 216, SDL_FALSE, SDL_TRUE };
-    esz_core_t*         core   = NULL;
+    esz_status        status;
+    esz_window*       window = NULL;
+    esz_window_config config = { 640, 360, 384, 216, SDL_FALSE, SDL_TRUE };
+    esz_core*         core   = NULL;
 
     status = esz_create_window("Tau Ceti", &config, &window);
     if (ESZ_OK != status)
@@ -94,7 +94,7 @@ quit:
     return EXIT_SUCCESS;
 }
 
-static void key_down_callback(esz_window_t* window, esz_core_t* core)
+static void key_down_callback(esz_window* window, esz_core* core)
 {
     switch (esz_get_keycode(core))
     {

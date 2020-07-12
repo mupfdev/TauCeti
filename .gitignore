@@ -5,3 +5,4 @@ build*
 *.lib
 *.o
 *.so
+*.tiled-session
