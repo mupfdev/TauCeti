@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/project-GitHub-blue?style=flat?svg=true" alt="GitHub project" />
 </a>
 <a href="https://github.com/mupfelofen-de/TauCeti/blob/master/LICENCE.md">
-  <img src="https://img.shields.io/badge/licence-BEER--WARE-blue?style=flat?svg=true" alt="Licence" />
+  <img src="https://img.shields.io/badge/licence-MIT-blue?style=flat?svg=true" alt="Licence" />
 </a>
 <a href="https://ci.appveyor.com/project/mupfelofen-de/tauceti">
   <img src="https://ci.appveyor.com/api/projects/status/hg87r0evoqu6lfgr?svg=true" alt="Build status" />
