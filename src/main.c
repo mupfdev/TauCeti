@@ -37,7 +37,7 @@ int main()
     esz_load_map("res/maps/city.tmx", window, core);
     esz_register_event_callback(EVENT_KEYDOWN, &key_down_callback, core);
     // DEBUG
-    esz_set_camera_position(128.f, 500.f, SDL_FALSE, window, core);
+    esz_set_camera_position(0.f, 475.f, SDL_FALSE, window, core);
     // DEBUG
 
     while (esz_is_core_active(core))
@@ -107,7 +107,7 @@ static void key_down_callback(esz_window_t* window, esz_core_t* core)
         case SDLK_F4:
             esz_load_map("res/maps/city.tmx", window, core);
             // DEBUG
-            esz_set_camera_position(128.f, 500.f, SDL_FALSE, window, core);
+            esz_set_camera_position(0.f, 475.f, SDL_FALSE, window, core);
             // DEBUG
             break;
         case SDLK_F5:
