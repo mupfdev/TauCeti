@@ -4,7 +4,8 @@
     {
      "export":
         {
-         "target":"."
+         "format":"json",
+         "target":"test.json"
         }
     },
  "height":50,
@@ -798,7 +799,20 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/tilesets\/city.json"
+         "source":"..\/tilesets\/test.json"
+        }, 
+        {
+         "columns":33,
+         "firstgid":892,
+         "image":"..\/tilesets\/city.png",
+         "imageheight":432,
+         "imagewidth":528,
+         "margin":0,
+         "name":"test",
+         "spacing":0,
+         "tilecount":891,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",
