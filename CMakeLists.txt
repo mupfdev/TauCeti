@@ -10,18 +10,13 @@ find_package(SDL2 REQUIRED)
 add_subdirectory(external/eszFW)
 
 include_directories(
-    SYSTEM external/eszFW/src
-    SYSTEM external/eszFW/external/cute_headers
-    ${SDL2_INCLUDE_DIRS}
-    )
+    ${SDL2_INCLUDE_DIRS})
 
-set(TauCeti_SRCS
-    src/main.c
-    )
+set(TauCeti_sources src/main.c)
 
 add_executable(
     ${PROJECT_NAME}
-    ${TauCeti_SRCS})
+    ${TauCeti_sources})
 
 target_link_libraries(
     ${PROJECT_NAME}

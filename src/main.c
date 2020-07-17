@@ -7,6 +7,8 @@
 
 #define SDL_MAIN_HANDLED
 
+#include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <SDL.h>
 #include <esz.h>
@@ -15,12 +17,11 @@ static void key_down_callback(esz_window_t* window, esz_core_t* core);
 
 int main()
 {
-    const Uint8* keystate = esz_get_keyboard_state();
-
+    const uint8_t*      keystate = esz_get_keyboard_state();
     esz_status          status;
-    esz_window_t*       window = NULL;
-    esz_window_config_t config = { 640, 360, 384, 216, SDL_FALSE, SDL_TRUE };
-    esz_core_t*         core   = NULL;
+    esz_window_t*       window   = NULL;
+    esz_window_config_t config   = { 640, 360, 384, 216, false, true };
+    esz_core_t*         core     = NULL;
 
     status = esz_create_window("Tau Ceti", &config, &window);
     if (ESZ_OK != status)
@@ -36,9 +37,7 @@ int main()
 
     esz_load_map("res/maps/city.tmx", window, core);
     esz_register_event_callback(EVENT_KEYDOWN, &key_down_callback, core);
-    // DEBUG
-    esz_set_camera_position(0.f, 475.f, SDL_FALSE, window, core);
-    // DEBUG
+    esz_set_camera_position(0.f, 475.f, false, window, core);
 
     while (esz_is_core_active(core))
     {
@@ -64,7 +63,7 @@ int main()
             camera_x += 0.3f;
         }
 
-        esz_set_camera_position(camera_x, camera_y, SDL_TRUE, window, core);
+        esz_set_camera_position(camera_x, camera_y, true, window, core);
         status = esz_draw_frame(window, core);
         if (ESZ_ERROR_CRITICAL == status)
         {
@@ -106,9 +105,7 @@ static void key_down_callback(esz_window_t* window, esz_core_t* core)
             break;
         case SDLK_F4:
             esz_load_map("res/maps/city.tmx", window, core);
-            // DEBUG
-            esz_set_camera_position(0.f, 475.f, SDL_FALSE, window, core);
-            // DEBUG
+            esz_set_camera_position(0.f, 475.f, false, window, core);
             break;
         case SDLK_F5:
             esz_unload_map(window, core);
