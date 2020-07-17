@@ -4,8 +4,8 @@
 <a href="https://github.com/mupfelofen-de/TauCeti">
   <img src="https://img.shields.io/badge/project-GitHub-blue?style=flat?svg=true" alt="GitHub project" />
 </a>
-<a href="https://github.com/mupfelofen-de/TauCeti/blob/master/LICENSE.md">
-  <img src="https://img.shields.io/badge/licence-MIT-blue?style=flat?svg=true" alt="Licence" />
+<a href="https://github.com/mupfelofen-de/TauCeti/blob/master/LICENCE.md">
+  <img src="https://img.shields.io/badge/licence-BEER--WARE-blue?style=flat?svg=true" alt="Licence" />
 </a>
 <a href="https://ci.appveyor.com/project/mupfelofen-de/tauceti">
   <img src="https://ci.appveyor.com/api/projects/status/hg87r0evoqu6lfgr?svg=true" alt="Build status" />
@@ -65,6 +65,13 @@ mkdir build
 cd build
 cmake ..
 make
+```
+
+You can also use _TauCeti_ with _cute_tiled_ instead of _libTMX_.  Just
+enable the respective CMake option:
+
+```bash
+cmake -DUSE_CUTE_TILED=ON ..
 ```
 
 You can run the demo by entering:
