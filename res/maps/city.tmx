@@ -19,7 +19,6 @@
   <property name="sprite_sheet_3" type="file" value="../sprites/vehicle-police.png"/>
   <property name="sprite_sheet_4" type="file" value="../sprites/vehicle-truck.png"/>
   <property name="sprite_sheet_count" type="int" value="5"/>
-  <property name="tileset_image" type="file" value="../tilesets/city.png"/>
  </properties>
  <tileset firstgid="1" source="../tilesets/city.tsx"/>
  <layer id="1" name="Tile Layer BG 1" width="75" height="50">

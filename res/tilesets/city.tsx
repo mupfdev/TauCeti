@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.3.5" name="city" tilewidth="16" tileheight="16" tilecount="891" columns="33">
+<tileset version="1.4" tiledversion="1.4.1" name="city" tilewidth="16" tileheight="16" tilecount="891" columns="33">
  <image source="city.png" width="528" height="432"/>
  <tile id="23">
   <animation>
@@ -61,7 +61,11 @@
    <frame tileid="189" duration="100"/>
   </animation>
  </tile>
- <tile id="200" type="Ladder"/>
+ <tile id="200">
+  <properties>
+   <property name="is_ladder" type="bool" value="true"/>
+  </properties>
+ </tile>
  <tile id="223">
   <animation>
    <frame tileid="223" duration="100"/>
@@ -78,7 +82,11 @@
    <frame tileid="230" duration="100"/>
   </animation>
  </tile>
- <tile id="233" type="Ladder"/>
+ <tile id="233">
+  <properties>
+   <property name="is_ladder" type="bool" value="true"/>
+  </properties>
+ </tile>
  <tile id="256">
   <animation>
    <frame tileid="256" duration="100"/>
@@ -127,10 +135,26 @@
    <frame tileid="359" duration="100"/>
   </animation>
  </tile>
- <tile id="369" type="Platform"/>
- <tile id="370" type="Platform"/>
- <tile id="371" type="Platform"/>
- <tile id="372" type="Platform"/>
+ <tile id="369">
+  <properties>
+   <property name="is_platform" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="370">
+  <properties>
+   <property name="is_platform" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="371">
+  <properties>
+   <property name="is_platform" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="372">
+  <properties>
+   <property name="is_platform" type="bool" value="true"/>
+  </properties>
+ </tile>
  <tile id="382">
   <animation>
    <frame tileid="382" duration="100"/>
