@@ -14,13 +14,13 @@ include_directories(
 
 set(TauCeti_sources src/main.c)
 
-option(USE_CUTE_TILED "Use cute_tiled instead of libTMX" OFF)
+option(USE_LIBTMX "Use libTMX instead of cute_tiled" OFF)
 
-if(USE_CUTE_TILED)
-  add_definitions(-DUSE_CUTE_TILED)
-else()
+if(USE_LIBTMX)
   add_definitions(-DUSE_LIBTMX)
-endif(USE_CUTE_TILED)
+else()
+  add_definitions(-DUSE_CUTE_TILED)
+endif(USE_LIBTMX)
 
 add_executable(
     ${PROJECT_NAME}
