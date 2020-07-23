@@ -2,10 +2,11 @@
 <map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="75" height="50" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextlayerid="9" nextobjectid="22">
  <properties>
   <property name="animated_tile_fps" type="int" value="5"/>
+  <property name="background_constant_velocity" type="float" value="0"/>
   <property name="background_is_top_aligned" type="bool" value="false"/>
-  <property name="background_layer_0" type="file" value="../backgrounds/city-bg0.png"/>
-  <property name="background_layer_1" type="file" value="../backgrounds/city-bg1.png"/>
-  <property name="background_layer_2" type="file" value="../backgrounds/city-bg2.png"/>
+  <property name="background_layer_1" type="file" value="../backgrounds/city-bg0.png"/>
+  <property name="background_layer_2" type="file" value="../backgrounds/city-bg1.png"/>
+  <property name="background_layer_3" type="file" value="../backgrounds/city-bg2.png"/>
   <property name="background_layer_count" type="int" value="3"/>
   <property name="background_layer_shift" type="float" value="0.5"/>
   <property name="font" type="file" value="../fonts/samus.ttf"/>
@@ -13,11 +14,11 @@
   <property name="gravitation" type="float" value="9.80665"/>
   <property name="meter_in_pixel" type="int" value="42"/>
   <property name="music" type="file" value="../music/Dreams_of_Vain.ogg"/>
-  <property name="sprite_sheet_0" type="file" value="../sprites/player.png"/>
-  <property name="sprite_sheet_1" type="file" value="../sprites/vehicle-misc1.png"/>
-  <property name="sprite_sheet_2" type="file" value="../sprites/vehicle-misc2.png"/>
-  <property name="sprite_sheet_3" type="file" value="../sprites/vehicle-police.png"/>
-  <property name="sprite_sheet_4" type="file" value="../sprites/vehicle-truck.png"/>
+  <property name="sprite_sheet_1" type="file" value="../sprites/player.png"/>
+  <property name="sprite_sheet_2" type="file" value="../sprites/vehicle-misc1.png"/>
+  <property name="sprite_sheet_3" type="file" value="../sprites/vehicle-misc2.png"/>
+  <property name="sprite_sheet_4" type="file" value="../sprites/vehicle-police.png"/>
+  <property name="sprite_sheet_5" type="file" value="../sprites/vehicle-truck.png"/>
   <property name="sprite_sheet_count" type="int" value="5"/>
  </properties>
  <tileset firstgid="1" source="../tilesets/city.tsx"/>
@@ -54,12 +55,12 @@
   </data>
  </layer>
  <objectgroup id="5" name="Object Layer 1">
-  <object id="1" name="Player" type="Entity" x="32" y="592">
+  <object id="1" name="Player" type="entity" x="32" y="592">
    <properties>
     <property name="acceleration" type="float" value="8"/>
-    <property name="animation_end" type="int" value="3"/>
-    <property name="animation_speed" type="float" value="12.5"/>
-    <property name="animation_start" type="int" value="0"/>
+    <property name="animation_first_frame" type="int" value="0"/>
+    <property name="animation_fps" type="int" value="5"/>
+    <property name="animation_last_frame" type="int" value="3"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
     <property name="frame_offset_x" type="int" value="0"/>
@@ -70,19 +71,19 @@
     <property name="is_in_background" type="bool" value="false"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="false"/>
-    <property name="is_player" type="bool" value="true"/>
+    <property name="is_visible" type="bool" value="true"/>
     <property name="max_velocity_x" type="float" value="4.5"/>
     <property name="sprite_sheet_id" type="int" value="0"/>
     <property name="width" type="int" value="64"/>
    </properties>
    <point/>
   </object>
-  <object id="17" name="Truck" type="Entity" x="-256" y="192">
+  <object id="17" name="Truck" type="entity" x="-256" y="192">
    <properties>
     <property name="acceleration" type="float" value="3.5"/>
-    <property name="animation_end" type="int" value="0"/>
-    <property name="animation_speed" type="float" value="0"/>
-    <property name="animation_start" type="int" value="0"/>
+    <property name="animation_first_frame" type="int" value="0"/>
+    <property name="animation_fps" type="int" value="0"/>
+    <property name="animation_last_frame" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
     <property name="frame_offset_x" type="int" value="0"/>
@@ -93,19 +94,19 @@
     <property name="is_in_background" type="bool" value="true"/>
     <property name="is_left_oriented" type="bool" value="true"/>
     <property name="is_moving" type="bool" value="true"/>
-    <property name="is_player" type="bool" value="false"/>
+    <property name="is_visible" type="bool" value="true"/>
     <property name="max_velocity_x" type="float" value="2"/>
     <property name="sprite_sheet_id" type="int" value="4"/>
     <property name="width" type="int" value="104"/>
    </properties>
    <point/>
   </object>
-  <object id="18" name="Police" type="Entity" x="1000" y="300">
+  <object id="18" name="Police" type="entity" x="1000" y="300">
    <properties>
     <property name="acceleration" type="float" value="45"/>
-    <property name="animation_end" type="int" value="0"/>
-    <property name="animation_speed" type="float" value="0"/>
-    <property name="animation_start" type="int" value="0"/>
+    <property name="animation_first_frame" type="int" value="0"/>
+    <property name="animation_fps" type="int" value="0"/>
+    <property name="animation_last_frame" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
     <property name="frame_offset_x" type="int" value="0"/>
@@ -116,19 +117,19 @@
     <property name="is_in_background" type="bool" value="true"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="true"/>
-    <property name="is_player" type="bool" value="true"/>
+    <property name="is_visible" type="bool" value="true"/>
     <property name="max_velocity_x" type="float" value="10"/>
     <property name="sprite_sheet_id" type="int" value="3"/>
     <property name="width" type="int" value="64"/>
    </properties>
    <point/>
   </object>
-  <object id="20" name="MiscVehicle2" type="Entity" x="800" y="416">
+  <object id="20" name="MiscVehicle2" type="entity" x="800" y="416">
    <properties>
     <property name="acceleration" type="float" value="45"/>
-    <property name="animation_end" type="int" value="0"/>
-    <property name="animation_speed" type="float" value="0"/>
-    <property name="animation_start" type="int" value="0"/>
+    <property name="animation_first_frame" type="int" value="0"/>
+    <property name="animation_fps" type="int" value="0"/>
+    <property name="animation_last_frame" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
     <property name="frame_offset_x" type="int" value="0"/>
@@ -139,19 +140,19 @@
     <property name="is_in_background" type="bool" value="true"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="true"/>
-    <property name="is_player" type="bool" value="true"/>
+    <property name="is_visible" type="bool" value="true"/>
     <property name="max_velocity_x" type="float" value="5"/>
     <property name="sprite_sheet_id" type="int" value="2"/>
     <property name="width" type="int" value="64"/>
    </properties>
    <point/>
   </object>
-  <object id="19" name="MiscVehicle1" type="Entity" x="128" y="150">
+  <object id="19" name="MiscVehicle1" type="entity" x="128" y="150">
    <properties>
     <property name="acceleration" type="float" value="45"/>
-    <property name="animation_end" type="int" value="0"/>
-    <property name="animation_speed" type="float" value="0"/>
-    <property name="animation_start" type="int" value="0"/>
+    <property name="animation_first_frame" type="int" value="0"/>
+    <property name="animation_fps" type="int" value="0"/>
+    <property name="animation_last_frame" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
     <property name="frame_offset_x" type="int" value="0"/>
@@ -162,37 +163,12 @@
     <property name="is_in_background" type="bool" value="true"/>
     <property name="is_left_oriented" type="bool" value="true"/>
     <property name="is_moving" type="bool" value="true"/>
-    <property name="is_player" type="bool" value="true"/>
+    <property name="is_visible" type="bool" value="true"/>
     <property name="max_velocity_x" type="float" value="8"/>
     <property name="sprite_sheet_id" type="int" value="1"/>
     <property name="width" type="int" value="64"/>
    </properties>
    <point/>
-  </object>
-  <object id="12" name="MessageBox" type="GenericMsg" x="1072" y="560" width="80" height="64">
-   <properties>
-    <property name="message" value="Nice jump!"/>
-   </properties>
-  </object>
-  <object id="7" name="MessageBox" type="AndroidMsg" x="128" y="560" width="48" height="48">
-   <properties>
-    <property name="message" value="Swipe up to jump"/>
-   </properties>
-  </object>
-  <object id="8" name="MessageBox" type="AndroidMsg" x="16" y="560" width="48" height="48">
-   <properties>
-    <property name="message" value="Touch the screen to walk around"/>
-   </properties>
-  </object>
-  <object id="11" name="MessageBox" type="AndroidMsg" x="224" y="512" width="48" height="48">
-   <properties>
-    <property name="message" value="Touch the lower screen to crouch"/>
-   </properties>
-  </object>
-  <object id="13" name="MessageBox" type="AndroidMsg" x="416" y="496" width="64" height="64">
-   <properties>
-    <property name="message" value="Crouch and swipe down to fall trough"/>
-   </properties>
   </object>
  </objectgroup>
 </map>
