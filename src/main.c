@@ -35,6 +35,8 @@ int main()
         goto quit;
     }
 
+    SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
+
     status = esz_init_core(&core);
     if (ESZ_OK != status)
     {
@@ -76,7 +78,7 @@ int main()
         }
 
         esz_set_camera_position(camera_x, camera_y, true, window, core);
-        status = esz_draw_frame(window, core);
+        status = esz_show_scene(window, core);
         if (ESZ_ERROR_CRITICAL == status)
         {
             break;
