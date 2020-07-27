@@ -111,16 +111,23 @@ static void key_down_callback(esz_window_t* window, esz_core_t* core)
 {
     switch (esz_get_keycode(core))
     {
+        case SDLK_ESCAPE:
         case SDLK_q:
             esz_deactivate_core(core);
             break;
-        case SDLK_F4:
-            esz_load_map(MAP_FILE, window, core);
-            esz_set_camera_position(0.f, 475.f, false, window, core);
-            break;
         case SDLK_F5:
-            esz_unload_map(window, core);
+        {
+            if (esz_is_map_loaded(core))
+            {
+                esz_unload_map(window, core);
+            }
+            else
+            {
+                esz_load_map(MAP_FILE, window, core);
+                esz_set_camera_position(0.f, 475.f, false, window, core);
+            }
             break;
+        }
         case SDLK_F11:
             esz_toggle_fullscreen(window);
             break;
