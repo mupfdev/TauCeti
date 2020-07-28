@@ -99,19 +99,29 @@
                          "value":8
                         }, 
                         {
-                         "name":"animation_first_frame",
+                         "name":"animation_1",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"animation_1_first_frame",
                          "type":"int",
                          "value":0
                         }, 
                         {
-                         "name":"animation_fps",
+                         "name":"animation_1_fps",
                          "type":"int",
-                         "value":5
+                         "value":8
                         }, 
                         {
-                         "name":"animation_last_frame",
+                         "name":"animation_1_length",
                          "type":"int",
-                         "value":3
+                         "value":4
+                        }, 
+                        {
+                         "name":"animation_1_offset_y",
+                         "type":"int",
+                         "value":1
                         }, 
                         {
                          "name":"connect_horizontal_map_ends",
@@ -122,16 +132,6 @@
                          "name":"connect_vertical_map_ends",
                          "type":"bool",
                          "value":false
-                        }, 
-                        {
-                         "name":"frame_offset_x",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame_offset_y",
-                         "type":"int",
-                         "value":1
                         }, 
                         {
                          "name":"height",
@@ -169,9 +169,19 @@
                          "value":false
                         }, 
                         {
+                         "name":"is_player",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"is_visible",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"jumping_power",
+                         "type":"float",
+                         "value":4
                         }, 
                         {
                          "name":"max_velocity_x",
@@ -207,21 +217,6 @@
                          "value":3.5
                         }, 
                         {
-                         "name":"animation_first_frame",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"animation_fps",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"animation_last_frame",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
                          "name":"connect_horizontal_map_ends",
                          "type":"bool",
                          "value":true
@@ -230,16 +225,6 @@
                          "name":"connect_vertical_map_ends",
                          "type":"bool",
                          "value":false
-                        }, 
-                        {
-                         "name":"frame_offset_x",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame_offset_y",
-                         "type":"int",
-                         "value":0
                         }, 
                         {
                          "name":"height",
@@ -277,9 +262,19 @@
                          "value":true
                         }, 
                         {
+                         "name":"is_player",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
                          "name":"is_visible",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"jumping_power",
+                         "type":"float",
+                         "value":0
                         }, 
                         {
                          "name":"max_velocity_x",
@@ -315,21 +310,6 @@
                          "value":45
                         }, 
                         {
-                         "name":"animation_first_frame",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"animation_fps",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"animation_last_frame",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
                          "name":"connect_horizontal_map_ends",
                          "type":"bool",
                          "value":true
@@ -338,16 +318,6 @@
                          "name":"connect_vertical_map_ends",
                          "type":"bool",
                          "value":false
-                        }, 
-                        {
-                         "name":"frame_offset_x",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame_offset_y",
-                         "type":"int",
-                         "value":0
                         }, 
                         {
                          "name":"height",
@@ -385,9 +355,19 @@
                          "value":true
                         }, 
                         {
+                         "name":"is_player",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
                          "name":"is_visible",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"jumping_power",
+                         "type":"float",
+                         "value":0
                         }, 
                         {
                          "name":"max_velocity_x",
@@ -423,21 +403,6 @@
                          "value":45
                         }, 
                         {
-                         "name":"animation_first_frame",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"animation_fps",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"animation_last_frame",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
                          "name":"connect_horizontal_map_ends",
                          "type":"bool",
                          "value":true
@@ -446,16 +411,6 @@
                          "name":"connect_vertical_map_ends",
                          "type":"bool",
                          "value":false
-                        }, 
-                        {
-                         "name":"frame_offset_x",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame_offset_y",
-                         "type":"int",
-                         "value":1
                         }, 
                         {
                          "name":"height",
@@ -493,9 +448,19 @@
                          "value":true
                         }, 
                         {
+                         "name":"is_player",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
                          "name":"is_visible",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"jumping_power",
+                         "type":"float",
+                         "value":0
                         }, 
                         {
                          "name":"max_velocity_x",
@@ -531,21 +496,6 @@
                          "value":45
                         }, 
                         {
-                         "name":"animation_first_frame",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"animation_fps",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"animation_last_frame",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
                          "name":"connect_horizontal_map_ends",
                          "type":"bool",
                          "value":true
@@ -554,16 +504,6 @@
                          "name":"connect_vertical_map_ends",
                          "type":"bool",
                          "value":false
-                        }, 
-                        {
-                         "name":"frame_offset_x",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"frame_offset_y",
-                         "type":"int",
-                         "value":0
                         }, 
                         {
                          "name":"height",
@@ -601,9 +541,19 @@
                          "value":true
                         }, 
                         {
+                         "name":"is_player",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
                          "name":"is_visible",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"jumping_power",
+                         "type":"float",
+                         "value":0
                         }, 
                         {
                          "name":"max_velocity_x",
@@ -634,7 +584,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":22,
+ "nextobjectid":23,
  "orientation":"orthogonal",
  "properties":[
         {

@@ -46,7 +46,6 @@ int main()
     if (ESZ_OK == esz_load_map(MAP_FILE, window, core))
     {
         esz_register_event_callback(EVENT_KEYDOWN, &key_down_callback, core);
-        esz_set_camera_position(0.f, 475.f, false, window, core);
     }
     else
     {
@@ -60,6 +59,14 @@ int main()
 
         esz_update_core(window, core);
 
+        if (keystate[SDL_SCANCODE_LSHIFT])
+        {
+            esz_unlock_camera(core);
+        }
+        else
+        {
+            esz_lock_camera(core);
+        }
         if (keystate[SDL_SCANCODE_UP])
         {
             camera_y -= 0.3f;
@@ -76,8 +83,8 @@ int main()
         {
             camera_x += 0.3f;
         }
-
         esz_set_camera_position(camera_x, camera_y, true, window, core);
+
         status = esz_show_scene(window, core);
         if (ESZ_ERROR_CRITICAL == status)
         {
@@ -124,7 +131,6 @@ static void key_down_callback(esz_window_t* window, esz_core_t* core)
             else
             {
                 esz_load_map(MAP_FILE, window, core);
-                esz_set_camera_position(0.f, 475.f, false, window, core);
             }
             break;
         }

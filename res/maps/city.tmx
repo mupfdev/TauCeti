@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="75" height="50" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextlayerid="9" nextobjectid="22">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="75" height="50" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextlayerid="9" nextobjectid="23">
  <properties>
   <property name="animated_tile_fps" type="int" value="5"/>
   <property name="background_constant_velocity" type="float" value="0"/>
@@ -56,13 +56,13 @@
   <object id="1" name="Player" type="entity" x="32" y="592">
    <properties>
     <property name="acceleration" type="float" value="8"/>
-    <property name="animation_first_frame" type="int" value="0"/>
-    <property name="animation_fps" type="int" value="5"/>
-    <property name="animation_last_frame" type="int" value="3"/>
+    <property name="animation_1" type="bool" value="true"/>
+    <property name="animation_1_first_frame" type="int" value="0"/>
+    <property name="animation_1_fps" type="int" value="8"/>
+    <property name="animation_1_length" type="int" value="4"/>
+    <property name="animation_1_offset_y" type="int" value="1"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
-    <property name="frame_offset_x" type="int" value="0"/>
-    <property name="frame_offset_y" type="int" value="1"/>
     <property name="height" type="int" value="64"/>
     <property name="is_affected_by_gravity" type="bool" value="true"/>
     <property name="is_animated" type="bool" value="true"/>
@@ -70,7 +70,9 @@
     <property name="is_in_midground" type="bool" value="true"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="false"/>
+    <property name="is_player" type="bool" value="true"/>
     <property name="is_visible" type="bool" value="false"/>
+    <property name="jumping_power" type="float" value="4"/>
     <property name="max_velocity_x" type="float" value="4.5"/>
     <property name="sprite_sheet_id" type="int" value="0"/>
     <property name="width" type="int" value="64"/>
@@ -80,13 +82,8 @@
   <object id="17" name="Truck" type="entity" x="960" y="512">
    <properties>
     <property name="acceleration" type="float" value="3.5"/>
-    <property name="animation_first_frame" type="int" value="0"/>
-    <property name="animation_fps" type="int" value="0"/>
-    <property name="animation_last_frame" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
-    <property name="frame_offset_x" type="int" value="0"/>
-    <property name="frame_offset_y" type="int" value="0"/>
     <property name="height" type="int" value="104"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
@@ -94,7 +91,9 @@
     <property name="is_in_midground" type="bool" value="false"/>
     <property name="is_left_oriented" type="bool" value="true"/>
     <property name="is_moving" type="bool" value="true"/>
+    <property name="is_player" type="bool" value="false"/>
     <property name="is_visible" type="bool" value="true"/>
+    <property name="jumping_power" type="float" value="0"/>
     <property name="max_velocity_x" type="float" value="2"/>
     <property name="sprite_sheet_id" type="int" value="4"/>
     <property name="width" type="int" value="264"/>
@@ -104,13 +103,8 @@
   <object id="18" name="Police" type="entity" x="700" y="475">
    <properties>
     <property name="acceleration" type="float" value="45"/>
-    <property name="animation_first_frame" type="int" value="0"/>
-    <property name="animation_fps" type="int" value="0"/>
-    <property name="animation_last_frame" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
-    <property name="frame_offset_x" type="int" value="0"/>
-    <property name="frame_offset_y" type="int" value="0"/>
     <property name="height" type="int" value="64"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
@@ -118,7 +112,9 @@
     <property name="is_in_midground" type="bool" value="false"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="true"/>
+    <property name="is_player" type="bool" value="false"/>
     <property name="is_visible" type="bool" value="true"/>
+    <property name="jumping_power" type="float" value="0"/>
     <property name="max_velocity_x" type="float" value="4.5"/>
     <property name="sprite_sheet_id" type="int" value="3"/>
     <property name="width" type="int" value="168"/>
@@ -128,13 +124,8 @@
   <object id="20" name="MiscVehicle2" type="entity" x="800" y="670">
    <properties>
     <property name="acceleration" type="float" value="45"/>
-    <property name="animation_first_frame" type="int" value="0"/>
-    <property name="animation_fps" type="int" value="0"/>
-    <property name="animation_last_frame" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
-    <property name="frame_offset_x" type="int" value="0"/>
-    <property name="frame_offset_y" type="int" value="1"/>
     <property name="height" type="int" value="64"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
@@ -142,7 +133,9 @@
     <property name="is_in_midground" type="bool" value="false"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="true"/>
+    <property name="is_player" type="bool" value="false"/>
     <property name="is_visible" type="bool" value="true"/>
+    <property name="jumping_power" type="float" value="0"/>
     <property name="max_velocity_x" type="float" value="4"/>
     <property name="sprite_sheet_id" type="int" value="2"/>
     <property name="width" type="int" value="96"/>
@@ -152,13 +145,8 @@
   <object id="19" name="MiscVehicle1" type="entity" x="560" y="600">
    <properties>
     <property name="acceleration" type="float" value="45"/>
-    <property name="animation_first_frame" type="int" value="0"/>
-    <property name="animation_fps" type="int" value="0"/>
-    <property name="animation_last_frame" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
-    <property name="frame_offset_x" type="int" value="0"/>
-    <property name="frame_offset_y" type="int" value="0"/>
     <property name="height" type="int" value="64"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
@@ -166,7 +154,9 @@
     <property name="is_in_midground" type="bool" value="false"/>
     <property name="is_left_oriented" type="bool" value="true"/>
     <property name="is_moving" type="bool" value="true"/>
+    <property name="is_player" type="bool" value="false"/>
     <property name="is_visible" type="bool" value="true"/>
+    <property name="jumping_power" type="float" value="0"/>
     <property name="max_velocity_x" type="float" value="4.8"/>
     <property name="sprite_sheet_id" type="int" value="1"/>
     <property name="width" type="int" value="96"/>
