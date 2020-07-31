@@ -53,14 +53,53 @@
   </data>
  </layer>
  <objectgroup id="5" name="Object Layer 1">
-  <object id="1" name="Player" type="entity" x="32" y="592">
+  <object id="1" name="Player" type="entity" x="31" y="592">
    <properties>
     <property name="acceleration" type="float" value="8"/>
     <property name="animation_1" type="bool" value="true"/>
-    <property name="animation_1_first_frame" type="int" value="0"/>
+    <property name="animation_1_first_frame" type="int" value="1"/>
     <property name="animation_1_fps" type="int" value="8"/>
     <property name="animation_1_length" type="int" value="4"/>
     <property name="animation_1_offset_y" type="int" value="1"/>
+    <property name="animation_2" type="bool" value="true"/>
+    <property name="animation_2_first_frame" type="int" value="1"/>
+    <property name="animation_2_fps" type="int" value="12"/>
+    <property name="animation_2_length" type="int" value="16"/>
+    <property name="animation_2_offset_y" type="int" value="0"/>
+    <property name="animation_3" type="bool" value="true"/>
+    <property name="animation_3_first_frame" type="int" value="17"/>
+    <property name="animation_3_fps" type="int" value="12"/>
+    <property name="animation_3_length" type="int" value="6"/>
+    <property name="animation_3_offset_y" type="int" value="0"/>
+    <property name="animation_4" type="bool" value="true"/>
+    <property name="animation_4_first_frame" type="int" value="23"/>
+    <property name="animation_4_fps" type="int" value="0"/>
+    <property name="animation_4_length" type="int" value="1"/>
+    <property name="animation_5" type="bool" value="true"/>
+    <property name="animation_5_first_frame" type="int" value="24"/>
+    <property name="animation_5_fps" type="int" value="0"/>
+    <property name="animation_5_length" type="int" value="1"/>
+    <property name="animation_5_offset_y" type="int" value="0"/>
+    <property name="animation_6" type="bool" value="true"/>
+    <property name="animation_6_first_frame" type="int" value="5"/>
+    <property name="animation_6_fps" type="int" value="12"/>
+    <property name="animation_6_length" type="int" value="8"/>
+    <property name="animation_6_offset_y" type="int" value="1"/>
+    <property name="animation_7" type="bool" value="true"/>
+    <property name="animation_7_first_frame" type="int" value="13"/>
+    <property name="animation_7_fps" type="int" value="12"/>
+    <property name="animation_7_length" type="int" value="4"/>
+    <property name="animation_7_offset_y" type="int" value="1"/>
+    <property name="animation_8" type="bool" value="true"/>
+    <property name="animation_8_first_frame" type="int" value="17"/>
+    <property name="animation_8_fps" type="int" value="12"/>
+    <property name="animation_8_length" type="int" value="7"/>
+    <property name="animation_8_offset_y" type="int" value="1"/>
+    <property name="animation_9" type="bool" value="true"/>
+    <property name="animation_9_first_frame" type="int" value="24"/>
+    <property name="animation_9_fps" type="int" value="0"/>
+    <property name="animation_9_length" type="int" value="1"/>
+    <property name="animation_9_offset_y" type="int" value="1"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
     <property name="height" type="int" value="64"/>
@@ -73,7 +112,7 @@
     <property name="is_player" type="bool" value="true"/>
     <property name="is_visible" type="bool" value="false"/>
     <property name="jumping_power" type="float" value="4"/>
-    <property name="max_velocity_x" type="float" value="4.5"/>
+    <property name="max_velocity_x" type="float" value="2"/>
     <property name="sprite_sheet_id" type="int" value="0"/>
     <property name="width" type="int" value="64"/>
    </properties>
