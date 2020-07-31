@@ -56,7 +56,7 @@ DOWN:    crouch
 First clone the repository including the submodules:
 ```bash
 git clone --recurse-submodules -j2 https://github.com/mupfelofen-de/TauCeti.git
-cd eszFW
+cd TauCeti
 ```
 
 To compile _TauCeti_ under Linux use CMake as follows:
