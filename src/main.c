@@ -18,7 +18,7 @@ static void key_up_callback(esz_window_t* window, esz_core_t* core);
 
 #ifdef USE_LIBTMX
     #define MAP_FILE "res/maps/city.tmx"
-#elif  USE_CUTE_TILED
+#else  // (cute_tiled.h)
     #define MAP_FILE "res/maps/city.json"
 #endif
 
