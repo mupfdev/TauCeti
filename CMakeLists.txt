@@ -17,9 +17,7 @@ set(TauCeti_sources src/main.c)
 option(USE_LIBTMX "Use libTMX instead of cute_tiled" OFF)
 
 if(USE_LIBTMX)
-  add_definitions(-DUSE_LIBTMX)
-else()
-  add_definitions(-DUSE_CUTE_TILED)
+    add_definitions(-DUSE_LIBTMX)
 endif(USE_LIBTMX)
 
 add_executable(
