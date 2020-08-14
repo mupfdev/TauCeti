@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="75" height="50" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextlayerid="9" nextobjectid="23">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="75" height="50" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextlayerid="9" nextobjectid="23">
  <properties>
   <property name="animated_tile_fps" type="int" value="5"/>
   <property name="background_constant_velocity" type="float" value="0"/>
@@ -7,11 +7,11 @@
   <property name="background_layer_1" type="file" value="../backgrounds/city-bg0.png"/>
   <property name="background_layer_2" type="file" value="../backgrounds/city-bg1.png"/>
   <property name="background_layer_3" type="file" value="../backgrounds/city-bg2.png"/>
-  <property name="background_layer_shift" type="float" value="0.5"/>
+  <property name="background_layer_shift" type="float" value="0.25"/>
   <property name="font" type="file" value="../fonts/samus.ttf"/>
   <property name="font_color" type="color" value="#ffffff00"/>
   <property name="gravitation" type="float" value="9.80665"/>
-  <property name="meter_in_pixel" type="int" value="42"/>
+  <property name="meter_in_pixel" type="int" value="32"/>
   <property name="music" type="file" value="../music/Dreams_of_Vain.ogg"/>
   <property name="sprite_sheet_1" type="file" value="../sprites/player.png"/>
   <property name="sprite_sheet_2" type="file" value="../sprites/vehicle-misc1.png"/>
@@ -53,12 +53,12 @@
   </data>
  </layer>
  <objectgroup id="5" name="Object Layer 1">
-  <object id="1" name="Player" type="entity" x="31" y="592">
+  <object id="1" name="Player" type="actor" x="31" y="592">
    <properties>
-    <property name="acceleration" type="float" value="8"/>
+    <property name="acceleration" type="float" value="5"/>
     <property name="animation_1" type="bool" value="true"/>
     <property name="animation_1_first_frame" type="int" value="1"/>
-    <property name="animation_1_fps" type="int" value="8"/>
+    <property name="animation_1_fps" type="int" value="5"/>
     <property name="animation_1_length" type="int" value="4"/>
     <property name="animation_1_offset_y" type="int" value="1"/>
     <property name="animation_2" type="bool" value="true"/>
@@ -112,13 +112,13 @@
     <property name="is_player" type="bool" value="true"/>
     <property name="is_visible" type="bool" value="false"/>
     <property name="jumping_power" type="float" value="4"/>
-    <property name="max_velocity_x" type="float" value="2"/>
+    <property name="max_velocity_x" type="float" value="2.5"/>
     <property name="sprite_sheet_id" type="int" value="0"/>
     <property name="width" type="int" value="64"/>
    </properties>
    <point/>
   </object>
-  <object id="17" name="Truck" type="entity" x="960" y="512">
+  <object id="17" name="Truck" type="actor" x="960" y="512">
    <properties>
     <property name="acceleration" type="float" value="3.5"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
@@ -139,7 +139,7 @@
    </properties>
    <point/>
   </object>
-  <object id="18" name="Police" type="entity" x="700" y="475">
+  <object id="18" name="Police" type="actor" x="700" y="475">
    <properties>
     <property name="acceleration" type="float" value="45"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
@@ -160,7 +160,7 @@
    </properties>
    <point/>
   </object>
-  <object id="20" name="MiscVehicle2" type="entity" x="800" y="670">
+  <object id="20" name="MiscVehicle2" type="actor" x="800" y="670">
    <properties>
     <property name="acceleration" type="float" value="45"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
@@ -181,7 +181,7 @@
    </properties>
    <point/>
   </object>
-  <object id="19" name="MiscVehicle1" type="entity" x="560" y="600">
+  <object id="19" name="MiscVehicle1" type="actor" x="560" y="600">
    <properties>
     <property name="acceleration" type="float" value="45"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
