@@ -15,10 +15,12 @@
 
 static void key_down_callback(esz_window_t* window, esz_core_t* core);
 static void key_up_callback(esz_window_t* window, esz_core_t* core);
+static void walk_left(esz_core_t* core);
+static void walk_right(esz_core_t* core);
 
 #ifdef USE_LIBTMX
     #define MAP_FILE "res/maps/city.tmx"
-#else  // (cute_tiled.h)
+#else // (cute_tiled.h)
     #define MAP_FILE "res/maps/city.json"
 #endif
 
@@ -44,15 +46,9 @@ int main()
         goto quit;
     }
 
-    if (ESZ_OK == esz_load_map(MAP_FILE, window, core))
-    {
-        esz_register_event_callback(EVENT_KEYDOWN, &key_down_callback, core);
-        esz_register_event_callback(EVENT_KEYUP,   &key_up_callback, core);
-    }
-    else
-    {
-        esz_deactivate_core(core);
-    }
+    esz_load_map(MAP_FILE, window, core);
+    esz_register_event_callback(EVENT_KEYDOWN, &key_down_callback, core);
+    esz_register_event_callback(EVENT_KEYUP, &key_up_callback, core);
 
     while (esz_is_core_active(core))
     {
@@ -87,6 +83,15 @@ int main()
             camera_pos_x += 0.3f;
         }
         esz_set_camera_position(camera_pos_x, camera_pos_y, true, window, core);
+
+        if (esz_is_player_moving(core))
+        {
+            esz_set_player_animation(2, core);
+        }
+        else
+        {
+            esz_set_player_animation(1, core);
+        }
 
         status = esz_show_scene(window, core);
         if (ESZ_ERROR_CRITICAL == status)
@@ -125,8 +130,14 @@ static void key_down_callback(esz_window_t* window, esz_core_t* core)
         case SDLK_q:
             esz_deactivate_core(core);
             break;
+        case SDLK_SPACE:
+            esz_set_player_state(STATE_IN_MID_AIR, core);
+            break;
         case SDLK_LEFT:
+            walk_left(core);
+            break;
         case SDLK_RIGHT:
+            walk_right(core);
             break;
         case SDLK_F4:
             esz_set_next_player_animation(core);
@@ -160,7 +171,40 @@ static void key_up_callback(esz_window_t* window, esz_core_t* core)
     {
         case SDLK_LEFT:
         case SDLK_RIGHT:
-            //
+            esz_clear_player_state(STATE_MOVING, core);
             break;
     }
 }
+
+static void walk_left(esz_core_t* core)
+{
+    if (esz_is_camera_locked(core))
+    {
+        esz_clear_player_state(STATE_GOING_RIGHT, core);
+        esz_clear_player_state(STATE_LOOKING_RIGHT, core);
+        esz_set_player_state(STATE_GOING_LEFT, core);
+        esz_set_player_state(STATE_LOOKING_LEFT, core);
+        esz_set_player_state(STATE_MOVING, core);
+    }
+    else
+    {
+        esz_clear_player_state(STATE_MOVING, core);
+    }
+}
+
+static void walk_right(esz_core_t* core)
+{
+    if (esz_is_camera_locked(core))
+    {
+        esz_clear_player_state(STATE_GOING_LEFT, core);
+        esz_clear_player_state(STATE_LOOKING_LEFT, core);
+        esz_set_player_state(STATE_GOING_RIGHT, core);
+        esz_set_player_state(STATE_LOOKING_RIGHT, core);
+        esz_set_player_state(STATE_MOVING, core);
+    }
+    else
+    {
+        esz_clear_player_state(STATE_MOVING, core);
+    }
+}
+
