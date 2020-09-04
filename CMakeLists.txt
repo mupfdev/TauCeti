@@ -5,16 +5,25 @@ set(CMAKE_C_STANDARD 11)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/external/eszFW/cmake/)
 
+find_package(SDL2 REQUIRED)
+
 add_subdirectory(external/eszFW)
 
-include_directories(SYSTEM external/eszFW/src
-    SYSTEM ${SDL2_INCLUDE_DIR}
-    SYSTEM external/eszFW/external/tmx/src
-    )
+include_directories(
+    ${SDL2_INCLUDE_DIRS})
 
-set(TauCeti_SRCS
-    src/main.c
-    )
+set(TauCeti_sources src/main.c)
 
-add_executable(TauCeti ${TauCeti_SRCS})
-target_link_libraries(TauCeti eszFW)
+option(USE_LIBTMX "Use libTMX instead of cute_tiled" OFF)
+
+if(USE_LIBTMX)
+    add_definitions(-DUSE_LIBTMX)
+endif(USE_LIBTMX)
+
+add_executable(
+    ${PROJECT_NAME}
+    ${TauCeti_sources})
+
+target_link_libraries(
+    ${PROJECT_NAME}
+    eszFW)

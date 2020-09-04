@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="75" height="50" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextlayerid="9" nextobjectid="22">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="75" height="50" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#00003c" nextlayerid="9" nextobjectid="23">
  <properties>
   <property name="animated_tile_fps" type="int" value="5"/>
+  <property name="background_constant_velocity" type="float" value="0"/>
   <property name="background_is_top_aligned" type="bool" value="false"/>
-  <property name="background_layer_0" type="file" value="../backgrounds/city-bg0.png"/>
-  <property name="background_layer_1" type="file" value="../backgrounds/city-bg1.png"/>
-  <property name="background_layer_2" type="file" value="../backgrounds/city-bg2.png"/>
-  <property name="background_layer_count" type="int" value="3"/>
-  <property name="background_layer_shift" type="float" value="0.5"/>
+  <property name="background_layer_1" type="file" value="../backgrounds/city-bg0.png"/>
+  <property name="background_layer_2" type="file" value="../backgrounds/city-bg1.png"/>
+  <property name="background_layer_3" type="file" value="../backgrounds/city-bg2.png"/>
+  <property name="background_layer_shift" type="float" value="0.25"/>
   <property name="font" type="file" value="../fonts/samus.ttf"/>
   <property name="font_color" type="color" value="#ffffff00"/>
   <property name="gravitation" type="float" value="9.80665"/>
-  <property name="meter_in_pixel" type="int" value="42"/>
+  <property name="meter_in_pixel" type="int" value="32"/>
   <property name="music" type="file" value="../music/Dreams_of_Vain.ogg"/>
-  <property name="sprite_sheet_0" type="file" value="../sprites/player.png"/>
-  <property name="sprite_sheet_1" type="file" value="../sprites/vehicle-misc1.png"/>
-  <property name="sprite_sheet_2" type="file" value="../sprites/vehicle-misc2.png"/>
-  <property name="sprite_sheet_3" type="file" value="../sprites/vehicle-police.png"/>
-  <property name="sprite_sheet_4" type="file" value="../sprites/vehicle-truck.png"/>
-  <property name="sprite_sheet_count" type="int" value="5"/>
-  <property name="tileset_image" type="file" value="../tilesets/city.png"/>
+  <property name="sprite_sheet_1" type="file" value="../sprites/player.png"/>
+  <property name="sprite_sheet_2" type="file" value="../sprites/vehicle-misc1.png"/>
+  <property name="sprite_sheet_3" type="file" value="../sprites/vehicle-misc2.png"/>
+  <property name="sprite_sheet_4" type="file" value="../sprites/vehicle-police.png"/>
+  <property name="sprite_sheet_5" type="file" value="../sprites/vehicle-truck.png"/>
  </properties>
  <tileset firstgid="1" source="../tilesets/city.tsx"/>
  <layer id="1" name="Tile Layer BG 1" width="75" height="50">
@@ -55,145 +53,154 @@
   </data>
  </layer>
  <objectgroup id="5" name="Object Layer 1">
-  <object id="1" name="Player" type="Entity" x="32" y="592">
+  <object id="1" name="Player" type="actor" x="31" y="592">
    <properties>
-    <property name="acceleration" type="float" value="8"/>
-    <property name="animation_end" type="int" value="3"/>
-    <property name="animation_speed" type="float" value="12.5"/>
-    <property name="animation_start" type="int" value="0"/>
+    <property name="acceleration" type="float" value="5"/>
+    <property name="animation_1" type="bool" value="true"/>
+    <property name="animation_1_first_frame" type="int" value="1"/>
+    <property name="animation_1_fps" type="int" value="5"/>
+    <property name="animation_1_length" type="int" value="4"/>
+    <property name="animation_1_offset_y" type="int" value="1"/>
+    <property name="animation_2" type="bool" value="true"/>
+    <property name="animation_2_first_frame" type="int" value="1"/>
+    <property name="animation_2_fps" type="int" value="12"/>
+    <property name="animation_2_length" type="int" value="16"/>
+    <property name="animation_2_offset_y" type="int" value="0"/>
+    <property name="animation_3" type="bool" value="true"/>
+    <property name="animation_3_first_frame" type="int" value="17"/>
+    <property name="animation_3_fps" type="int" value="12"/>
+    <property name="animation_3_length" type="int" value="6"/>
+    <property name="animation_3_offset_y" type="int" value="0"/>
+    <property name="animation_4" type="bool" value="true"/>
+    <property name="animation_4_first_frame" type="int" value="23"/>
+    <property name="animation_4_fps" type="int" value="0"/>
+    <property name="animation_4_length" type="int" value="1"/>
+    <property name="animation_5" type="bool" value="true"/>
+    <property name="animation_5_first_frame" type="int" value="24"/>
+    <property name="animation_5_fps" type="int" value="0"/>
+    <property name="animation_5_length" type="int" value="1"/>
+    <property name="animation_5_offset_y" type="int" value="0"/>
+    <property name="animation_6" type="bool" value="true"/>
+    <property name="animation_6_first_frame" type="int" value="5"/>
+    <property name="animation_6_fps" type="int" value="12"/>
+    <property name="animation_6_length" type="int" value="8"/>
+    <property name="animation_6_offset_y" type="int" value="1"/>
+    <property name="animation_7" type="bool" value="true"/>
+    <property name="animation_7_first_frame" type="int" value="13"/>
+    <property name="animation_7_fps" type="int" value="12"/>
+    <property name="animation_7_length" type="int" value="4"/>
+    <property name="animation_7_offset_y" type="int" value="1"/>
+    <property name="animation_8" type="bool" value="true"/>
+    <property name="animation_8_first_frame" type="int" value="17"/>
+    <property name="animation_8_fps" type="int" value="12"/>
+    <property name="animation_8_length" type="int" value="7"/>
+    <property name="animation_8_offset_y" type="int" value="1"/>
+    <property name="animation_9" type="bool" value="true"/>
+    <property name="animation_9_first_frame" type="int" value="24"/>
+    <property name="animation_9_fps" type="int" value="0"/>
+    <property name="animation_9_length" type="int" value="1"/>
+    <property name="animation_9_offset_y" type="int" value="1"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
-    <property name="frame_offset_x" type="int" value="0"/>
-    <property name="frame_offset_y" type="int" value="1"/>
     <property name="height" type="int" value="64"/>
     <property name="is_affected_by_gravity" type="bool" value="true"/>
     <property name="is_animated" type="bool" value="true"/>
     <property name="is_in_background" type="bool" value="false"/>
+    <property name="is_in_midground" type="bool" value="true"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="false"/>
     <property name="is_player" type="bool" value="true"/>
-    <property name="max_velocity_x" type="float" value="4.5"/>
+    <property name="is_visible" type="bool" value="false"/>
+    <property name="jumping_power" type="float" value="4"/>
+    <property name="max_velocity_x" type="float" value="2.5"/>
     <property name="sprite_sheet_id" type="int" value="0"/>
     <property name="width" type="int" value="64"/>
    </properties>
    <point/>
   </object>
-  <object id="17" name="Truck" type="Entity" x="-256" y="192">
+  <object id="17" name="Truck" type="actor" x="960" y="512">
    <properties>
     <property name="acceleration" type="float" value="3.5"/>
-    <property name="animation_end" type="int" value="0"/>
-    <property name="animation_speed" type="float" value="0"/>
-    <property name="animation_start" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
-    <property name="frame_offset_x" type="int" value="0"/>
-    <property name="frame_offset_y" type="int" value="0"/>
-    <property name="height" type="int" value="264"/>
+    <property name="height" type="int" value="104"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
     <property name="is_in_background" type="bool" value="true"/>
+    <property name="is_in_midground" type="bool" value="false"/>
     <property name="is_left_oriented" type="bool" value="true"/>
     <property name="is_moving" type="bool" value="true"/>
     <property name="is_player" type="bool" value="false"/>
+    <property name="is_visible" type="bool" value="true"/>
+    <property name="jumping_power" type="float" value="0"/>
     <property name="max_velocity_x" type="float" value="2"/>
     <property name="sprite_sheet_id" type="int" value="4"/>
-    <property name="width" type="int" value="104"/>
+    <property name="width" type="int" value="264"/>
    </properties>
    <point/>
   </object>
-  <object id="18" name="Police" type="Entity" x="1000" y="300">
+  <object id="18" name="Police" type="actor" x="700" y="475">
    <properties>
     <property name="acceleration" type="float" value="45"/>
-    <property name="animation_end" type="int" value="0"/>
-    <property name="animation_speed" type="float" value="0"/>
-    <property name="animation_start" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
-    <property name="frame_offset_x" type="int" value="0"/>
-    <property name="frame_offset_y" type="int" value="0"/>
-    <property name="height" type="int" value="168"/>
+    <property name="height" type="int" value="64"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
     <property name="is_in_background" type="bool" value="true"/>
+    <property name="is_in_midground" type="bool" value="false"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="true"/>
-    <property name="is_player" type="bool" value="true"/>
-    <property name="max_velocity_x" type="float" value="10"/>
+    <property name="is_player" type="bool" value="false"/>
+    <property name="is_visible" type="bool" value="true"/>
+    <property name="jumping_power" type="float" value="0"/>
+    <property name="max_velocity_x" type="float" value="4.5"/>
     <property name="sprite_sheet_id" type="int" value="3"/>
-    <property name="width" type="int" value="64"/>
+    <property name="width" type="int" value="168"/>
    </properties>
    <point/>
   </object>
-  <object id="20" name="MiscVehicle2" type="Entity" x="800" y="416">
+  <object id="20" name="MiscVehicle2" type="actor" x="800" y="670">
    <properties>
     <property name="acceleration" type="float" value="45"/>
-    <property name="animation_end" type="int" value="0"/>
-    <property name="animation_speed" type="float" value="0"/>
-    <property name="animation_start" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
-    <property name="frame_offset_x" type="int" value="0"/>
-    <property name="frame_offset_y" type="int" value="1"/>
-    <property name="height" type="int" value="96"/>
+    <property name="height" type="int" value="64"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
     <property name="is_in_background" type="bool" value="true"/>
+    <property name="is_in_midground" type="bool" value="false"/>
     <property name="is_left_oriented" type="bool" value="false"/>
     <property name="is_moving" type="bool" value="true"/>
-    <property name="is_player" type="bool" value="true"/>
-    <property name="max_velocity_x" type="float" value="5"/>
+    <property name="is_player" type="bool" value="false"/>
+    <property name="is_visible" type="bool" value="true"/>
+    <property name="jumping_power" type="float" value="0"/>
+    <property name="max_velocity_x" type="float" value="4"/>
     <property name="sprite_sheet_id" type="int" value="2"/>
-    <property name="width" type="int" value="64"/>
+    <property name="width" type="int" value="96"/>
    </properties>
    <point/>
   </object>
-  <object id="19" name="MiscVehicle1" type="Entity" x="128" y="150">
+  <object id="19" name="MiscVehicle1" type="actor" x="560" y="600">
    <properties>
     <property name="acceleration" type="float" value="45"/>
-    <property name="animation_end" type="int" value="0"/>
-    <property name="animation_speed" type="float" value="0"/>
-    <property name="animation_start" type="int" value="0"/>
     <property name="connect_horizontal_map_ends" type="bool" value="true"/>
     <property name="connect_vertical_map_ends" type="bool" value="false"/>
-    <property name="frame_offset_x" type="int" value="0"/>
-    <property name="frame_offset_y" type="int" value="0"/>
-    <property name="height" type="int" value="96"/>
+    <property name="height" type="int" value="64"/>
     <property name="is_affected_by_gravity" type="bool" value="false"/>
     <property name="is_animated" type="bool" value="false"/>
-    <property name="is_in_background" type="bool" value="true"/>
+    <property name="is_in_background" type="bool" value="false"/>
+    <property name="is_in_midground" type="bool" value="false"/>
     <property name="is_left_oriented" type="bool" value="true"/>
     <property name="is_moving" type="bool" value="true"/>
-    <property name="is_player" type="bool" value="true"/>
-    <property name="max_velocity_x" type="float" value="8"/>
+    <property name="is_player" type="bool" value="false"/>
+    <property name="is_visible" type="bool" value="true"/>
+    <property name="jumping_power" type="float" value="0"/>
+    <property name="max_velocity_x" type="float" value="4.8"/>
     <property name="sprite_sheet_id" type="int" value="1"/>
-    <property name="width" type="int" value="64"/>
+    <property name="width" type="int" value="96"/>
    </properties>
    <point/>
-  </object>
-  <object id="12" name="MessageBox" type="GenericMsg" x="1072" y="560" width="80" height="64">
-   <properties>
-    <property name="message" value="Nice jump!"/>
-   </properties>
-  </object>
-  <object id="7" name="MessageBox" type="AndroidMsg" x="128" y="560" width="48" height="48">
-   <properties>
-    <property name="message" value="Swipe up to jump"/>
-   </properties>
-  </object>
-  <object id="8" name="MessageBox" type="AndroidMsg" x="16" y="560" width="48" height="48">
-   <properties>
-    <property name="message" value="Touch the screen to walk around"/>
-   </properties>
-  </object>
-  <object id="11" name="MessageBox" type="AndroidMsg" x="224" y="512" width="48" height="48">
-   <properties>
-    <property name="message" value="Touch the lower screen to crouch"/>
-   </properties>
-  </object>
-  <object id="13" name="MessageBox" type="AndroidMsg" x="416" y="496" width="64" height="64">
-   <properties>
-    <property name="message" value="Crouch and swipe down to fall trough"/>
-   </properties>
   </object>
  </objectgroup>
 </map>
