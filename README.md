@@ -1,3 +1,7 @@
+## THIS REPOSITORY HAS DISCONTINUED
+This project is no longer maintained.  It is now part of
+[eszFW](https://github.com/mupfelofen-de/eszFW).
+
 # Tau Ceti
 
 <p>
@@ -56,7 +60,7 @@ DOWN:    crouch
 First clone the repository including the submodules:
 ```bash
 git clone --recurse-submodules -j2 https://github.com/mupfelofen-de/TauCeti.git
-cd eszFW
+cd TauCeti
 ```
 
 To compile _TauCeti_ under Linux use CMake as follows:
@@ -65,6 +69,13 @@ mkdir build
 cd build
 cmake ..
 make
+```
+
+You can also use _TauCeti_ with _cute_tiled_ instead of _libTMX_.  Just
+enable the respective CMake option:
+
+```bash
+cmake -DUSE_CUTE_TILED=ON ..
 ```
 
 You can run the demo by entering:
